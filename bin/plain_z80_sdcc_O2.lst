@@ -1,0 +1,244 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : free open source ANSI-C Compiler
+                              3 ; Version 4.0.0 #11528 (Linux)
+                              4 ;--------------------------------------------------------
+                              5 	.module plain
+                              6 	.optsdcc -mz80
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _main
+                             12 	.globl _process_block
+                             13 	.globl _puts
+                             14 	.globl _printf
+                             15 	.globl _state
+                             16 ;--------------------------------------------------------
+                             17 ; special function registers
+                             18 ;--------------------------------------------------------
+                             19 ;--------------------------------------------------------
+                             20 ; ram data
+                             21 ;--------------------------------------------------------
+                             22 	.area _DATA
+   0000                      23 _state::
+   0000                      24 	.ds 16
+                             25 ;--------------------------------------------------------
+                             26 ; ram data
+                             27 ;--------------------------------------------------------
+                             28 	.area _INITIALIZED
+                             29 ;--------------------------------------------------------
+                             30 ; absolute external ram data
+                             31 ;--------------------------------------------------------
+                             32 	.area _DABS (ABS)
+                             33 ;--------------------------------------------------------
+                             34 ; global & static initialisations
+                             35 ;--------------------------------------------------------
+                             36 	.area _HOME
+                             37 	.area _GSINIT
+                             38 	.area _GSFINAL
+                             39 	.area _GSINIT
+                             40 ;--------------------------------------------------------
+                             41 ; Home
+                             42 ;--------------------------------------------------------
+                             43 	.area _HOME
+                             44 	.area _HOME
+                             45 ;--------------------------------------------------------
+                             46 ; code
+                             47 ;--------------------------------------------------------
+                             48 	.area _CODE
+                             49 ;plain.c:8: void process_block(uint8_t* input) {
+                             50 ;	---------------------------------
+                             51 ; Function process_block
+                             52 ; ---------------------------------
+   0000                      53 _process_block::
+   0000 DD E5         [15]   54 	push	ix
+   0002 DD 21 00 00   [14]   55 	ld	ix,#0
+   0006 DD 39         [15]   56 	add	ix,sp
+                             57 ;plain.c:9: printf("[LOG] Processing block: ");
+   0008 21r4Ar00      [10]   58 	ld	hl, #___str_0
+   000B E5            [11]   59 	push	hl
+   000C CDr00r00      [17]   60 	call	_printf
+   000F F1            [10]   61 	pop	af
+                             62 ;plain.c:10: for(int i=0; i<16; i++) {
+   0010 01 00 00      [10]   63 	ld	bc, #0x0000
+   0013                      64 00103$:
+   0013 79            [ 4]   65 	ld	a, c
+   0014 D6 10         [ 7]   66 	sub	a, #0x10
+   0016 78            [ 4]   67 	ld	a, b
+   0017 17            [ 4]   68 	rla
+   0018 3F            [ 4]   69 	ccf
+   0019 1F            [ 4]   70 	rra
+   001A DE 80         [ 7]   71 	sbc	a, #0x80
+   001C 30 21         [12]   72 	jr	NC,00101$
+                             73 ;plain.c:12: state[i] = input[i] ^ 0xFF; 
+   001E 21r00r00      [10]   74 	ld	hl, #_state
+   0021 09            [11]   75 	add	hl, bc
+   0022 EB            [ 4]   76 	ex	de, hl
+   0023 DD 6E 04      [19]   77 	ld	l, 4 (ix)
+   0026 DD 66 05      [19]   78 	ld	h, 5 (ix)
+   0029 09            [11]   79 	add	hl, bc
+   002A 7E            [ 7]   80 	ld	a, (hl)
+   002B 2F            [ 4]   81 	cpl
+   002C 12            [ 7]   82 	ld	(de), a
+                             83 ;plain.c:13: printf("%02x ", state[i]);
+   002D 5F            [ 4]   84 	ld	e, a
+   002E 16 00         [ 7]   85 	ld	d, #0x00
+   0030 C5            [11]   86 	push	bc
+   0031 D5            [11]   87 	push	de
+   0032 21r63r00      [10]   88 	ld	hl, #___str_1
+   0035 E5            [11]   89 	push	hl
+   0036 CDr00r00      [17]   90 	call	_printf
+   0039 F1            [10]   91 	pop	af
+   003A F1            [10]   92 	pop	af
+   003B C1            [10]   93 	pop	bc
+                             94 ;plain.c:10: for(int i=0; i<16; i++) {
+   003C 03            [ 6]   95 	inc	bc
+   003D 18 D4         [12]   96 	jr	00103$
+   003F                      97 00101$:
+                             98 ;plain.c:15: printf("\n");
+   003F 21r69r00      [10]   99 	ld	hl, #___str_3
+   0042 E5            [11]  100 	push	hl
+   0043 CDr00r00      [17]  101 	call	_puts
+   0046 F1            [10]  102 	pop	af
+                            103 ;plain.c:16: }
+   0047 DD E1         [14]  104 	pop	ix
+   0049 C9            [10]  105 	ret
+   004A                     106 ___str_0:
+   004A 5B 4C 4F 47 5D 20   107 	.ascii "[LOG] Processing block: "
+        50 72 6F 63 65 73
+        73 69 6E 67 20 62
+        6C 6F 63 6B 3A 20
+   0062 00                  108 	.db 0x00
+   0063                     109 ___str_1:
+   0063 25 30 32 78 20      110 	.ascii "%02x "
+   0068 00                  111 	.db 0x00
+   0069                     112 ___str_3:
+   0069 00                  113 	.db 0x00
+                            114 ;plain.c:18: int main() {
+                            115 ;	---------------------------------
+                            116 ; Function main
+                            117 ; ---------------------------------
+   006A                     118 _main::
+   006A DD E5         [15]  119 	push	ix
+   006C DD 21 00 00   [14]  120 	ld	ix,#0
+   0070 DD 39         [15]  121 	add	ix,sp
+   0072 21 F0 FF      [10]  122 	ld	hl, #-16
+   0075 39            [11]  123 	add	hl, sp
+   0076 F9            [ 6]  124 	ld	sp, hl
+                            125 ;plain.c:20: uint8_t data[16] = {
+   0077 21 00 00      [10]  126 	ld	hl, #0
+   007A 39            [11]  127 	add	hl, sp
+   007B EB            [ 4]  128 	ex	de, hl
+   007C 3E 32         [ 7]  129 	ld	a, #0x32
+   007E 12            [ 7]  130 	ld	(de), a
+   007F 6B            [ 4]  131 	ld	l, e
+   0080 62            [ 4]  132 	ld	h, d
+   0081 23            [ 6]  133 	inc	hl
+   0082 36 43         [10]  134 	ld	(hl), #0x43
+   0084 6B            [ 4]  135 	ld	l, e
+   0085 62            [ 4]  136 	ld	h, d
+   0086 23            [ 6]  137 	inc	hl
+   0087 23            [ 6]  138 	inc	hl
+   0088 36 F6         [10]  139 	ld	(hl), #0xf6
+   008A 6B            [ 4]  140 	ld	l, e
+   008B 62            [ 4]  141 	ld	h, d
+   008C 23            [ 6]  142 	inc	hl
+   008D 23            [ 6]  143 	inc	hl
+   008E 23            [ 6]  144 	inc	hl
+   008F 36 A8         [10]  145 	ld	(hl), #0xa8
+   0091 21 04 00      [10]  146 	ld	hl, #0x0004
+   0094 19            [11]  147 	add	hl, de
+   0095 36 88         [10]  148 	ld	(hl), #0x88
+   0097 21 05 00      [10]  149 	ld	hl, #0x0005
+   009A 19            [11]  150 	add	hl, de
+   009B 36 5A         [10]  151 	ld	(hl), #0x5a
+   009D 21 06 00      [10]  152 	ld	hl, #0x0006
+   00A0 19            [11]  153 	add	hl, de
+   00A1 36 30         [10]  154 	ld	(hl), #0x30
+   00A3 21 07 00      [10]  155 	ld	hl, #0x0007
+   00A6 19            [11]  156 	add	hl, de
+   00A7 36 8D         [10]  157 	ld	(hl), #0x8d
+   00A9 21 08 00      [10]  158 	ld	hl, #0x0008
+   00AC 19            [11]  159 	add	hl, de
+   00AD 36 31         [10]  160 	ld	(hl), #0x31
+   00AF 21 09 00      [10]  161 	ld	hl, #0x0009
+   00B2 19            [11]  162 	add	hl, de
+   00B3 36 31         [10]  163 	ld	(hl), #0x31
+   00B5 21 0A 00      [10]  164 	ld	hl, #0x000a
+   00B8 19            [11]  165 	add	hl, de
+   00B9 36 98         [10]  166 	ld	(hl), #0x98
+   00BB 21 0B 00      [10]  167 	ld	hl, #0x000b
+   00BE 19            [11]  168 	add	hl, de
+   00BF 36 A2         [10]  169 	ld	(hl), #0xa2
+   00C1 21 0C 00      [10]  170 	ld	hl, #0x000c
+   00C4 19            [11]  171 	add	hl, de
+   00C5 36 E0         [10]  172 	ld	(hl), #0xe0
+   00C7 21 0D 00      [10]  173 	ld	hl, #0x000d
+   00CA 19            [11]  174 	add	hl, de
+   00CB 36 37         [10]  175 	ld	(hl), #0x37
+   00CD 21 0E 00      [10]  176 	ld	hl, #0x000e
+   00D0 19            [11]  177 	add	hl, de
+   00D1 36 07         [10]  178 	ld	(hl), #0x07
+   00D3 21 0F 00      [10]  179 	ld	hl, #0x000f
+   00D6 19            [11]  180 	add	hl, de
+   00D7 36 34         [10]  181 	ld	(hl), #0x34
+                            182 ;plain.c:25: printf("--- System Start (Baseline) ---\n");
+   00D9 D5            [11]  183 	push	de
+   00DA 21r0Fr01      [10]  184 	ld	hl, #___str_5
+   00DD E5            [11]  185 	push	hl
+   00DE CDr00r00      [17]  186 	call	_puts
+   00E1 F1            [10]  187 	pop	af
+   00E2 D1            [10]  188 	pop	de
+                            189 ;plain.c:27: for(int i=0; i<4; i++) {
+   00E3 01 00 00      [10]  190 	ld	bc, #0x0000
+   00E6                     191 00103$:
+   00E6 79            [ 4]  192 	ld	a, c
+   00E7 D6 04         [ 7]  193 	sub	a, #0x04
+   00E9 78            [ 4]  194 	ld	a, b
+   00EA 17            [ 4]  195 	rla
+   00EB 3F            [ 4]  196 	ccf
+   00EC 1F            [ 4]  197 	rra
+   00ED DE 80         [ 7]  198 	sbc	a, #0x80
+   00EF 30 0E         [12]  199 	jr	NC,00101$
+                            200 ;plain.c:28: process_block(data);
+   00F1 6B            [ 4]  201 	ld	l, e
+   00F2 62            [ 4]  202 	ld	h, d
+   00F3 C5            [11]  203 	push	bc
+   00F4 D5            [11]  204 	push	de
+   00F5 E5            [11]  205 	push	hl
+   00F6 CDr00r00      [17]  206 	call	_process_block
+   00F9 F1            [10]  207 	pop	af
+   00FA D1            [10]  208 	pop	de
+   00FB C1            [10]  209 	pop	bc
+                            210 ;plain.c:27: for(int i=0; i<4; i++) {
+   00FC 03            [ 6]  211 	inc	bc
+   00FD 18 E7         [12]  212 	jr	00103$
+   00FF                     213 00101$:
+                            214 ;plain.c:31: printf("--- System Shutdown ---\n");
+   00FF 21r2Fr01      [10]  215 	ld	hl, #___str_7
+   0102 E5            [11]  216 	push	hl
+   0103 CDr00r00      [17]  217 	call	_puts
+   0106 F1            [10]  218 	pop	af
+                            219 ;plain.c:32: return 0;
+   0107 21 00 00      [10]  220 	ld	hl, #0x0000
+                            221 ;plain.c:33: }
+   010A DD F9         [10]  222 	ld	sp, ix
+   010C DD E1         [14]  223 	pop	ix
+   010E C9            [10]  224 	ret
+   010F                     225 ___str_5:
+   010F 2D 2D 2D 20 53 79   226 	.ascii "--- System Start (Baseline) ---"
+        73 74 65 6D 20 53
+        74 61 72 74 20 28
+        42 61 73 65 6C 69
+        6E 65 29 20 2D 2D
+        2D
+   012E 00                  227 	.db 0x00
+   012F                     228 ___str_7:
+   012F 2D 2D 2D 20 53 79   229 	.ascii "--- System Shutdown ---"
+        73 74 65 6D 20 53
+        68 75 74 64 6F 77
+        6E 20 2D 2D 2D
+   0146 00                  230 	.db 0x00
+                            231 	.area _CODE
+                            232 	.area _INITIALIZER
+                            233 	.area _CABS (ABS)
