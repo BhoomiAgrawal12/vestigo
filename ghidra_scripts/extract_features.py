@@ -13,6 +13,7 @@ from ghidra.program.model.address import AddressSet
 import json
 import math
 import sys
+import os
 
 # =============================================================================
 # 1. CRYPTOGRAPHIC CONSTANTS DATABASE
@@ -23,6 +24,12 @@ CRYPTO_CONSTANTS = {
     # --- AES (Rijndael) ---
     # Forward S-Box (first 16 bytes packed into 32-bit integers for detection)
     "AES_SBOX": [0x637c777b, 0xf26b6fc5, 0x3001672b, 0xfed7ab76], 
+    # Byte-wise S-Box for memory scanning
+    "AES_SBOX_BYTES": [
+        0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76
+    ], 
+    # Inverse S-Box
+    "AES_INV_SBOX": [0x52096a, 0xd53036a5, 0x38bf40a3, 0x9e81f3d7],
     # T-Table 0 (Optimization often used in OpenSSL)
     "AES_TE0":  [0xc66363a5, 0xf87c7c84, 0xee777799, 0xf67b7b8d], 
     # Rcon (Round Constants)
@@ -47,8 +54,50 @@ CRYPTO_CONSTANTS = {
     # --- Asymmetric (RSA/ECC) ---
     # Curve P-256 Prime (secp256r1)
     "P256_PRIME": [0xFFFFFFFF, 0x00000001, 0x00000000, 0x00000000], 
+    # Curve25519 Prime (2^255 - 19)
+    "C25519_PRIME": [0x7fffffffffffffff, 0xffffffffffffffed],
     # ASN.1 Sequence Header often found in RSA keys
     "ASN1_SEQ":   [0x3082], 
+    
+    # --- PRNG ---
+    # Mersenne Twister MT19937 Matrix A
+    "MT19937_MATRIX_A": [0x9908b0df],
+}
+
+# Ground Truth Mapping
+# Maps source code function names to specific algorithm labels
+LABEL_MAP = {
+    # --- AES Variants ---
+    "AES128_Encrypt": "AES-128",
+    "AES192_Encrypt": "AES-192",
+    "AES256_Encrypt": "AES-256",
+    "AES_Encrypt": "AES-128", # Default from the simple aes.c
+    "KeyExpansion": "AES-KeySchedule",
+    
+    # --- RSA Variants ---
+    "RSA1024_Encrypt": "RSA-1024",
+    "RSA2048_Encrypt": "RSA-2048",
+    "RSA4096_Encrypt": "RSA-4096",
+    "ModExp": "RSA-ModExp",     # The core math function for RSA
+    
+    # --- SHA Variants ---
+    "sha1_transform": "SHA-1",
+    "sha1_process": "SHA-1",
+    "sha256_transform": "SHA-256",
+    "sha256_process": "SHA-256",
+    
+    # --- Others ---
+    "chacha20_block": "ChaCha20",
+    "xor_encrypt": "XOR",
+    "prng_next": "PRNG-LCG",
+    
+    # --- ECC Variants ---
+    "ec_point_double": "ECC-SecP256",
+    "ec_point_add": "ECC-SecP256",
+    "ec_scalar_mult": "ECC-SecP256",
+    "ecdh_compute_shared_secret": "ECC-SecP256",
+    "ecdsa_sign": "ECC-SecP256",
+    "ecdsa_verify": "ECC-SecP256"
 }
 
 # Mapping P-Code IDs to readable strings for histograms
@@ -224,7 +273,51 @@ def extract_node_features(block, listing):
                     for algo, consts in CRYPTO_CONSTANTS.items():
                         if val32 in consts:
                             features["crypto_constant_hits"] += 1
+                            features["crypto_constant_hits"] += 1
                             features["constant_flags"][algo] = True
+
+            # 5. Global Memory Scan for S-Box (Direct & Indirect)
+            # Use ReferenceManager to ensure we get all references
+            refs = currentProgram.getReferenceManager().getReferencesFrom(inst.getAddress())
+            for ref in refs:
+                if ref.isMemoryReference() and not ref.isStackReference():
+                    try:
+                        to_addr = ref.getToAddress()
+                        memory = currentProgram.getMemory()
+                        
+                        # 1. Direct Reference Check
+                        mem_bytes = []
+                        for k in range(16):
+                            b = memory.getByte(to_addr.add(k)) & 0xFF
+                            mem_bytes.append(b)
+                        
+                        if mem_bytes == CRYPTO_CONSTANTS["AES_SBOX_BYTES"]:
+                            features["crypto_constant_hits"] += 1
+                            features["constant_flags"]["AES_SBOX"] = True
+                            continue
+
+                        # 2. Indirect Reference Check (Literal Pools)
+                        # Read pointer from the referenced address
+                        ptr_size = currentProgram.getDefaultPointerSize()
+                        if ptr_size == 4:
+                            ptr_val = memory.getInt(to_addr) & 0xFFFFFFFF
+                        else:
+                            ptr_val = memory.getLong(to_addr) & 0xFFFFFFFFFFFFFFFF
+                        
+                        indirect_addr = to_addr.getNewAddress(ptr_val)
+                        
+                        # Read bytes at indirect address
+                        mem_bytes_indirect = []
+                        for k in range(16):
+                            b = memory.getByte(indirect_addr.add(k)) & 0xFF
+                            mem_bytes_indirect.append(b)
+
+                        if mem_bytes_indirect == CRYPTO_CONSTANTS["AES_SBOX_BYTES"]:
+                            features["crypto_constant_hits"] += 1
+                            features["constant_flags"]["AES_SBOX"] = True
+
+                    except:
+                        pass
 
     # --- Ratios ---
     if counts["TOTAL"] > 0:
@@ -238,6 +331,7 @@ def extract_node_features(block, listing):
 
     features["immediate_entropy"] = calculate_entropy(immediates)
     features["carry_chain_depth"] = max_carry
+    features["immediates"] = immediates # Pass up for advanced analysis
     
     # N-Gram Repetition (Unrolled Loop Detector)
     if len(raw_opcodes) >= 6:
@@ -252,15 +346,171 @@ def extract_node_features(block, listing):
 
     return features
 
+def extract_advanced_features(func, current_program, node_features):
+    """
+    Extracts high-level algorithmic features based on aggregated node data.
+    """
+    adv_features = {
+        # AES
+        "has_aes_sbox": False, "aes_sbox_match_score": 0.0, "has_aes_rcon": False,
+        "tbox_detected": False, "gf256_mul_ratio": 0.0, "mixcolumns_pattern_score": 0.0,
+        "key_expansion_detection": False, "num_large_tables": 0, "table_entropy_score": 0.0,
+        "approx_rounds": 0,
+        
+        # RSA
+        "bigint_op_count": 0, "montgomery_op_count": 0, "modexp_op_density": 0.0,
+        "exponent_bit_length": 0, "modulus_bit_length": 0, "bigint_width": 0,
+        "bignum_limb_count": 0,
+        
+        # ECC
+        "curve25519_constant_detection": False, "ladder_step_count": 0,
+        "cswap_patterns": 0, "projective_affine_ops_count": 0, "mixed_coordinate_ratio": 0.0,
+        
+        # SHA
+        "sha_init_constants_hits": 0, "sha_k_table_hits": 0, "sha_rotation_patterns": 0,
+        "schedule_size_detection": 0, "bitwise_mix_operations": 0,
+        
+        # PRNG
+        "lcg_multiplier": 0, "lcg_increment": 0, "lcg_mod": 0,
+        "mt19937_constants": False, "quarterround_score": 0, "feedback_polynomial": 0,
+        
+        # General
+        "string_refs_count": 0, "rodata_refs_count": 0, "data_refs_count": 0,
+        "stack_frame_size": func.getStackFrame().getFrameSize(),
+        "string_density": 0.0, "call_in_degree": 0, "call_out_degree": 0,
+        "betweenness_centrality": 0.0, "pagerank_score": 0.0
+    }
+
+    # Aggregated Counters
+    total_inst = 0
+    total_xor = 0
+    total_rot = 0
+    
+    # 1. Aggregate Node Data
+    for nf in node_features:
+        total_inst += nf["instruction_count"]
+        total_xor += nf["opcode_histogram"].get("XOR", 0)
+        # Fix: Sum specific shift/rotate mnemonics
+        rot_count = nf["opcode_histogram"].get("SHL", 0) + \
+                    nf["opcode_histogram"].get("SHR", 0) + \
+                    nf["opcode_histogram"].get("SAR", 0)
+        total_rot += rot_count
+        
+        # AES Checks
+        if nf["constant_flags"].get("AES_SBOX", False) or nf["constant_flags"].get("AES_INV_SBOX", False):
+            adv_features["has_aes_sbox"] = True
+            adv_features["aes_sbox_match_score"] += 1.0
+        if nf["constant_flags"].get("AES_RCON", False):
+            adv_features["has_aes_rcon"] = True
+            adv_features["key_expansion_detection"] = True
+        if nf["constant_flags"].get("AES_TE0", False):
+            adv_features["tbox_detected"] = True
+            
+        # AES MixColumns / GF(2^8) Heuristics
+        # Look for "xtime" pattern: (x << 1) ^ ((x >> 7) & 1 ? 0x1b : 0)
+        # Simplified: Check for shifts and XORs with 0x1b
+        if 0x1b in nf.get("immediates", []): # Need to ensure immediates are passed up or check entropy
+             adv_features["gf256_mul_ratio"] += 1.0
+             adv_features["mixcolumns_pattern_score"] += 1.0
+
+        # SHA Checks
+        if nf["constant_flags"].get("SHA1_INIT", False) or nf["constant_flags"].get("SHA256_INIT", False) or nf["constant_flags"].get("SHA224_INIT", False):
+            adv_features["sha_init_constants_hits"] += 1
+        if nf["constant_flags"].get("SHA1_K", False) or nf["constant_flags"].get("SHA256_K", False):
+            adv_features["sha_k_table_hits"] += 1
+            
+        # ECC Checks
+        if nf["constant_flags"].get("P256_PRIME", False) or nf["constant_flags"].get("C25519_PRIME", False):
+            adv_features["curve25519_constant_detection"] = True
+            
+        # PRNG Checks
+        if nf["constant_flags"].get("MT19937_MATRIX_A", False):
+            adv_features["mt19937_constants"] = True
+            
+        # BigInt / RSA Heuristics
+        if nf["carry_chain_depth"] > 2:
+            adv_features["bigint_op_count"] += 1
+            adv_features["bigint_width"] = max(adv_features["bigint_width"], nf["carry_chain_depth"] * 32) # Approx
+            
+        # Table Analysis
+        if nf["table_lookup_presence"]:
+            adv_features["num_large_tables"] += 1
+            adv_features["table_entropy_score"] += nf["immediate_entropy"]
+            
+        # ModExp / Montgomery Heuristics (High MUL/DIV density)
+        mul_count = nf["opcode_histogram"].get("MUL", 0)
+        div_count = nf["opcode_histogram"].get("DIV", 0) + nf["opcode_histogram"].get("MOD", 0)
+        if mul_count > 0 and div_count > 0:
+             adv_features["modexp_op_density"] += (mul_count + div_count)
+             
+        # SHA Rotation Patterns (High Rotate density)
+        if rot_count > 2:
+            adv_features["sha_rotation_patterns"] += 1
+            
+        # Bitwise Mix (XOR + ROT)
+        if (nf["opcode_histogram"].get("XOR", 0) + rot_count) > 5:
+            adv_features["bitwise_mix_operations"] += 1
+            
+        # Ladder Step / CSWAP (Conditional Branch + Swap logic)
+        # Heuristic: Branch followed by PHI or CMOV-like logic (hard to detect perfectly in aggregated stats)
+        if nf["opcode_histogram"].get("PHI", 0) > 0 and nf["opcode_histogram"].get("CBRANCH", 0) > 0:
+            adv_features["cswap_patterns"] += 1
+            adv_features["ladder_step_count"] += 1
+
+    # 2. Call Graph Metrics (Local)
+    refs = current_program.getReferenceManager().getReferencesTo(func.getEntryPoint())
+    adv_features["call_in_degree"] = sum(1 for r in refs if r.getReferenceType().isCall())
+    
+    # Calculate Out-Degree
+    # We can iterate the function body and count CALL instructions
+    out_degree = 0
+    listing = current_program.getListing()
+    code_units = listing.getCodeUnits(func.getBody(), True)
+    while code_units.hasNext():
+        cu = code_units.next()
+        if cu.getMnemonicString() == "CALL":
+            out_degree += 1
+    adv_features["call_out_degree"] = out_degree
+
+    # Normalize Densities
+    if total_inst > 0:
+        adv_features["modexp_op_density"] /= total_inst
+        adv_features["string_density"] = float(adv_features["string_refs_count"]) / total_inst
+        adv_features["gf256_mul_ratio"] /= total_inst
+        
+    # Schedule Size Detection (Heuristic based on loop count and block size)
+    # SHA schedule often involves a loop of 64/80 iterations expanding data
+    # We can infer from total_inst if it's a massive unrolled block.
+    if total_inst > 500 and adv_features["bitwise_mix_operations"] > 10:
+        adv_features["schedule_size_detection"] = 1 # Likely unrolled schedule
+        
+    # Approx Rounds (AES)
+    # If we detected Rcon, count how many unique Rcon constants we saw?
+    # Or just use instruction count / 100 as a rough proxy if AES detected
+    if adv_features["has_aes_rcon"] or adv_features["has_aes_sbox"]:
+        adv_features["approx_rounds"] = int(total_inst / 16) # Very rough heuristic
+
+    return adv_features
+
 
 def extract_function_data(func, current_program):
     """
     Orchestrates features for a whole function.
     """
+    func_name = func.getName()
+    label = "Non-Crypto"
+    
+    # Labeling Logic
+    func_lower = func_name.lower()
+    for key, val in LABEL_MAP.items():
+        if key.lower() in func_lower:
+            label = val
+            break
+
     func_data = {
-        "name": func.getName(),
+        "name": func_name,
         "address": func.getEntryPoint().toString(),
-        "label": "Non-Crypto", 
+        "label": label, 
         "graph_level": {},
         "node_level": [],
         "edge_level": []
@@ -345,6 +595,10 @@ def extract_function_data(func, current_program):
         "strongly_connected_components": get_tarjan_scc(node_ids, adj_list)
     }
     
+    # 4. Advanced Algorithmic Features
+    adv_feats = extract_advanced_features(func, current_program, func_data["node_level"])
+    func_data["advanced_features"] = adv_feats
+    
     return func_data
 
 # =============================================================================
@@ -357,9 +611,28 @@ def run_analysis():
     
     output_data = {
         "binary": program_name,
+        "metadata": {
+            "text_size": 0,
+            "rodata_size": 0,
+            "data_size": 0,
+            "num_functions": 0,
+            "total_tables_detected": 0
+        },
         "functions": []
     }
     
+    # Extract Section Sizes
+    mem = currentProgram.getMemory()
+    for block in mem.getBlocks():
+        name = block.getName()
+        size = block.getSize()
+        if ".text" in name:
+            output_data["metadata"]["text_size"] += size
+        elif ".rodata" in name:
+            output_data["metadata"]["rodata_size"] += size
+        elif ".data" in name:
+            output_data["metadata"]["data_size"] += size
+
     fm = currentProgram.getFunctionManager()
     funcs = fm.getFunctions(True)
     
@@ -371,19 +644,27 @@ def run_analysis():
         try:
             f_data = extract_function_data(f, currentProgram)
             output_data["functions"].append(f_data)
+            output_data["metadata"]["total_tables_detected"] += f_data["advanced_features"]["num_large_tables"]
         except Exception as e:
             print("Error analyzing {}: {}".format(f.getName(), e))
+            
+    output_data["metadata"]["num_functions"] = len(output_data["functions"])
             
     # Save JSON to same directory as binary
     args = getScriptArgs()
     # Default to current working directory if no arg
-    out_dir = args[0] if len(args) > 0 else "."
-    out_file = "{}/{}_features.json".format(out_dir, program_name)
+    project_root = args[0] if len(args) > 0 else "."
+    # Save to ghidra_output directory
+    output_dir = os.path.join(project_root, "ghidra_output")
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
         
-    print("[*] Saving features to: " + out_file)
+    output_file = os.path.join(output_dir, "{}_features.json".format(program_name))
     
-    with open(out_file, "w") as f:
-        json.dump(output_data, f, indent=2)
+    print("[*] Saving features to: {}".format(output_file))
+    
+    with open(output_file, "w") as f:
+        json.dump(output_data, f, indent=4)
 
 if __name__ == "__main__":
     run_analysis()

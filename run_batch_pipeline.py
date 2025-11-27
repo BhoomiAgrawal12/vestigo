@@ -31,7 +31,7 @@ BINARY_DIR = "dataset_binaries"
 OUTPUT_DIR = "ghidra_output"
 PROJECT_DIR = "/tmp/ghidra_batch_project"
 PROJECT_NAME = f"batch_extraction_{int(time.time())}"
-SCRIPT_PATH = "ghidra/extract.py"
+SCRIPT_PATH = "ghidra_scripts/extract_features.py"
 BATCH_SIZE = 10  # Process in batches to show progress
 TIMEOUT_PER_BINARY = 180  # 3 minutes per binary
 
@@ -67,7 +67,8 @@ def run_ghidra_on_binary(binary_path):
         )
         
         # Check for output in ghidra_output directory
-        output_file = os.path.join(OUTPUT_DIR, binary_name + ".json")
+        # Note: extract_features.py appends "_features.json"
+        output_file = os.path.join(OUTPUT_DIR, binary_name + "_features.json")
         
         if os.path.exists(output_file):
             # Validate JSON
@@ -129,7 +130,7 @@ def main():
             binary_name = os.path.basename(binary_path)
             
             # Check if already processed
-            output_file = os.path.join(OUTPUT_DIR, binary_name + ".json")
+            output_file = os.path.join(OUTPUT_DIR, binary_name + "_features.json")
             if os.path.exists(output_file):
                 print(f"  [{i+1}/{len(binaries)}] {binary_name[:40]:40s} ⊙ SKIP (exists)")
                 results['success'] += 1

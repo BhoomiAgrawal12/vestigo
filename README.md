@@ -72,6 +72,24 @@ python3 extract_features.py
 ```
 *Note: Currently configured to run on a specific example in `__main__`. Modify the script to iterate over your dataset as needed.*
 
+### 4. Dynamic Analysis (`dynamic_analysis/`)
+
+Automates the emulation and instrumentation of firmware binaries to extract runtime secrets and detect security vulnerabilities.
+
+**Components:**
+- `emulator.py`: Runs binaries using QEMU User Mode.
+- `instrumentation.py`: Injects Frida hooks to capture crypto keys.
+- `log_monitor.py`: Scans logs for Secure Boot failures and other leaks.
+
+**Usage:**
+```bash
+python3 dynamic_analysis/dynamic_main.py <binary_path> <arch> <sysroot_path>
+```
+*Example:*
+```bash
+python3 dynamic_analysis/dynamic_main.py ./busybox arm /tmp/extracted_fs
+```
+
 
 ## Supported Architectures
 
