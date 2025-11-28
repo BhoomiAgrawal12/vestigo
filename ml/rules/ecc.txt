@@ -1,0 +1,199 @@
+crypto_detection_rules:
+
+  ###############################################################
+  #  ECC RULES (PRIORITY 1 — MUST MATCH FIRST)
+  ###############################################################
+
+  # -------------------------------------------------
+  # 1. Curve25519 Key Clamping
+  # -------------------------------------------------
+  - rule:
+      name: Curve25519 Key Clamping
+      canonical_primitive: Curve25519
+      priority: 1
+
+      detect_if:
+        any_of:
+          - all_of:
+              - instruction: { mnemonic: and, number: 0xF8 }
+              - any_of:
+                  - instruction: { mnemonic: and, number: 0x7F }
+                  - instruction: { mnemonic: and, number: 0x3F }
+              - instruction: { mnemonic: or, number: 0x40 }
+          - string: "x25519"
+          - bytes: "curve25519"
+
+      variant_resolution:
+        file_keyword:
+          "curve25519": "Curve25519"
+          "x25519": "Curve25519"
+
+
+  # -------------------------------------------------
+  # 2. ECC ASN.1 OIDs (EC PUBLIC KEY, secp256r1, etc.)
+  # -------------------------------------------------
+  - rule:
+      name: ECC ASN.1 Public Key / OID
+      canonical_primitive: ECC
+      priority: 1
+
+      detect_if:
+        any_of:
+          - bytes: "3059301306072A8648CE3D020106082A8648CE3D030107"
+          - bytes: "30760201010420"
+          - string: "EC PARAMETERS"
+          - string: "EC PUBLIC KEY"
+
+
+  # -------------------------------------------------
+  # 3. OpenSSL ECC API
+  # -------------------------------------------------
+  - rule:
+      name: ECC OpenSSL API Usage
+      canonical_primitive: ECC
+      priority: 1
+
+      detect_if:
+        any_of:
+          - api: EC_KEY_new
+          - api: EC_KEY_free
+          - api: EC_KEY_generate_key
+          - api: EC_POINT_mul
+          - api: EC_POINT_new
+          - api: EC_GROUP_new_by_curve_name
+          - api: EC_GROUP_set_curve
+          - api: EC_POINT_add
+
+
+  ###############################################################
+  #  ECC MATH & ECC INIT RULES (PRIORITY 2)
+  ###############################################################
+
+  # -------------------------------------------------
+  # 4. ECC Initialization (Loading curve parameters)
+  # -------------------------------------------------
+  - rule:
+      name: ECC Initialize Curve
+      canonical_primitive: ECC
+      priority: 2
+
+      detect_if:
+        any_of:
+          - string_any:
+              - "ec_init_curve"
+              - "ecc_init"
+              - "curve_init"
+              - "ec_group"
+              - "ecp_group"
+              - "uECC_init"
+          - all_of:
+              - table_lookup_presence: true
+              - mem_ops_ratio: ">0.15"
+              - instruction_count: "<250"
+              - curve_constants_detected: true   # provided by your static pipeline
+
+
+  # -------------------------------------------------
+  # 5. ECC Point Arithmetic (point_add, point_double)
+  # -------------------------------------------------
+  - rule:
+      name: ECC Point Operations
+      canonical_primitive: ECC
+      priority: 2
+
+      detect_if:
+        any_of:
+          - string_any:
+              - "point_add"
+              - "ec_point_add"
+              - "point_double"
+              - "ec_point_double"
+              - "ec_point_mul"
+              - "ecc_mul"
+              - "scalar_mul"
+              - "scalar_mult"
+          - point_arithmetic_detected: true      # from your dynamic CFG/feature extractor
+
+
+  # -------------------------------------------------
+  # 6. ECC Heuristic (Corrected — no more mod_pow false positives)
+  # -------------------------------------------------
+  - rule:
+      name: ECC Heuristic (Corrected)
+      canonical_primitive: ECC
+      priority: 2
+
+      detect_if:
+        any_of:
+
+          # High arithmetic + high bitwise (ECC math)
+          - all_of:
+              - arithmetic_ops: ">=140"
+              - bitwise_ops: ">=12"
+              - multiply_ratio: ">0.05"
+              - rsa_bigint_detected: false
+              - has_aes_sbox: false
+
+          # Medium arithmetic + ECC-like ops
+          - all_of:
+              - arithmetic_ops: ">=70"
+              - crypto_like_ops: ">=25"
+              - point_arithmetic_detected: true
+              - has_aes_sbox: false
+              - table_lookup_presence: false
+
+      ml_features:
+        node: [bitwise_op_density, instruction_count]
+        function: [arithmetic_ops, crypto_like_ops, num_basic_blocks]
+
+
+
+  ###############################################################
+  #  NON-CRYPTO RULES (PRIORITY 10 – LAST FALLBACK)
+  ###############################################################
+
+  # -------------------------------------------------
+  # 7. NON-CRYPTO (Corrected — prevents mod_pow → ECC mistakes)
+  # -------------------------------------------------
+  - rule:
+      name: Non-Crypto (Strict)
+      canonical_primitive: Non-Crypto
+      priority: 10
+
+      detect_if:
+        any_of:
+
+          # --- Negative patterns: NEVER ECC ---
+          - string_any:
+              - "mod_pow"
+              - "modexp"
+              - "bn_mod_exp"
+              - "mp_exptmod"
+              - "mod_inverse"
+              - "invmod"
+              - "mp_invmod"
+              - "modmul"
+              - "mod_mul"
+              - "bigint"
+              - "bignum"
+
+          # --- Big-int / modexp arithmetic signature ---
+          - all_of:
+              - multiply_ratio: "==0.0"
+              - table_lookup_presence: true
+              - arithmetic_ops: ">=40"
+              - crypto_like_ops: "<25"
+              - bitwise_ops: "<15"
+
+          # --- No ECC structural behavior ---
+          - all_of:
+              - point_arithmetic_detected: false
+              - curve_constants_detected: false
+
+          # --- Weak crypto signals (likely non-crypto math) ---
+          - all_of:
+              - arithmetic_ops: "<60"
+              - crypto_like_ops: "<15"
+              - has_aes_sbox: false
+              - rsa_bigint_detected: false
+              - has_sha_constants: false

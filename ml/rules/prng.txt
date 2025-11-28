@@ -1,0 +1,44 @@
+crypto_detection_rules:
+
+  # ============================================================
+  # PRNG — ULTRA STRONG RULE (100% Safe)
+  # ============================================================
+  - rule:
+      name: PRNG Detection
+      canonical_primitive: PRNG
+      priority: 1
+
+      detect_if:
+        all_of:
+
+          # 1. Very high randomness inside function body
+          - function_byte_entropy: ">=4.2"
+          - opcode_entropy: ">=3.6"
+
+          # 2. PRNGs are small functions with low structural complexity
+          - num_basic_blocks: "<25"
+          - cyclomatic_complexity: "<3"
+          - strongly_connected_components: "<3"
+
+          # 3. PRNGs always have a loop
+          - loop_count: ">=1"
+
+          # 4. Bitwise-heavy arithmetic (xorshift / LCG / xoroshiro / pcg)
+          - bitwise_ops: ">=10"
+          - arithmetic_ops: ">=10"
+
+          # 5. NO crypto signatures allowed
+          - has_aes_sbox: false
+          - has_aes_rcon: false
+          - has_sha_constants: false
+          - rsa_bigint_detected: false
+
+          # 6. PRNG never uses AES/SHA tables or lookups
+          - table_lookup_presence: false
+          - crypto_constant_hits: "<1"
+
+          # 7. PRNGs have high opcode variety
+          - unique_ngram_count: ">=20"
+
+      ml_features:
+        function: [function_byte_entropy, opcode_entropy, unique_ngram_count]

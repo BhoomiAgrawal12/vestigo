@@ -1,0 +1,157 @@
+- rule:
+    name: RSA Strong ID (BigInt)
+    canonical_primitive: RSA
+    priority: 1
+
+    detect_if:
+      any_of:
+        - rsa_bigint_detected: true
+        - string_any:
+            - "bn_mod_exp"
+            - "bn_mod_exp_mont"
+            - "bn_mod_mul"
+            - "bn_mod_inverse"
+            - "mp_exptmod"
+            - "mp_mulmod"
+            - "mp_invmod"
+            - "modexp"
+            - "rsa"
+            - "pkcs1"
+            - "rsa_private"
+            - "rsa_public"
+            - "rsa_sign"
+            - "rsa_verify"
+- rule:
+    name: RSA Modular Exponentiation
+    canonical_primitive: RSA
+    priority: 1
+
+    detect_if:
+      all_of:
+        - multiply_ratio: "==0.0"          # RSA modexp uses CALL-based multiplies
+        - table_lookup_presence: true       # Precomputed tables in BN/MP libraries
+        - arithmetic_ops: ">=80"            # Big arithmetic-heavy code
+        - bitwise_ops: ">=10"               # Shifts & bit manipulations
+        - crypto_like_ops: ">=20"           # Modexp shape
+        - has_aes_sbox: false
+        - has_sha_constants: false
+- rule:
+    name: RSA Square-Multiply Loop
+    canonical_primitive: RSA
+    priority: 2
+
+    detect_if:
+      any_of:
+        - all_of:
+            - bitwise_ops: ">=15"         # AND, OR, SHR for exp scanning
+            - crypto_like_ops: ">=25"
+            - rotate_ratio: "<0.01"
+            - multiply_ratio: "<0.05"
+            - immediate_entropy: ">=3.5"  # messy exponent & modulus data
+        - all_of:
+            - num_loop_edges: ">=2"
+            - num_basic_blocks: ">=5"
+            - branch_condition_complexity: ">=20"
+- rule:
+    name: RSA Key Generation / Primality Test
+    canonical_primitive: RSA
+    priority: 2
+
+    detect_if:
+      any_of:
+        - string_any:
+            - "miller"
+            - "rabin"
+            - "is_prime"
+            - "primegen"
+        - all_of:
+            - arithmetic_ops: ">=120"
+            - xor_ratio: ">=0.05"
+            - rotate_ratio: "<0.01"
+            - table_lookup_presence: true
+            - immediate_entropy: ">=4"
+- rule:
+    name: RSA CRT Optimization
+    canonical_primitive: RSA
+    priority: 2
+
+    detect_if:
+      any_of:
+        - string_any:
+            - "qinv"
+            - "dp"
+            - "dq"
+            - "crt"
+            - "mont"
+            - "montgomery"
+        - all_of:
+            - arithmetic_ops: ">=150"
+            - bitwise_op_density: ">=0.1"
+            - multiply_ratio: "<0.05"
+            - crypto_constant_hits: ">=1"
+- rule:
+    name: RSA Public-Key Op
+    canonical_primitive: RSA
+    priority: 3
+
+    detect_if:
+      any_of:
+        - immediate_entropy: "<=1.0"       # e = 65537 or small exponents
+        - string_any: ["65537", "public exponent", "rsa_pub"]
+      all_of:
+        - bitwise_ops: ">=12"
+        - arithmetic_ops: ">=50"
+        - has_sha_constants: false
+        - has_aes_sbox: false
+- rule:
+    name: RSA Private-Key Op
+    canonical_primitive: RSA
+    priority: 3
+
+    detect_if:
+      all_of:
+        - immediate_entropy: ">=5"        # private exponent randomness
+        - arithmetic_ops: ">=100"
+        - bitwise_ops: ">=20"
+        - load_store_ratio: ">=0.10"
+        - multiply_ratio: "<0.05"
+        - has_aes_sbox: false
+        - has_sha_constants: false
+- rule:
+    name: RSA Heuristic
+    canonical_primitive: RSA
+    priority: 4
+
+    detect_if:
+      all_of:
+        - arithmetic_ops: ">=130"
+        - crypto_like_ops: ">=30"
+        - bitwise_ops: ">=15"
+        - table_lookup_presence: true
+        - immediate_entropy: ">=4.0"
+        - function_byte_entropy: ">=6.0"
+        - has_aes_sbox: false
+        - rsa_bigint_detected: true
+- rule:
+    name: RSA ASN.1 Signature / PKCS1
+    canonical_primitive: RSA
+    priority: 4
+
+    detect_if:
+      any_of:
+        - bytes: "300d06092a864886f70d010101"    # OID = 1.2.840.113549.1.1.1
+        - bytes: "rsaEncryption"
+        - string_any: ["PKCS#1", "RSASSA"]
+- rule:
+    name: Non-Crypto (Fallback)
+    canonical_primitive: Non-Crypto
+    priority: 10
+
+    detect_if:
+      all_of:
+        - arithmetic_ops: "<60"
+        - crypto_like_ops: "<10"
+        - bitwise_ops: "<8"
+        - has_aes_sbox: false
+        - has_sha_constants: false
+        - rsa_bigint_detected: false

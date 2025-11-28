@@ -1,0 +1,92 @@
+crypto_detection_rules:
+
+  # -------------------------------------------------
+  # AES Table-based detection (primary)
+  # -------------------------------------------------
+  - rule:
+      name: AES Table-based Detection
+      canonical_primitive: AES
+      priority: 1
+
+      summary:
+        indicators:
+          - AES S-box table detection
+          - AES Rcon constant detection
+          - table lookups + crypto constants
+          - characteristic add/xor patterns (round transforms)
+
+      detect_if:
+        any_of:
+          # direct signature blocks (preferred)
+          - has_aes_sbox: true
+          - has_aes_rcon: true
+
+          # behavior: table lookups + constants + add/xor pattern
+          - all_of:
+              - table_lookup_presence: true
+              - crypto_constant_hits: ">=1"
+              - avg_add_ratio: ">=0.12"
+              - avg_xor_ratio: ">=0.003"
+
+      ml_features:
+        node: [table_lookup_presence, crypto_constant_hits, bitwise_op_density, add_ratio, xor_ratio]
+        function: [num_basic_blocks, loop_count, instruction_count]
+        metadata: [architecture, compiler, optimization]
+
+      variant_resolution:
+        # 1) filename keyword mapping (highest priority)
+        file_keyword:
+          "128": "AES-128"
+          "192": "AES-192"
+          "256": "AES-256"
+
+        # 2) graph / numeric thresholds fallback: crypto_constant_hits thresholds
+        graph_rules:
+          "AES-256":
+            crypto_constant_hits: ">=30"
+            instruction_count: ">=200"
+          "AES-192":
+            crypto_constant_hits: ">=18"
+            instruction_count: ">=150"
+          "AES-128":
+            crypto_constant_hits: ">=8"
+            instruction_count: ">=80"
+
+        # 3) ngram-based fallback (if crypto_constant_hits absent)
+        ngram_rules:
+          "AES-256": ">=80"
+          "AES-192": ">=55"
+          "AES-128": ">=35"
+
+  # -------------------------------------------------
+  # AES MixColumns-specific (optional but strict)
+  # -------------------------------------------------
+  - rule:
+      name: AES MixColumns Pattern
+      canonical_primitive: AES
+      priority: 1
+
+      detect_if:
+        all_of:
+          - loop_count: ">=1"
+          - avg_add_ratio: ">=0.10"
+          - avg_xor_ratio: ">=0.002"
+          - table_lookup_presence: true
+
+      ml_features:
+        algorithm_specific: [mixcolumns_pattern_score, gf256_mul_ratio]
+
+  # -------------------------------------------------
+  # NON-CRYPTO (fallback) — explicit negative rule
+  # -------------------------------------------------
+  - rule:
+      name: Non-Crypto (strict AES-only mode)
+      canonical_primitive: Non-Crypto
+      priority: 99
+
+      detect_if:
+        all_of:
+          - has_aes_sbox: false
+          - has_aes_rcon: false
+          - table_lookup_presence: false
+          - crypto_constant_hits: "<1"

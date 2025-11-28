@@ -1,0 +1,33 @@
+# -------------------------------------------------
+# SHA (SHA-1 / SHA-224 / SHA-256 Unified Detection)
+# -------------------------------------------------
+- rule:
+    name: SHA Detection
+    canonical_primitive: SHA
+    priority: 1
+
+    detect_if:
+      any_of:
+
+        # Strong match from signature engine
+        - has_sha_constants: true
+
+        # SHA round structure: ROTATE + ADD + XOR + loop
+        - all_of:
+            - rotate_ratio: ">=0.02"
+            - add_ratio: ">=0.02"
+            - xor_ratio: ">=0.02"
+            - loop_count: ">=1"
+            - bitwise_ops: ">=5"
+            - has_aes_sbox: false
+
+    ml_features:
+      node: 
+        - bitwise_op_density
+        - rotate_ratio
+        - add_ratio
+        - xor_ratio
+      function:
+        - loop_count
+        - cyclomatic_complexity
+        - num_loop_edges
