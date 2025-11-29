@@ -24,28 +24,53 @@ class EmulatorRunner:
         }
         # Normalize architecture string
         arch_lower = self.architecture.lower()
+        binary_name = None
         if arch_lower in arch_map:
-            return arch_map[arch_lower]
+            binary_name = arch_map[arch_lower]
+        else:
+            # Fallback or heuristic
+            for key in arch_map:
+                if key in arch_lower:
+                    binary_name = arch_map[key]
+                    break
         
-        # Fallback or heuristic
-        for key in arch_map:
-            if key in arch_lower:
-                return arch_map[key]
-        
-        raise ValueError(f"Unsupported architecture: {self.architecture}")
+        if not binary_name:
+            raise ValueError(f"Unsupported architecture: {self.architecture}")
 
-    def start(self, trace_mode=False):
+        # Check local bin directory for DYNAMIC binary first (better for Frida)
+        # e.g. qemu-arm-dynamic
+        dynamic_name = binary_name.replace("-static", "-dynamic")
+        local_dynamic = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'bin', dynamic_name)
+        if os.path.exists(local_dynamic):
+            return local_dynamic
+
+        # Check local bin directory for STATIC binary
+        local_bin = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'bin', binary_name)
+        if os.path.exists(local_bin):
+            return local_bin
+        
+        # Fallback to system path
+        return binary_name
+
+    def start(self, trace_mode=False, gadget_path=None):
         """Starts the QEMU emulation."""
         qemu_bin = self._get_qemu_binary()
         
-        cmd = [qemu_bin]
+        cmd = [qemu_bin, "-L", self.sysroot_path]
         
-        if self.sysroot_path:
-             cmd.extend(["-L", self.sysroot_path])
-             
         if trace_mode:
             cmd.append("-strace")
             
+        # Gadget Injection via QEMU_SET_ENV
+        env = os.environ.copy()
+        if gadget_path:
+            # QEMU_SET_ENV passes env vars to the guest
+            # We want to set LD_PRELOAD in the guest
+            # Format: QEMU_SET_ENV=VAR=VAL,VAR2=VAL2
+            # Note: If QEMU_SET_ENV is already set, we should append, but for now just set it.
+            env["QEMU_SET_ENV"] = f"LD_PRELOAD={gadget_path}"
+            self.logger.info(f"Injecting Frida Gadget: {gadget_path}")
+
         cmd.append(self.binary_path)
         
         self.logger.info(f"Starting emulation: {' '.join(cmd)}")
@@ -56,9 +81,9 @@ class EmulatorRunner:
             self.process = subprocess.Popen(
                 cmd,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+                stderr=subprocess.STDOUT, # Merge stderr for log monitoring
                 text=True, # Ensure we get string output
-                bufsize=1  # Line buffered
+                env=env # Pass environment with QEMU_SET_ENV
             )
             return self.process
         except FileNotFoundError:

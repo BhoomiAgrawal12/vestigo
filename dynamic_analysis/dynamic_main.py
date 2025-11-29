@@ -23,6 +23,10 @@ class DynamicOrchestrator:
         self.findings = findings
         self.duration = 30 # seconds
 
+        # Clear previous secrets log
+        if os.path.exists("secrets.log"):
+            os.remove("secrets.log")
+
     def run(self):
         logger.info("Starting Dynamic Analysis Orchestration...")
 
@@ -33,22 +37,30 @@ class DynamicOrchestrator:
             logger.error(f"Aborting: {e}")
             return
 
-        # 2. Wait for initialization (simple sleep for now)
-        time.sleep(2)
+        # 2. Wait for initialization (retry loop)
         pid = self.emulator.get_pid()
         if not pid:
-            logger.error("Process failed to start or died immediately.")
+            logger.error("Process failed to start.")
             return
 
         logger.info(f"Target process running with PID: {pid}")
         self.instrumentation.target = pid
 
-        # 3. Inject Frida Hooks
-        try:
-            self.instrumentation.attach_and_inject(self.findings)
-        except Exception as e:
-            logger.error(f"Instrumentation failed: {e}")
-            # We might continue even if instrumentation fails, to check logs
+        # 3. Inject Frida Hooks (Retry logic)
+        attached = False
+        for i in range(10):
+            if self.emulator.process.poll() is not None:
+                logger.warning("Process exited before instrumentation could attach.")
+                break
+            try:
+                self.instrumentation.attach_and_inject(self.findings)
+                attached = True
+                break
+            except Exception:
+                time.sleep(0.1)
+        
+        if not attached and self.emulator.process.poll() is None:
+             logger.error("Failed to attach to running process after retries.")
         
         # 4. Monitor Logs (in a separate thread to not block the timer)
         def monitor_stdout():
