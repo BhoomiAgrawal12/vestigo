@@ -27,7 +27,7 @@ if not GHIDRA_HOME:
         print("Please set GHIDRA_HOME environment variable or install Ghidra.")
         exit(1)
 
-BINARY_DIR = "dataset_binaries"
+BINARY_DIR = "builds"
 OUTPUT_DIR = "ghidra_output"
 PROJECT_DIR = "/tmp/ghidra_batch_project"
 PROJECT_NAME = f"batch_extraction_{int(time.time())}"
@@ -96,15 +96,30 @@ def main():
     # Setup
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     
-    # Find binaries
-    binaries = sorted(glob.glob(os.path.join(BINARY_DIR, "*.elf")))
-    binaries.extend(sorted(glob.glob(os.path.join(BINARY_DIR, "*.ihx"))))
-    
+    binaries = []
+
+    # 1) Collect all .o and .a files recursively under builds/
+    for root, dirs, files in os.walk(BINARY_DIR):
+        for fname in files:
+            if fname.endswith(".o") or fname.endswith(".a"):
+                binaries.append(os.path.join(root, fname))
+
+    # 2) Add negative samples: busybox_*_unstripped (ELF only)
+    NEGATIVE_DIR = os.path.join(BINARY_DIR, "negetive")
+    if os.path.isdir(NEGATIVE_DIR):
+        for fname in os.listdir(NEGATIVE_DIR):
+            full = os.path.join(NEGATIVE_DIR, fname)
+            if fname.startswith("busybox_") and fname.endswith("_unstripped"):
+                binaries.append(full)
+
+    # 3) Deduplicate and sort
+    binaries = sorted(set(binaries))
+
     if not binaries:
-        print(f"✗ No binaries found in {BINARY_DIR}")
+        print(f"✗ No binaries found in '{BINARY_DIR}' (expected .o, .a, busybox_*_unstripped).")
         return
-    
-    print(f"Found {len(binaries)} binaries")
+
+    print(f"Found {len(binaries)} binaries (.o, .a, busybox_*_unstripped)")
     print(f"Processing in batches of {BATCH_SIZE}")
     print()
     
@@ -171,10 +186,8 @@ def main():
     
     if results['failed_binaries']:
         print(f"Failed binaries ({len(results['failed_binaries'])}):")
-        for binary in results['failed_binaries'][:20]:
+        for binary in results['failed_binaries']:
             print(f"  - {binary}")
-        if len(results['failed_binaries']) > 20:
-            print(f"  ... and {len(results['failed_binaries']) - 20} more")
     
     print()
     print(f"✓ Output directory: {OUTPUT_DIR}/")
