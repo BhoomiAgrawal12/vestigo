@@ -8,34 +8,61 @@ import re
 # ============================================================
 # CONFIG
 # ============================================================
-TARGET_DIR = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "..", "ghidra_output")
-)
 
+TARGET_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..", "test_dataset_json")
+)
 
 OUTPUT_JSON = "ecc_training_dataset.json"
 OUTPUT_CSV  = "ecc_crypto_dataset.csv"
 
-START_INDEX = 120   # ECC dataset range
-END_INDEX   = 160
+START_INDEX = 135   # ECC dataset start
+END_INDEX   = 155   # ECC dataset end index
 
 
 # ============================================================
-# STRICT ECC FUNCTION NAMES (ONLY THESE ARE ECC)
+# STRICT ECC FUNCTION NAMES (BASED ON YOUR DUMP)
 # ============================================================
 
 ECC_NAMES = {
-    "ec_init_curve",
-    "ec_point_double",
-    "ec_point_add",
-    "ec_scalar_mult",
-    "ecdh_generate_keypair",
-    "ecdh_compute_shared_secret",
-    "ecdsa_sign",
-    "ecdsa_verify"
+    # curve setup
+    "init_demo_curve",
+
+    # point operations
+    "point_double",
+    "point_infinity",
+    "point_add",
+    "point_is_equal",
+
+    # scalar multiplication
+    "scalar_mul",
+
+    # ecdh key exchange
+    "gen_keypair",
+    "compute_shared",
+
+    # ecdsa
+    "ecdsa_sign_toy",
+    "ecdsa_verify_toy",
+
+    # printing
+    "print_point",
+
+    # field arithmetic mod p
+    "mod_add",
+    "mod_sub",
+    "mod_mul",
+    "mod_inv",
+    "mod_pow",
+    "modnorm",
+
+    # number theory helpers
+    "egcd",
+    "__umodti3",
+    "__clzdi2",
 }
 
-ECC_NAMES = {n.lower() for n in ECC_NAMES}
+ECC_NAMES = {name.lower() for name in ECC_NAMES}
 
 
 # ============================================================
@@ -50,11 +77,12 @@ def stringify(func):
 
 
 # ============================================================
-# FEATURE EXTRACTION (same format as RSA/SHA)
+# FEATURE EXTRACTION
 # ============================================================
 
 def extract_features(func):
     f = {}
+
     graph = func.get("graph_level", {}) or {}
     nodes = func.get("node_level", []) or func.get("nodes", []) or []
     op = func.get("op_category_counts", {}) or {}
@@ -66,25 +94,26 @@ def extract_features(func):
     n = max(1, len(nodes))
 
     # graph metrics
-    for k in [
+    graph_keys = [
         "num_basic_blocks","num_edges","cyclomatic_complexity","loop_count",
-        "loop_depth","branch_density","average_block_size","num_entry_exit_paths",
-        "strongly_connected_components","num_conditional_edges",
-        "num_unconditional_edges","num_loop_edges",
+        "loop_depth","branch_density","average_block_size",
+        "num_entry_exit_paths","strongly_connected_components",
+        "num_conditional_edges","num_unconditional_edges","num_loop_edges",
         "avg_edge_branch_condition_complexplexity"
-    ]:
+    ]
+    for k in graph_keys:
         f[k] = graph.get(k, 0)
 
-    # instruction-level features
+    # instruction-level aggregation
     f["instruction_count"] = sum(n_.get("instruction_count",0) for n_ in nodes)
     f["immediate_entropy"] = sum(n_.get("immediate_entropy",0) for n_ in nodes)/n
     f["bitwise_op_density"] = sum(n_.get("bitwise_op_density",0) for n_ in nodes)/n
     f["crypto_constant_hits"] = sum(n_.get("crypto_constant_hits",0) for n_ in nodes)
     f["branch_condition_complexity"] = sum(n_.get("branch_condition_complexity",0) for n_ in nodes)
 
-    # ratios
-    def avg_ratio(key):
-        return sum(n_.get("opcode_ratios",{}).get(key,0) for n_ in nodes)/n
+    # opcode ratio averages
+    def avg_ratio(field):
+        return sum(n_.get("opcode_ratios",{}).get(field,0) for n_ in nodes)/n
 
     for r in ["add_ratio","logical_ratio","load_store_ratio","xor_ratio",
               "multiply_ratio","rotate_ratio"]:
@@ -96,40 +125,36 @@ def extract_features(func):
     f["has_aes_rcon"] = bool(cs.get("has_aes_rcon"))
     f["has_sha_constants"] = bool(cs.get("has_sha_constants"))
 
-    # data refs
+    # data references
     f["rodata_refs_count"] = data_ref.get("rodata_refs_count", 0)
     f["string_refs_count"] = data_ref.get("string_refs_count", 0)
     f["stack_frame_size"] = data_ref.get("stack_frame_size", 0)
 
-    # categories
+    # operation categories
     f["bitwise_ops"] = op.get("bitwise_ops", 0)
     f["crypto_like_ops"] = op.get("crypto_like_ops", 0)
     f["arithmetic_ops"] = op.get("arithmetic_ops", 0)
     f["mem_ops_ratio"] = float(op.get("mem_ops_ratio", 0.0))
 
-    # entropy
+    # entropy metrics
     f["function_byte_entropy"] = entropy.get("function_byte_entropy", 0)
     f["opcode_entropy"] = entropy.get("opcode_entropy", 0)
     f["cyclomatic_complexicity_density"] = entropy.get("cyclomatic_complexity_density", 0)
+
     f["unique_ngram_count"] = seq.get("unique_ngram_count", 0)
 
+    # raw text
     f["_text"] = stringify(func)
 
     return f
 
 
 # ============================================================
-# STRICT LABELING (NO RULES — ONLY NAMES)
+# STRICT NAME-BASED ECC CLASSIFICATION
 # ============================================================
 
-def classify_ecc(function_name):
-    """Return ECC or Non-Crypto strictly based on name."""
-    fn = function_name.lower()
-
-    if fn in ECC_NAMES:
-        return "ECC"
-
-    return "Non-Crypto"
+def classify_ecc(name):
+    return "ECC" if name.lower() in ECC_NAMES else "Non-Crypto"
 
 
 # ============================================================
@@ -141,8 +166,8 @@ def process():
     files = sorted(glob.glob(os.path.join(TARGET_DIR, "*.json")))
     files = files[START_INDEX:END_INDEX]
 
-    all_rows = []
-    all_json = []
+    rows = []
+    jdata = []
 
     for jf in files:
         with open(jf, "r", encoding="utf-8") as f:
@@ -156,8 +181,7 @@ def process():
         opt = parts[-1].split(".")[0] if len(parts)>=4 else "unknown"
 
         for func in data.get("functions", []):
-
-            fname = func.get("name","")
+            fname = func.get("name", "")
             addr = func.get("address", "")
 
             feats = extract_features(func)
@@ -175,9 +199,9 @@ def process():
                 **feats
             }
 
-            all_rows.append(row)
+            rows.append(row)
 
-            all_json.append({
+            jdata.append({
                 "filename": binary,
                 "function_name": fname,
                 "function_address": addr,
@@ -185,16 +209,15 @@ def process():
                 "features": feats
             })
 
-    # save JSON
-    with open(OUTPUT_JSON, "w", encoding="utf-8") as jj:
-        json.dump(all_json, jj, indent=2)
+    # JSON output
+    with open(OUTPUT_JSON, "w", encoding="utf-8") as jf:
+        json.dump(jdata, jf, indent=2)
 
-    # save CSV
+    # CSV output
     with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as cf:
-        writer = csv.DictWriter(cf, fieldnames=all_rows[0].keys())
+        writer = csv.DictWriter(cf, fieldnames=rows[0].keys())
         writer.writeheader()
-        for r in all_rows:
-            writer.writerow(r)
+        writer.writerows(rows)
 
     print("[+] ECC dataset generated:")
     print("    JSON:", OUTPUT_JSON)

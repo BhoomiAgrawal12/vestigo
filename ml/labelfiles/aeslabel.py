@@ -9,19 +9,18 @@ import math
 # CONFIG
 # ============================================================
 TARGET_DIR = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "..", "ghidra_output")
+    os.path.join(os.path.dirname(__file__), "..", "..", "test_dataset_json")
 )
-
 
 OUTPUT_JSON = "aes_training_dataset.json"
 OUTPUT_CSV  = "aes_crypto_dataset.csv"
 
 START_INDEX = 1
-END_INDEX   = 120
+END_INDEX   = 135
 
 
 # ============================================================
-# AES FUNCTION NAME MAP
+# AES FUNCTION NAME MAP  (UPDATED)
 # ============================================================
 
 AES_FUNCS = [
@@ -31,15 +30,24 @@ AES_FUNCS = [
     "aes256_encrypt",
 
     # AES round transformations
+    "addroundkey",
     "add_round_key",
+    "subbytes",
     "sub_bytes",
+    "shiftrows",
     "shift_rows",
+    "mixcolumns",
     "mix_columns",
+
+    # GF(2^8) helpers
+    "xt",
     "xtime",
 
     # key expansion
+    "keyexpansion",
     "key_expansion",
-    "key_expansion_192",
+    "rotword",
+    "subword",
 ]
 
 AES_FUNCS = [f.lower() for f in AES_FUNCS]
@@ -73,7 +81,6 @@ def stringify(func):
 
 # ============================================================
 # FEATURE EXTRACTION
-# (Same as RSA version — reused)
 # ============================================================
 
 def extract_features(func):
@@ -123,7 +130,7 @@ def extract_features(func):
     # data references
     f["rodata_refs_count"] = data.get("rodata_refs_count",0)
     f["string_refs_count"] = data.get("string_refs_count",0)
-    f["stack_frame_size"] = data.get("stack_frame_size",0)
+    f["stack_frame_size"]  = data.get("stack_frame_size",0)
 
     # op categories
     f["bitwise_ops"]     = op.get("bitwise_ops",0)

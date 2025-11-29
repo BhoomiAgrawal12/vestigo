@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+"""
+sha_label.py
+
+Labels ONLY SHA functions (SHA-1 / SHA-224).
+Everything else → Non-Crypto
+"""
+
 import os
 import glob
 import json
@@ -7,45 +15,39 @@ import math
 # ============================================================
 # CONFIG
 # ============================================================
+
 TARGET_DIR = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "..", "ghidra_output")
+    os.path.join(os.path.dirname(__file__), "..", "..", "test_dataset_json")
 )
 
 OUTPUT_JSON = "sha_training_dataset.json"
 OUTPUT_CSV  = "sha_crypto_dataset.csv"
 
-START_INDEX = 280     # Your SHA dataset range
-END_INDEX   = 360
+START_INDEX = 220
+END_INDEX   = 310
 
 
 # ============================================================
-# SHA NAME MATCH (HIGHEST PRIORITY)
+# NEW SHA FUNCTION SETS (FROM YOUR DATA)
 # ============================================================
 
 SHA1_FUNCS = {
-    "sha1_transform", "sha1_init", "sha1_update", "sha1_final"
+    "sha1_init_alt",
+    "sha1_update_alt",
+    "sha1_final_alt",
+    "sha1_compress",
 }
 
 SHA224_FUNCS = {
-    "sha224_transform", "sha224_init", "sha224_update", "sha224_final"
+    "sha224_alt_init",
+    "sha224_alt_update",
+    "sha224_alt_final",
+    "do_block",
 }
 
 
 # ============================================================
-# VARIANT FROM FILENAME
-# ============================================================
-
-def infer_variant(filename):
-    lf = filename.lower()
-    if "sha224" in lf or "sha-224" in lf:
-        return "SHA-224"
-    if "sha1" in lf:
-        return "SHA-1"
-    return "SHA"
-
-
-# ============================================================
-# STRINGIFY + FEATURE EXTRACTION
+# STRINGIFY
 # ============================================================
 
 def stringify(func):
@@ -55,15 +57,19 @@ def stringify(func):
         return str(func).lower()
 
 
+# ============================================================
+# FEATURE EXTRACTION
+# ============================================================
+
 def extract_features(func):
     f = {}
-    graph = func.get("graph_level", {})
-    nodes = func.get("node_level", [])
-    op    = func.get("op_category_counts", {})
-    cs    = func.get("crypto_signatures", {})
-    data  = func.get("data_references", {})
-    ent   = func.get("entropy_metrics", {})
-    seq   = func.get("instruction_sequence", {})
+    graph = func.get("graph_level", {}) or {}
+    nodes = func.get("node_level", []) or []
+    op    = func.get("op_category_counts", {}) or {}
+    cs    = func.get("crypto_signatures", {}) or {}
+    data  = func.get("data_references", {}) or {}
+    ent   = func.get("entropy_metrics", {}) or {}
+    seq   = func.get("instruction_sequence", {}) or {}
 
     ncount = max(1, len(nodes))
 
@@ -77,18 +83,18 @@ def extract_features(func):
     ]:
         f[k] = graph.get(k, 0)
 
-    # counts
-    f["instruction_count"] = sum(n.get("instruction_count", 0) for n in nodes)
-    f["immediate_entropy"] = sum(n.get("immediate_entropy", 0) for n in nodes)/ncount
-    f["bitwise_op_density"] = sum(n.get("bitwise_op_density", 0) for n in nodes)/ncount
-    f["crypto_constant_hits"] = sum(n.get("crypto_constant_hits", 0) for n in nodes)
+    # instruction-level
+    f["instruction_count"] = sum(n.get("instruction_count",0) for n in nodes)
+    f["immediate_entropy"] = sum(n.get("immediate_entropy",0) for n in nodes)/ncount
+    f["bitwise_op_density"] = sum(n.get("bitwise_op_density",0) for n in nodes)/ncount
+    f["crypto_constant_hits"] = sum(n.get("crypto_constant_hits",0) for n in nodes)
     f["branch_condition_complexity"] = sum(
-        n.get("branch_condition_complexity", 0) for n in nodes
+        n.get("branch_condition_complexity",0) for n in nodes
     )
 
     # opcode ratios
     def avg_ratio(key):
-        return sum(n.get("opcode_ratios", {}).get(key, 0) for n in nodes) / ncount
+        return sum(n.get("opcode_ratios",{}).get(key,0) for n in nodes)/ncount
 
     for r in ["add_ratio","logical_ratio","load_store_ratio",
               "xor_ratio","multiply_ratio","rotate_ratio"]:
@@ -100,16 +106,16 @@ def extract_features(func):
     f["has_aes_rcon"]       = bool(cs.get("has_aes_rcon"))
     f["has_sha_constants"]  = bool(cs.get("has_sha_constants"))
 
-    # data refs
+    # data references
     f["rodata_refs_count"] = data.get("rodata_refs_count",0)
     f["string_refs_count"] = data.get("string_refs_count",0)
     f["stack_frame_size"] = data.get("stack_frame_size",0)
 
     # op categories
-    f["bitwise_ops"]       = op.get("bitwise_ops",0)
-    f["crypto_like_ops"]   = op.get("crypto_like_ops",0)
-    f["arithmetic_ops"]    = op.get("arithmetic_ops",0)
-    f["mem_ops_ratio"]     = float(op.get("mem_ops_ratio",0))
+    f["bitwise_ops"]     = op.get("bitwise_ops",0)
+    f["crypto_like_ops"] = op.get("crypto_like_ops",0)
+    f["arithmetic_ops"]  = op.get("arithmetic_ops",0)
+    f["mem_ops_ratio"]   = float(op.get("mem_ops_ratio",0))
 
     # entropy
     f["function_byte_entropy"] = ent.get("function_byte_entropy",0)
@@ -117,17 +123,17 @@ def extract_features(func):
     f["cyclomatic_complexity_density"] = ent.get("cyclomatic_complexity_density",0)
 
     # ngrams
-    f["unique_ngram_count"] = seq.get("unique_ngram_count", 0)
+    f["unique_ngram_count"] = seq.get("unique_ngram_count",0)
 
     f["_text"] = stringify(func)
     return f
 
 
 # ============================================================
-# LABEL ONLY SHA FUNCTIONS
+# CLASSIFY SHA VARIANT
 # ============================================================
 
-def classify_sha(func_name, filename):
+def classify_sha(func_name):
     lname = func_name.lower()
 
     if lname in SHA1_FUNCS:
@@ -140,29 +146,23 @@ def classify_sha(func_name, filename):
 
 
 # ============================================================
-# FILE METADATA EXTRACTION
+# EXTRACT METADATA FROM BINARY NAME
 # ============================================================
 
 def extract_metadata(filename):
-    """
-    Expected filename format:
-    sha1_x86_gcc_O2.json
-    sha224_arm_clang_O3.json
-    sha1_avr_gcc_O0.json
-    """
     base = os.path.basename(filename).replace(".json","")
     parts = base.split("_")
 
-    architecture = "unknown"
+    arch = "unknown"
     compiler = "unknown"
-    optimization = "unknown"
+    opt = "unknown"
 
     if len(parts) >= 4:
-        architecture = parts[-3]
-        compiler     = parts[-2]
-        optimization = parts[-1]
+        arch     = parts[-3]
+        compiler = parts[-2]
+        opt      = parts[-1]
 
-    return architecture, compiler, optimization
+    return arch, compiler, opt
 
 
 # ============================================================
@@ -186,9 +186,9 @@ def process():
 
         for func in data.get("functions", []):
             fname = func.get("name","")
-            feats = extract_features(func)
 
-            label = classify_sha(fname, binary)
+            feats = extract_features(func)
+            label = classify_sha(fname)
 
             row = {
                 "architecture": arch,
@@ -204,17 +204,17 @@ def process():
             row.update(feats)
             all_rows.append(row)
 
-    # Save JSON
-    with open(OUTPUT_JSON,"w",encoding="utf-8") as j:
-        json.dump(all_rows, j, indent=2)
+    # JSON output
+    with open(OUTPUT_JSON,"w",encoding="utf-8") as jf:
+        json.dump(all_rows, jf, indent=2)
 
-    # Save CSV
+    # CSV output
     with open(OUTPUT_CSV,"w",newline="",encoding="utf-8") as cf:
         writer = csv.DictWriter(cf, fieldnames=all_rows[0].keys())
         writer.writeheader()
         writer.writerows(all_rows)
 
-    print("[+] SHA dataset written:", OUTPUT_JSON, OUTPUT_CSV)
+    print("[+] SHA dataset created:", OUTPUT_JSON, OUTPUT_CSV)
 
 
 if __name__ == "__main__":

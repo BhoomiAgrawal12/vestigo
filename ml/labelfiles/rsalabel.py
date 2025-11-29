@@ -1,7 +1,8 @@
+#!/usr/bin/env python3
+
 import os
 import glob
 import json
-import sys
 import csv
 import math
 
@@ -9,34 +10,34 @@ import math
 # CONFIG
 # ============================================================
 TARGET_DIR = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "..", "ghidra_output")
+    os.path.join(os.path.dirname(__file__), "..", "..", "test_dataset_json")
 )
+
 OUTPUT_JSON = "rsa_training_dataset.json"
 OUTPUT_CSV  = "rsa_crypto_dataset.csv"
 
-START_INDEX = 199
-END_INDEX   = 280
+START_INDEX = 200
+END_INDEX   = 220
 
 
 # ============================================================
-# RSA FUNCTION NAME MAP
+# REAL RSA FUNCTIONS FROM YOUR DATASET
 # ============================================================
 
 RSA_FUNCS = [
-    "mod_exp",
-    "extended_gcd",
-    "mod_inverse",
-    "is_prime",
-    "generate_prime",
-    "rsa1024_generate_keypair",
-    "rsa1024_encrypt",
-    "rsa1024_decrypt",
-    "rsa4096_generate_keypair",
-    "rsa4096_encrypt",
-    "rsa4096_decrypt",
+    "rsa_generate",
+    "rsa_encrypt",
+    "rsa_decrypt",
+    "gen_prime",
+    "is_prime_mr",
+    "rand_in_range",
+    "pow_mod",
+    "mul_mod",
+    "inv_mod",
+    "egcd",
+    "__umodti3"
 ]
 
-# lowercase everything
 RSA_FUNCS = [f.lower() for f in RSA_FUNCS]
 
 
@@ -48,9 +49,11 @@ def detect_keysize_from_filename(filename: str):
     name = filename.lower()
     if "1024" in name:
         return "RSA-1024"
+    if "2048" in name:
+        return "RSA-2048"
     if "4096" in name:
         return "RSA-4096"
-    return None  # key size unknown
+    return None  # key size missing
 
 
 # ============================================================
@@ -70,7 +73,6 @@ def stringify(func):
 
 def extract_features(func):
     f = {}
-
     graph = func.get("graph_level", {}) or {}
     nodes = func.get("node_level", []) or []
     op    = func.get("op_category_counts", {}) or {}
@@ -92,38 +94,39 @@ def extract_features(func):
     for k in keys:
         f[k] = graph.get(k, 0)
 
-    # instruction-level aggregation
+    # instruction-level
     f["instruction_count"] = sum(n.get("instruction_count",0) for n in nodes)
     f["immediate_entropy"] = sum(n.get("immediate_entropy",0) for n in nodes) / ncount
     f["bitwise_op_density"] = sum(n.get("bitwise_op_density",0) for n in nodes) / ncount
     f["crypto_constant_hits"] = sum(n.get("crypto_constant_hits",0) for n in nodes)
     f["branch_condition_complexity"] = sum(n.get("branch_condition_complexity",0) for n in nodes)
 
-    # opcode ratios averaged
+    # opcode ratio averages
     def avg_ratio(r):
         return sum(n.get("opcode_ratios",{}).get(r,0) for n in nodes) / ncount
 
-    for r in ["add_ratio","logical_ratio","load_store_ratio","xor_ratio","multiply_ratio","rotate_ratio"]:
+    for r in ["add_ratio","logical_ratio","load_store_ratio","xor_ratio",
+              "multiply_ratio","rotate_ratio"]:
         f[r] = avg_ratio(r)
 
-    # crypto flags
-    f["has_aes_sbox"]       = bool(cs.get("has_aes_sbox"))
-    f["rsa_bigint_detected"]= bool(cs.get("rsa_bigint_detected"))
-    f["has_aes_rcon"]       = bool(cs.get("has_aes_rcon"))
-    f["has_sha_constants"]  = bool(cs.get("has_sha_constants"))
+    # crypto signature flags
+    f["has_aes_sbox"] = bool(cs.get("has_aes_sbox"))
+    f["rsa_bigint_detected"] = bool(cs.get("rsa_bigint_detected"))
+    f["has_aes_rcon"] = bool(cs.get("has_aes_rcon"))
+    f["has_sha_constants"] = bool(cs.get("has_sha_constants"))
 
     # data references
     f["rodata_refs_count"] = data.get("rodata_refs_count",0)
     f["string_refs_count"] = data.get("string_refs_count",0)
     f["stack_frame_size"] = data.get("stack_frame_size",0)
 
-    # op categories
-    f["bitwise_ops"]     = op.get("bitwise_ops",0)
+    # operation categories
+    f["bitwise_ops"] = op.get("bitwise_ops",0)
     f["crypto_like_ops"] = op.get("crypto_like_ops",0)
-    f["arithmetic_ops"]  = op.get("arithmetic_ops",0)
-    f["mem_ops_ratio"]   = float(op.get("mem_ops_ratio",0))
+    f["arithmetic_ops"] = op.get("arithmetic_ops",0)
+    f["mem_ops_ratio"] = float(op.get("mem_ops_ratio",0))
 
-    # entropies
+    # entropy
     f["function_byte_entropy"] = ent.get("function_byte_entropy",0)
     f["opcode_entropy"]        = ent.get("opcode_entropy",0)
     f["cyclomatic_complexity_density"] = ent.get("cyclomatic_complexity_density",0)
@@ -135,7 +138,7 @@ def extract_features(func):
 
 
 # ============================================================
-# MAIN
+# MAIN PIPELINE
 # ============================================================
 
 def process():
@@ -166,12 +169,15 @@ def process():
             lname = fname.lower()
             feats = extract_features(func)
 
-            # ---------- 1. FUNCTION NAME BASED RSA DETECTION ----------
-            is_rsa_func = any(key in lname for key in RSA_FUNCS)
+            # ---------- RSA Name Check ----------
+            is_rsa_func = lname in RSA_FUNCS
 
-            # ---------- 2. KEY SIZE FROM FILENAME ----------
-            if is_rsa_func and keysize is not None:
-                label = keysize                 # RSA-1024 or RSA-4096
+            # ---------- RSA Variant ----------
+            if is_rsa_func:
+                if keysize is not None:
+                    label = keysize   # RSA-1024 / RSA-2048 / RSA-4096
+                else:
+                    label = "RSA"
             else:
                 label = "Non-Crypto"
 
@@ -188,7 +194,7 @@ def process():
             })
 
     # ============================================================
-    # WRITE CSV
+    # WRITE FILES
     # ============================================================
 
     with open(OUTPUT_CSV,"w",newline="",encoding="utf-8") as cf:
@@ -196,12 +202,10 @@ def process():
         writer.writeheader()
         writer.writerows(all_samples)
 
-    # JSON output
     with open(OUTPUT_JSON,"w",encoding="utf-8") as jf:
         json.dump(all_samples, jf, indent=2)
 
     print("[+] Generated RSA dataset:", OUTPUT_JSON, OUTPUT_CSV)
-
 
 
 if __name__ == "__main__":

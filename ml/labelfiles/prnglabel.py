@@ -10,7 +10,7 @@ Outputs:
  - prng_training_dataset.json
  - prng_crypto_dataset.csv
 
-Range: JSON files 160 → 200
+Range: JSON files 155 → 200
 """
 
 import os
@@ -21,31 +21,49 @@ import csv
 # ============================================================
 # CONFIG
 # ============================================================
-TARGET_DIR = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "..", "ghidra_output")
-)
 
+TARGET_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..", "test_dataset_json")
+)
 
 OUTPUT_JSON = "prng_training_dataset.json"
 OUTPUT_CSV  = "prng_crypto_dataset.csv"
 
-START_INDEX = 160
+START_INDEX = 155
 END_INDEX   = 200
 
+
 # ============================================================
-# PRNG FUNCTION SET
+# CORRECT PRNG FUNCTION SET (FROM YOUR DATASET)
 # ============================================================
+
 PRNG_FUNCS = {
-    "lcg_init", "lcg_next",
-    "xorshift128_init", "xorshift128_next",
-    "chacha_init", "chacha_block", "chacha_next",
-    "mt_init", "mt_next",
-    "prng_init", "prng_next", "prng_bytes", "prng_range", "prng_double"
+    "lcg_pm_init",
+    "lcg_pm_next",
+
+    "xs64_init",
+    "xs64_next",
+
+    "pcg32_init",
+    "pcg32_next_u32",
+
+    "sm64_init",
+    "sm64_next",
+
+    "rng_init",
+    "rng_next",
+    "rng_bytes",
+    "rng_range",
+    "rng_double",
 }
+
+PRNG_FUNCS = {f.lower() for f in PRNG_FUNCS}
+
 
 # ============================================================
 # CLEAN CSV FIELDS
 # ============================================================
+
 FIELDNAMES = [
     "architecture","algorithm","compiler","optimization","filename",
     "function_name","function_address","label",
@@ -73,9 +91,11 @@ FIELDNAMES = [
     "unique_ngram_count"
 ]
 
+
 # ============================================================
 # FEATURE EXTRACTION
 # ============================================================
+
 def extract_features(func):
     f = {}
     graph = func.get("graph_level", {}) or {}
@@ -113,7 +133,7 @@ def extract_features(func):
               "multiply_ratio","rotate_ratio"]:
         f[r] = avg_ratio(r)
 
-    # crypto flags (likely all false)
+    # crypto flags
     f["has_aes_sbox"] = bool(cs.get("has_aes_sbox"))
     f["rsa_bigint_detected"] = bool(cs.get("rsa_bigint_detected"))
     f["has_aes_rcon"] = bool(cs.get("has_aes_rcon"))
@@ -140,16 +160,20 @@ def extract_features(func):
 
     return f
 
+
 # ============================================================
-# LABEL LOGIC — ONLY PRNG OR NON-CRYPTO
+# LABEL LOGIC — STRICT PRNG / NON-CRYPTO
 # ============================================================
+
 def classify(func_name):
     fn = func_name.lower()
     return "PRNG" if fn in PRNG_FUNCS else "Non-Crypto"
 
+
 # ============================================================
-# PARSE FILENAME METADATA
+# PARSE METADATA
 # ============================================================
+
 def extract_metadata(filename):
     base = os.path.basename(filename).lower().replace(".json", "")
     parts = base.split("_")
@@ -157,11 +181,12 @@ def extract_metadata(filename):
         return parts[-3], parts[-2], parts[-1]
     return "unknown","unknown","unknown"
 
+
 # ============================================================
 # MAIN PIPELINE
 # ============================================================
-def process():
 
+def process():
     files = sorted(glob.glob(os.path.join(TARGET_DIR, "*.json")))
     files = files[START_INDEX:END_INDEX]
 
@@ -190,9 +215,9 @@ def process():
                 "function_address": func.get("address",""),
                 "label": label,
             }
+
             row.update(feats)
             rows.append(row)
-
             json_out.append(row)
 
     # Write JSON
@@ -207,6 +232,7 @@ def process():
             writer.writerow({k: r.get(k,"") for k in FIELDNAMES})
 
     print("[+] Done:", OUTPUT_JSON, OUTPUT_CSV)
+
 
 if __name__ == "__main__":
     process()
