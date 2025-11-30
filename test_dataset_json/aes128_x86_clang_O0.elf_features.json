@@ -11,13 +11,17 @@
             "address": "00101000", 
             "graph_level": {
                 "strongly_connected_components": 4, 
+                "avg_edge_branch_condition_complexity": 1.25, 
                 "average_block_size": 2.6666666666666665, 
                 "num_edges": 4, 
                 "branch_density": 0.0, 
                 "num_basic_blocks": 3, 
                 "num_entry_exit_paths": 2, 
                 "loop_count": 0, 
+                "num_conditional_edges": 1, 
+                "num_unconditional_edges": 3, 
                 "loop_depth": 0, 
+                "num_loop_edges": 0, 
                 "cyclomatic_complexity": 3
             }, 
             "edge_level": [
@@ -312,7 +316,45 @@
                     }
                 }
             ], 
+            "crypto_signatures": {
+                "has_aes_sbox": 1, 
+                "rsa_bigint_detected": 1, 
+                "has_aes_rcon": 0, 
+                "has_sha_constants": 0
+            }, 
+            "data_references": {
+                "rodata_refs_count": 1, 
+                "string_refs_count": 0, 
+                "stack_frame_size": 8
+            }, 
+            "op_category_counts": {
+                "bitwise_ops": 7, 
+                "multiply_ratio": 0.0, 
+                "crypto_like_ops": 0, 
+                "xor_ratio": 0.0, 
+                "add_ratio": 0.05555555555555555, 
+                "rotate_ratio": 0.0, 
+                "arithmetic_ops": 4, 
+                "load_store_ratio": 0.05555555555555555, 
+                "mem_ops_ratio": 0.05555555555555555, 
+                "logical_ratio": 0.19444444444444445
+            }, 
             "label": "Non-Crypto", 
+            "instruction_sequence": {
+                "unique_ngram_count": 7, 
+                "top_5_bigrams": [
+                    "call add", 
+                    "test jz", 
+                    "add ret", 
+                    "mov test", 
+                    "endbr64 sub"
+                ]
+            }, 
+            "entropy_metrics": {
+                "function_byte_entropy": 4.236368983644952, 
+                "opcode_entropy": 2.270977578946997, 
+                "cyclomatic_complexity_density": 0.375
+            }, 
             "name": "_init", 
             "advanced_features": {
                 "key_expansion_detection": false, 
@@ -363,13 +405,17 @@
             "address": "00101020", 
             "graph_level": {
                 "strongly_connected_components": 2, 
+                "avg_edge_branch_condition_complexity": 0.0, 
                 "average_block_size": 2.0, 
                 "num_edges": 1, 
                 "branch_density": 0.0, 
                 "num_basic_blocks": 1, 
                 "num_entry_exit_paths": 0, 
                 "loop_count": 0, 
+                "num_conditional_edges": 0, 
+                "num_unconditional_edges": 1, 
                 "loop_depth": 0, 
+                "num_loop_edges": 0, 
                 "cyclomatic_complexity": 2
             }, 
             "edge_level": [
@@ -426,7 +472,41 @@
                     "constant_flags": {}
                 }
             ], 
+            "crypto_signatures": {
+                "has_aes_sbox": 1, 
+                "rsa_bigint_detected": 1, 
+                "has_aes_rcon": 0, 
+                "has_sha_constants": 0
+            }, 
+            "data_references": {
+                "rodata_refs_count": 2, 
+                "string_refs_count": 0, 
+                "stack_frame_size": 8
+            }, 
+            "op_category_counts": {
+                "bitwise_ops": 0, 
+                "multiply_ratio": 0.0, 
+                "crypto_like_ops": 0, 
+                "xor_ratio": 0.0, 
+                "add_ratio": 0.0, 
+                "rotate_ratio": 0.0, 
+                "arithmetic_ops": 1, 
+                "load_store_ratio": 0.25, 
+                "mem_ops_ratio": 0.25, 
+                "logical_ratio": 0.0
+            }, 
             "label": "Non-Crypto", 
+            "instruction_sequence": {
+                "unique_ngram_count": 1, 
+                "top_5_bigrams": [
+                    "push jmp"
+                ]
+            }, 
+            "entropy_metrics": {
+                "function_byte_entropy": 2.5849625007211565, 
+                "opcode_entropy": 1.5, 
+                "cyclomatic_complexity_density": 1.0
+            }, 
             "name": "FUN_00101020", 
             "advanced_features": {
                 "key_expansion_detection": false, 
@@ -477,13 +557,17 @@
             "address": "00101050", 
             "graph_level": {
                 "strongly_connected_components": 2, 
+                "avg_edge_branch_condition_complexity": 0.0, 
                 "average_block_size": 13.0, 
                 "num_edges": 1, 
                 "branch_density": 0.0, 
                 "num_basic_blocks": 1, 
                 "num_entry_exit_paths": 0, 
                 "loop_count": 0, 
+                "num_conditional_edges": 0, 
+                "num_unconditional_edges": 1, 
                 "loop_depth": 0, 
+                "num_loop_edges": 0, 
                 "cyclomatic_complexity": 2
             }, 
             "edge_level": [
@@ -704,7 +788,45 @@
                     }
                 }
             ], 
+            "crypto_signatures": {
+                "has_aes_sbox": 1, 
+                "rsa_bigint_detected": 1, 
+                "has_aes_rcon": 0, 
+                "has_sha_constants": 0
+            }, 
+            "data_references": {
+                "rodata_refs_count": 1, 
+                "string_refs_count": 0, 
+                "stack_frame_size": 16
+            }, 
+            "op_category_counts": {
+                "bitwise_ops": 12, 
+                "multiply_ratio": 0.0, 
+                "crypto_like_ops": 3, 
+                "xor_ratio": 0.05263157894736842, 
+                "add_ratio": 0.017543859649122806, 
+                "rotate_ratio": 0.0, 
+                "arithmetic_ops": 4, 
+                "load_store_ratio": 0.07017543859649122, 
+                "mem_ops_ratio": 0.07017543859649122, 
+                "logical_ratio": 0.21052631578947367
+            }, 
             "label": "Non-Crypto", 
+            "instruction_sequence": {
+                "unique_ngram_count": 12, 
+                "top_5_bigrams": [
+                    "xor mov", 
+                    "mov pop", 
+                    "mov and", 
+                    "xor lea", 
+                    "call hlt"
+                ]
+            }, 
+            "entropy_metrics": {
+                "function_byte_entropy": 4.649114684439285, 
+                "opcode_entropy": 1.8169025129122072, 
+                "cyclomatic_complexity_density": 0.15384615384615385
+            }, 
             "name": "_start", 
             "advanced_features": {
                 "key_expansion_detection": false, 
@@ -755,13 +877,17 @@
             "address": "00101080", 
             "graph_level": {
                 "strongly_connected_components": 5, 
+                "avg_edge_branch_condition_complexity": 1.0, 
                 "average_block_size": 2.25, 
                 "num_edges": 5, 
                 "branch_density": 0.0, 
                 "num_basic_blocks": 4, 
                 "num_entry_exit_paths": 1, 
                 "loop_count": 0, 
+                "num_conditional_edges": 2, 
+                "num_unconditional_edges": 3, 
                 "loop_depth": 0, 
+                "num_loop_edges": 0, 
                 "cyclomatic_complexity": 3
             }, 
             "edge_level": [
@@ -1001,7 +1127,45 @@
                     "constant_flags": {}
                 }
             ], 
+            "crypto_signatures": {
+                "has_aes_sbox": 1, 
+                "rsa_bigint_detected": 1, 
+                "has_aes_rcon": 0, 
+                "has_sha_constants": 0
+            }, 
+            "data_references": {
+                "rodata_refs_count": 1, 
+                "string_refs_count": 0, 
+                "stack_frame_size": 8
+            }, 
+            "op_category_counts": {
+                "bitwise_ops": 5, 
+                "multiply_ratio": 0.0, 
+                "crypto_like_ops": 0, 
+                "xor_ratio": 0.0, 
+                "add_ratio": 0.03571428571428571, 
+                "rotate_ratio": 0.0, 
+                "arithmetic_ops": 2, 
+                "load_store_ratio": 0.03571428571428571, 
+                "mem_ops_ratio": 0.03571428571428571, 
+                "logical_ratio": 0.17857142857142858
+            }, 
             "label": "Non-Crypto", 
+            "instruction_sequence": {
+                "unique_ngram_count": 8, 
+                "top_5_bigrams": [
+                    "jmp ret", 
+                    "test jz", 
+                    "cmp jz", 
+                    "jz mov", 
+                    "lea cmp"
+                ]
+            }, 
+            "entropy_metrics": {
+                "function_byte_entropy": 3.9735127535760095, 
+                "opcode_entropy": 1.839622465782869, 
+                "cyclomatic_complexity_density": 0.3333333333333333
+            }, 
             "name": "deregister_tm_clones", 
             "advanced_features": {
                 "key_expansion_detection": false, 
@@ -1052,13 +1216,17 @@
             "address": "001010b0", 
             "graph_level": {
                 "strongly_connected_components": 5, 
+                "avg_edge_branch_condition_complexity": 9.2, 
                 "average_block_size": 3.5, 
                 "num_edges": 5, 
                 "branch_density": 0.0, 
                 "num_basic_blocks": 4, 
                 "num_entry_exit_paths": 1, 
                 "loop_count": 0, 
+                "num_conditional_edges": 2, 
+                "num_unconditional_edges": 3, 
                 "loop_depth": 0, 
+                "num_loop_edges": 0, 
                 "cyclomatic_complexity": 3
             }, 
             "edge_level": [
@@ -1517,7 +1685,45 @@
                     "constant_flags": {}
                 }
             ], 
+            "crypto_signatures": {
+                "has_aes_sbox": 1, 
+                "rsa_bigint_detected": 1, 
+                "has_aes_rcon": 0, 
+                "has_sha_constants": 0
+            }, 
+            "data_references": {
+                "rodata_refs_count": 1, 
+                "string_refs_count": 0, 
+                "stack_frame_size": 8
+            }, 
+            "op_category_counts": {
+                "bitwise_ops": 51, 
+                "multiply_ratio": 0.0, 
+                "crypto_like_ops": 2, 
+                "xor_ratio": 0.0, 
+                "add_ratio": 0.01694915254237288, 
+                "rotate_ratio": 0.0423728813559322, 
+                "arithmetic_ops": 5, 
+                "load_store_ratio": 0.00847457627118644, 
+                "mem_ops_ratio": 0.00847457627118644, 
+                "logical_ratio": 0.3898305084745763
+            }, 
             "label": "Non-Crypto", 
+            "instruction_sequence": {
+                "unique_ngram_count": 13, 
+                "top_5_bigrams": [
+                    "jmp ret", 
+                    "sar jz", 
+                    "test jz", 
+                    "lea sub", 
+                    "sar add"
+                ]
+            }, 
+            "entropy_metrics": {
+                "function_byte_entropy": 4.466857823238869, 
+                "opcode_entropy": 2.1199248274906144, 
+                "cyclomatic_complexity_density": 0.21428571428571427
+            }, 
             "name": "register_tm_clones", 
             "advanced_features": {
                 "key_expansion_detection": false, 
@@ -1568,13 +1774,17 @@
             "address": "001010f0", 
             "graph_level": {
                 "strongly_connected_components": 7, 
+                "avg_edge_branch_condition_complexity": 0.5714285714285714, 
                 "average_block_size": 2.8, 
                 "num_edges": 7, 
                 "branch_density": 0.2857142857142857, 
                 "num_basic_blocks": 5, 
                 "num_entry_exit_paths": 2, 
                 "loop_count": 2, 
-                "loop_depth": 0, 
+                "num_conditional_edges": 2, 
+                "num_unconditional_edges": 5, 
+                "loop_depth": 2, 
+                "num_loop_edges": 2, 
                 "cyclomatic_complexity": 4
             }, 
             "edge_level": [
@@ -1961,7 +2171,45 @@
                     "constant_flags": {}
                 }
             ], 
+            "crypto_signatures": {
+                "has_aes_sbox": 1, 
+                "rsa_bigint_detected": 1, 
+                "has_aes_rcon": 0, 
+                "has_sha_constants": 0
+            }, 
+            "data_references": {
+                "rodata_refs_count": 1, 
+                "string_refs_count": 0, 
+                "stack_frame_size": 8
+            }, 
+            "op_category_counts": {
+                "bitwise_ops": 4, 
+                "multiply_ratio": 0.0, 
+                "crypto_like_ops": 0, 
+                "xor_ratio": 0.0, 
+                "add_ratio": 0.06666666666666667, 
+                "rotate_ratio": 0.0, 
+                "arithmetic_ops": 8, 
+                "load_store_ratio": 0.13333333333333333, 
+                "mem_ops_ratio": 0.13333333333333333, 
+                "logical_ratio": 0.08888888888888889
+            }, 
             "label": "Non-Crypto", 
+            "instruction_sequence": {
+                "unique_ngram_count": 13, 
+                "top_5_bigrams": [
+                    "push cmp", 
+                    "mov pop", 
+                    "call call", 
+                    "mov call", 
+                    "call mov"
+                ]
+            }, 
+            "entropy_metrics": {
+                "function_byte_entropy": 4.514263086243268, 
+                "opcode_entropy": 2.556009343901204, 
+                "cyclomatic_complexity_density": 0.2857142857142857
+            }, 
             "name": "__do_global_dtors_aux", 
             "advanced_features": {
                 "key_expansion_detection": false, 
@@ -2012,13 +2260,17 @@
             "address": "00101140", 
             "graph_level": {
                 "strongly_connected_components": 8, 
+                "avg_edge_branch_condition_complexity": 0.15384615384615385, 
                 "average_block_size": 13.0, 
                 "num_edges": 13, 
                 "branch_density": 0.07692307692307693, 
                 "num_basic_blocks": 4, 
                 "num_entry_exit_paths": 0, 
                 "loop_count": 1, 
-                "loop_depth": 0, 
+                "num_conditional_edges": 1, 
+                "num_unconditional_edges": 12, 
+                "loop_depth": 1, 
+                "num_loop_edges": 1, 
                 "cyclomatic_complexity": 11
             }, 
             "edge_level": [
@@ -3138,7 +3390,45 @@
                     }
                 }
             ], 
+            "crypto_signatures": {
+                "has_aes_sbox": 1, 
+                "rsa_bigint_detected": 1, 
+                "has_aes_rcon": 0, 
+                "has_sha_constants": 0
+            }, 
+            "data_references": {
+                "rodata_refs_count": 0, 
+                "string_refs_count": 0, 
+                "stack_frame_size": 244
+            }, 
+            "op_category_counts": {
+                "bitwise_ops": 33, 
+                "multiply_ratio": 0.0, 
+                "crypto_like_ops": 3, 
+                "xor_ratio": 0.004694835680751174, 
+                "add_ratio": 0.1643192488262911, 
+                "rotate_ratio": 0.009389671361502348, 
+                "arithmetic_ops": 48, 
+                "load_store_ratio": 0.14553990610328638, 
+                "mem_ops_ratio": 0.14553990610328638, 
+                "logical_ratio": 0.14553990610328638
+            }, 
             "label": "AES-128", 
+            "instruction_sequence": {
+                "unique_ngram_count": 24, 
+                "top_5_bigrams": [
+                    "mov mov", 
+                    "lea call", 
+                    "call lea", 
+                    "call mov", 
+                    "lea lea"
+                ]
+            }, 
+            "entropy_metrics": {
+                "function_byte_entropy": 4.618742026014618, 
+                "opcode_entropy": 2.8561931171346155, 
+                "cyclomatic_complexity_density": 0.21153846153846154
+            }, 
             "name": "AES128_Encrypt", 
             "advanced_features": {
                 "key_expansion_detection": false, 
@@ -3189,13 +3479,17 @@
             "address": "00101240", 
             "graph_level": {
                 "strongly_connected_components": 3, 
+                "avg_edge_branch_condition_complexity": 0.4444444444444444, 
                 "average_block_size": 12.5, 
                 "num_edges": 9, 
                 "branch_density": 0.2222222222222222, 
                 "num_basic_blocks": 8, 
                 "num_entry_exit_paths": 1, 
                 "loop_count": 2, 
-                "loop_depth": 0, 
+                "num_conditional_edges": 2, 
+                "num_unconditional_edges": 7, 
+                "loop_depth": 2, 
+                "num_loop_edges": 2, 
                 "cyclomatic_complexity": 3
             }, 
             "edge_level": [
@@ -4770,7 +5064,45 @@
                     }
                 }
             ], 
+            "crypto_signatures": {
+                "has_aes_sbox": 1, 
+                "rsa_bigint_detected": 1, 
+                "has_aes_rcon": 0, 
+                "has_sha_constants": 0
+            }, 
+            "data_references": {
+                "rodata_refs_count": 10, 
+                "string_refs_count": 0, 
+                "stack_frame_size": 60
+            }, 
+            "op_category_counts": {
+                "bitwise_ops": 76, 
+                "multiply_ratio": 0.017543859649122806, 
+                "crypto_like_ops": 12, 
+                "xor_ratio": 0.017543859649122806, 
+                "add_ratio": 0.13815789473684212, 
+                "rotate_ratio": 0.008771929824561403, 
+                "arithmetic_ops": 78, 
+                "load_store_ratio": 0.14035087719298245, 
+                "mem_ops_ratio": 0.14035087719298245, 
+                "logical_ratio": 0.15789473684210525
+            }, 
             "label": "AES-KeySchedule", 
+            "instruction_sequence": {
+                "unique_ngram_count": 29, 
+                "top_5_bigrams": [
+                    "mov mov", 
+                    "movzx mov", 
+                    "mov movzx", 
+                    "movzx xor", 
+                    "xor mov"
+                ]
+            }, 
+            "entropy_metrics": {
+                "function_byte_entropy": 5.127380393149501, 
+                "opcode_entropy": 2.4734954620193883, 
+                "cyclomatic_complexity_density": 0.03
+            }, 
             "name": "KeyExpansion", 
             "advanced_features": {
                 "key_expansion_detection": false, 
@@ -4821,13 +5153,17 @@
             "address": "001013b0", 
             "graph_level": {
                 "strongly_connected_components": 3, 
+                "avg_edge_branch_condition_complexity": 0.5, 
                 "average_block_size": 5.25, 
                 "num_edges": 4, 
                 "branch_density": 0.25, 
                 "num_basic_blocks": 4, 
                 "num_entry_exit_paths": 1, 
                 "loop_count": 1, 
-                "loop_depth": 0, 
+                "num_conditional_edges": 1, 
+                "num_unconditional_edges": 3, 
+                "loop_depth": 1, 
+                "num_loop_edges": 1, 
                 "cyclomatic_complexity": 2
             }, 
             "edge_level": [
@@ -5276,7 +5612,45 @@
                     }
                 }
             ], 
+            "crypto_signatures": {
+                "has_aes_sbox": 1, 
+                "rsa_bigint_detected": 1, 
+                "has_aes_rcon": 0, 
+                "has_sha_constants": 0
+            }, 
+            "data_references": {
+                "rodata_refs_count": 0, 
+                "string_refs_count": 0, 
+                "stack_frame_size": 36
+            }, 
+            "op_category_counts": {
+                "bitwise_ops": 7, 
+                "multiply_ratio": 0.03409090909090909, 
+                "crypto_like_ops": 1, 
+                "xor_ratio": 0.011363636363636364, 
+                "add_ratio": 0.18181818181818182, 
+                "rotate_ratio": 0.0, 
+                "arithmetic_ops": 21, 
+                "load_store_ratio": 0.18181818181818182, 
+                "mem_ops_ratio": 0.18181818181818182, 
+                "logical_ratio": 0.07954545454545454
+            }, 
             "label": "Non-Crypto", 
+            "instruction_sequence": {
+                "unique_ngram_count": 15, 
+                "top_5_bigrams": [
+                    "mov mov", 
+                    "mov movsxd", 
+                    "movsxd movzx", 
+                    "mov jmp", 
+                    "xor mov"
+                ]
+            }, 
+            "entropy_metrics": {
+                "function_byte_entropy": 4.730508306220516, 
+                "opcode_entropy": 2.5830179255086763, 
+                "cyclomatic_complexity_density": 0.09523809523809523
+            }, 
             "name": "AddRoundKey", 
             "advanced_features": {
                 "key_expansion_detection": false, 
@@ -5327,13 +5701,17 @@
             "address": "00101400", 
             "graph_level": {
                 "strongly_connected_components": 3, 
+                "avg_edge_branch_condition_complexity": 0.5, 
                 "average_block_size": 5.25, 
                 "num_edges": 4, 
                 "branch_density": 0.25, 
                 "num_basic_blocks": 4, 
                 "num_entry_exit_paths": 1, 
                 "loop_count": 1, 
-                "loop_depth": 0, 
+                "num_conditional_edges": 1, 
+                "num_unconditional_edges": 3, 
+                "loop_depth": 1, 
+                "num_loop_edges": 1, 
                 "cyclomatic_complexity": 2
             }, 
             "edge_level": [
@@ -5762,7 +6140,45 @@
                     }
                 }
             ], 
+            "crypto_signatures": {
+                "has_aes_sbox": 1, 
+                "rsa_bigint_detected": 1, 
+                "has_aes_rcon": 0, 
+                "has_sha_constants": 0
+            }, 
+            "data_references": {
+                "rodata_refs_count": 2, 
+                "string_refs_count": 0, 
+                "stack_frame_size": 28
+            }, 
+            "op_category_counts": {
+                "bitwise_ops": 4, 
+                "multiply_ratio": 0.03896103896103896, 
+                "crypto_like_ops": 0, 
+                "xor_ratio": 0.0, 
+                "add_ratio": 0.19480519480519481, 
+                "rotate_ratio": 0.0, 
+                "arithmetic_ops": 20, 
+                "load_store_ratio": 0.19480519480519481, 
+                "mem_ops_ratio": 0.19480519480519481, 
+                "logical_ratio": 0.05194805194805195
+            }, 
             "label": "Non-Crypto", 
+            "instruction_sequence": {
+                "unique_ngram_count": 16, 
+                "top_5_bigrams": [
+                    "mov mov", 
+                    "mov movsxd", 
+                    "movsxd mov", 
+                    "mov jmp", 
+                    "add mov"
+                ]
+            }, 
+            "entropy_metrics": {
+                "function_byte_entropy": 4.717404158775143, 
+                "opcode_entropy": 2.570005062793205, 
+                "cyclomatic_complexity_density": 0.09523809523809523
+            }, 
             "name": "SubBytes", 
             "advanced_features": {
                 "key_expansion_detection": false, 
@@ -5813,13 +6229,17 @@
             "address": "00101450", 
             "graph_level": {
                 "strongly_connected_components": 1, 
+                "avg_edge_branch_condition_complexity": 0.0, 
                 "average_block_size": 46.0, 
                 "num_edges": 0, 
                 "branch_density": 0.0, 
                 "num_basic_blocks": 1, 
                 "num_entry_exit_paths": 1, 
                 "loop_count": 0, 
+                "num_conditional_edges": 0, 
+                "num_unconditional_edges": 0, 
                 "loop_depth": 0, 
+                "num_loop_edges": 0, 
                 "cyclomatic_complexity": 1
             }, 
             "edge_level": [], 
@@ -6410,7 +6830,44 @@
                     }
                 }
             ], 
+            "crypto_signatures": {
+                "has_aes_sbox": 1, 
+                "rsa_bigint_detected": 1, 
+                "has_aes_rcon": 0, 
+                "has_sha_constants": 0
+            }, 
+            "data_references": {
+                "rodata_refs_count": 0, 
+                "string_refs_count": 0, 
+                "stack_frame_size": 48
+            }, 
+            "op_category_counts": {
+                "bitwise_ops": 0, 
+                "multiply_ratio": 0.0, 
+                "crypto_like_ops": 0, 
+                "xor_ratio": 0.0, 
+                "add_ratio": 0.3161764705882353, 
+                "rotate_ratio": 0.0, 
+                "arithmetic_ops": 44, 
+                "load_store_ratio": 0.33088235294117646, 
+                "mem_ops_ratio": 0.33088235294117646, 
+                "logical_ratio": 0.0
+            }, 
             "label": "Non-Crypto", 
+            "instruction_sequence": {
+                "unique_ngram_count": 4, 
+                "top_5_bigrams": [
+                    "mov mov", 
+                    "mov pop", 
+                    "pop ret", 
+                    "push mov"
+                ]
+            }, 
+            "entropy_metrics": {
+                "function_byte_entropy": 4.098804770617353, 
+                "opcode_entropy": 1.9970607582392188, 
+                "cyclomatic_complexity_density": 0.021739130434782608
+            }, 
             "name": "ShiftRows", 
             "advanced_features": {
                 "key_expansion_detection": false, 
@@ -6461,13 +6918,17 @@
             "address": "001014f0", 
             "graph_level": {
                 "strongly_connected_components": 4, 
+                "avg_edge_branch_condition_complexity": 0.16666666666666666, 
                 "average_block_size": 32.75, 
                 "num_edges": 12, 
                 "branch_density": 0.08333333333333333, 
                 "num_basic_blocks": 4, 
                 "num_entry_exit_paths": 1, 
                 "loop_count": 1, 
-                "loop_depth": 0, 
+                "num_conditional_edges": 1, 
+                "num_unconditional_edges": 11, 
+                "loop_depth": 1, 
+                "num_loop_edges": 1, 
                 "cyclomatic_complexity": 10
             }, 
             "edge_level": [
@@ -8364,7 +8825,45 @@
                     }
                 }
             ], 
+            "crypto_signatures": {
+                "has_aes_sbox": 1, 
+                "rsa_bigint_detected": 1, 
+                "has_aes_rcon": 0, 
+                "has_sha_constants": 0
+            }, 
+            "data_references": {
+                "rodata_refs_count": 0, 
+                "string_refs_count": 0, 
+                "stack_frame_size": 60
+            }, 
+            "op_category_counts": {
+                "bitwise_ops": 89, 
+                "multiply_ratio": 0.013157894736842105, 
+                "crypto_like_ops": 19, 
+                "xor_ratio": 0.027960526315789474, 
+                "add_ratio": 0.12664473684210525, 
+                "rotate_ratio": 0.003289473684210526, 
+                "arithmetic_ops": 97, 
+                "load_store_ratio": 0.12828947368421054, 
+                "mem_ops_ratio": 0.12828947368421054, 
+                "logical_ratio": 0.14309210526315788
+            }, 
             "label": "Non-Crypto", 
+            "instruction_sequence": {
+                "unique_ngram_count": 27, 
+                "top_5_bigrams": [
+                    "mov mov", 
+                    "mov movzx", 
+                    "movzx xor", 
+                    "movsxd mov", 
+                    "xor movzx"
+                ]
+            }, 
+            "entropy_metrics": {
+                "function_byte_entropy": 5.121624538412296, 
+                "opcode_entropy": 2.426329392032639, 
+                "cyclomatic_complexity_density": 0.07633587786259542
+            }, 
             "name": "MixColumns", 
             "advanced_features": {
                 "key_expansion_detection": false, 
@@ -8415,13 +8914,17 @@
             "address": "001016a0", 
             "graph_level": {
                 "strongly_connected_components": 5, 
+                "avg_edge_branch_condition_complexity": 0.25, 
                 "average_block_size": 9.5, 
                 "num_edges": 8, 
                 "branch_density": 0.625, 
                 "num_basic_blocks": 4, 
                 "num_entry_exit_paths": 0, 
                 "loop_count": 5, 
-                "loop_depth": 0, 
+                "num_conditional_edges": 1, 
+                "num_unconditional_edges": 7, 
+                "loop_depth": 4, 
+                "num_loop_edges": 5, 
                 "cyclomatic_complexity": 6
             }, 
             "edge_level": [
@@ -9145,7 +9648,45 @@
                     }
                 }
             ], 
+            "crypto_signatures": {
+                "has_aes_sbox": 1, 
+                "rsa_bigint_detected": 1, 
+                "has_aes_rcon": 0, 
+                "has_sha_constants": 0
+            }, 
+            "data_references": {
+                "rodata_refs_count": 7, 
+                "string_refs_count": 0, 
+                "stack_frame_size": 84
+            }, 
+            "op_category_counts": {
+                "bitwise_ops": 11, 
+                "multiply_ratio": 0.007936507936507936, 
+                "crypto_like_ops": 1, 
+                "xor_ratio": 0.007936507936507936, 
+                "add_ratio": 0.15079365079365079, 
+                "rotate_ratio": 0.0, 
+                "arithmetic_ops": 27, 
+                "load_store_ratio": 0.14285714285714285, 
+                "mem_ops_ratio": 0.14285714285714285, 
+                "logical_ratio": 0.0873015873015873
+            }, 
             "label": "Non-Crypto", 
+            "instruction_sequence": {
+                "unique_ngram_count": 24, 
+                "top_5_bigrams": [
+                    "mov mov", 
+                    "lea mov", 
+                    "mov call", 
+                    "call mov", 
+                    "lea lea"
+                ]
+            }, 
+            "entropy_metrics": {
+                "function_byte_entropy": 4.797548500930982, 
+                "opcode_entropy": 2.6027826768012305, 
+                "cyclomatic_complexity_density": 0.15789473684210525
+            }, 
             "name": "main", 
             "advanced_features": {
                 "key_expansion_detection": false, 
@@ -9196,13 +9737,17 @@
             "address": "00101750", 
             "graph_level": {
                 "strongly_connected_components": 1, 
+                "avg_edge_branch_condition_complexity": 0.0, 
                 "average_block_size": 16.0, 
                 "num_edges": 0, 
                 "branch_density": 0.0, 
                 "num_basic_blocks": 1, 
                 "num_entry_exit_paths": 1, 
                 "loop_count": 0, 
+                "num_conditional_edges": 0, 
+                "num_unconditional_edges": 0, 
                 "loop_depth": 0, 
+                "num_loop_edges": 0, 
                 "cyclomatic_complexity": 1
             }, 
             "edge_level": [], 
@@ -9470,7 +10015,45 @@
                     }
                 }
             ], 
+            "crypto_signatures": {
+                "has_aes_sbox": 1, 
+                "rsa_bigint_detected": 1, 
+                "has_aes_rcon": 0, 
+                "has_sha_constants": 0
+            }, 
+            "data_references": {
+                "rodata_refs_count": 0, 
+                "string_refs_count": 0, 
+                "stack_frame_size": 17
+            }, 
+            "op_category_counts": {
+                "bitwise_ops": 32, 
+                "multiply_ratio": 0.0, 
+                "crypto_like_ops": 5, 
+                "xor_ratio": 0.02727272727272727, 
+                "add_ratio": 0.045454545454545456, 
+                "rotate_ratio": 0.01818181818181818, 
+                "arithmetic_ops": 8, 
+                "load_store_ratio": 0.05454545454545454, 
+                "mem_ops_ratio": 0.05454545454545454, 
+                "logical_ratio": 0.2727272727272727
+            }, 
             "label": "Non-Crypto", 
+            "instruction_sequence": {
+                "unique_ngram_count": 14, 
+                "top_5_bigrams": [
+                    "mov mov", 
+                    "shl movzx", 
+                    "xor movzx", 
+                    "xor mov", 
+                    "pop ret"
+                ]
+            }, 
+            "entropy_metrics": {
+                "function_byte_entropy": 4.577649554637347, 
+                "opcode_entropy": 2.1268440516409566, 
+                "cyclomatic_complexity_density": 0.0625
+            }, 
             "name": "xt", 
             "advanced_features": {
                 "key_expansion_detection": false, 
@@ -9521,13 +10104,17 @@
             "address": "00101780", 
             "graph_level": {
                 "strongly_connected_components": 1, 
+                "avg_edge_branch_condition_complexity": 0.0, 
                 "average_block_size": 4.0, 
                 "num_edges": 0, 
                 "branch_density": 0.0, 
                 "num_basic_blocks": 1, 
                 "num_entry_exit_paths": 2, 
                 "loop_count": 0, 
+                "num_conditional_edges": 0, 
+                "num_unconditional_edges": 0, 
                 "loop_depth": 0, 
+                "num_loop_edges": 0, 
                 "cyclomatic_complexity": 1
             }, 
             "edge_level": [], 
@@ -9684,7 +10271,43 @@
                     }
                 }
             ], 
+            "crypto_signatures": {
+                "has_aes_sbox": 1, 
+                "rsa_bigint_detected": 1, 
+                "has_aes_rcon": 0, 
+                "has_sha_constants": 0
+            }, 
+            "data_references": {
+                "rodata_refs_count": 0, 
+                "string_refs_count": 0, 
+                "stack_frame_size": 8
+            }, 
+            "op_category_counts": {
+                "bitwise_ops": 4, 
+                "multiply_ratio": 0.0, 
+                "crypto_like_ops": 0, 
+                "xor_ratio": 0.0, 
+                "add_ratio": 0.09523809523809523, 
+                "rotate_ratio": 0.0, 
+                "arithmetic_ops": 3, 
+                "load_store_ratio": 0.047619047619047616, 
+                "mem_ops_ratio": 0.047619047619047616, 
+                "logical_ratio": 0.19047619047619047
+            }, 
             "label": "Non-Crypto", 
+            "instruction_sequence": {
+                "unique_ngram_count": 3, 
+                "top_5_bigrams": [
+                    "sub add", 
+                    "add ret", 
+                    "endbr64 sub"
+                ]
+            }, 
+            "entropy_metrics": {
+                "function_byte_entropy": 3.238901256602631, 
+                "opcode_entropy": 2.3342564252133498, 
+                "cyclomatic_complexity_density": 0.25
+            }, 
             "name": "_fini", 
             "advanced_features": {
                 "key_expansion_detection": false, 

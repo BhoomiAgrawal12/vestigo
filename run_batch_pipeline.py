@@ -27,8 +27,8 @@ if not GHIDRA_HOME:
         print("Please set GHIDRA_HOME environment variable or install Ghidra.")
         exit(1)
 
-BINARY_DIR = "builds"
-OUTPUT_DIR = "ghidra_output"
+BINARY_DIR = "test_dataset_binaries"
+OUTPUT_DIR = "test_dataset_json"
 PROJECT_DIR = "/tmp/ghidra_batch_project"
 PROJECT_NAME = f"batch_extraction_{int(time.time())}"
 SCRIPT_PATH = "ghidra_scripts/extract_features.py"
@@ -40,7 +40,7 @@ import shutil
 def run_ghidra_on_binary(binary_path):
     """Run Ghidra analysis on a single binary"""
     # analyzer_bin = os.path.join(GHIDRA_HOME, "support", "analyzeHeadless")
-    analyzer_bin = os.path.join(GHIDRA_HOME, "support", "analyzeHeadless.bat")
+    analyzer_bin = os.path.join(GHIDRA_HOME, "support", "analyzeHeadless")
 
     binary_name = os.path.basename(binary_path)
     
@@ -103,7 +103,7 @@ def main():
     # 1) Collect all .o and .a files recursively under builds/
     for root, dirs, files in os.walk(BINARY_DIR):
         for fname in files:
-            if fname.endswith(".o") or fname.endswith(".a"):
+            if fname.endswith(".o") or fname.endswith(".a") or fname.endswith(".elf"):
                 binaries.append(os.path.join(root, fname))
 
     # 2) Add negative samples: busybox_*_unstripped (ELF only)
@@ -121,7 +121,7 @@ def main():
         print(f"✗ No binaries found in '{BINARY_DIR}' (expected .o, .a, busybox_*_unstripped).")
         return
 
-    print(f"Found {len(binaries)} binaries (.o, .a, busybox_*_unstripped)")
+    print(f"Found {len(binaries)} binaries (.o, .a, busybox_*_unstripped,.elf)")
     print(f"Processing in batches of {BATCH_SIZE}")
     print()
     
