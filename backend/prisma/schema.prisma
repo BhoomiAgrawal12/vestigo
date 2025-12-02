@@ -1,0 +1,35 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-py"
+}
+
+model Job {
+  id           String   @id @default(cuid())
+  fileName     String
+  hash         String
+  status       String   @default("analyzing")
+  severity     String?
+  findings     Int?
+  uploadTime   DateTime @default(now())
+  analysisTime String?
+  fileSize     String
+  fileType     String
+
+  threats Threat[]
+}
+
+model Threat {
+  id          String @id @default(cuid())
+  jobId       String
+  name        String
+  algorithm   String
+  variant     String
+  severity    String
+  description String
+
+  job Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
