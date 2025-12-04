@@ -21,6 +21,40 @@ def main():
         print(f"Error: File {target_file} not found.")
         sys.exit(1)
 
+    target_file = sys.argv[1]
+    
+    # 1. Initialize & Run Module 1 (Ingestion)
+    ingestor = IngestionModule()
+    ingestion_report = ingestor.process(target_file)
+    
+    # 2. Check Routing Decision
+    route = ingestion_report["routing"]["decision"]
+    extracted_path = ingestion_report["extraction"].get("extracted_path")
+    
+    final_analysis = {}
+
+    # 3. Dispatch to Specific Modules
+    if route == "PATH_B_LINUX_FS":
+        print("\n[+] Routing to Path B: Linux/FS Analyzer")
+        analyzer = AdvancedLinuxAnalyzer()
+        # We pass the folder where binwalk dumped the files
+        final_analysis = analyzer.analyze(extracted_path)
+
+    elif route == "PATH_A_BARE_METAL":
+        print("\n[+] Routing to Path A: Bare Metal / ML Engine")
+        analyzer = BareMetalAnalyzer()
+        
+        # For bare metal, we might need to find the largest .bin file in the extraction
+        # Or pass the original file if extraction was partial.
+        # For now, we pass the extraction root.
+        final_analysis = analyzer.analyze(extracted_path)
+
+    elif route == "PATH_C_HARD_TARGET":
+        print("\n[+] Routing to Path C: Hard Target Analyzer")
+        analyzer = HardTargetAnalyzer()
+        # Hard targets usually failed extraction, so we pass the ORIGINAL file
+        final_analysis = analyzer.analyze(target_file)
+
     print(f"[\u2699\ufe0f] Starting Vestigo-Omni Analysis on: {os.path.basename(target_file)}")
     
     # Initialize Modules
