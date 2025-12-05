@@ -59,12 +59,23 @@ class QilingDynamicAnalysisService:
         
         Args:
             job_id: Unique identifier for this analysis job
-            binary_path: Absolute path to the ELF binary
+            binary_path: Absolute path to the ELF binary (including converted .o files)
             
         Returns:
             Dict containing analysis results with crypto detection findings
+            
+        Note:
+            This function accepts both:
+            - Standard ELF executables
+            - ELF files converted from object files (.o)
+            The analysis behavior is the same for both types.
         """
         logger.info(f"Starting Qiling dynamic analysis - JobID: {job_id}, Binary: {binary_path}")
+        
+        # Check if this was converted from an object file
+        is_converted = binary_path.endswith('.elf') and os.path.exists(binary_path.replace('.elf', '.o'))
+        if is_converted:
+            logger.info(f"Analyzing converted object file (.o -> .elf) - JobID: {job_id}")
         
         if not os.path.exists(binary_path):
             logger.error(f"Binary file not found: {binary_path}")

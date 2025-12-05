@@ -7,12 +7,14 @@ from typing import Dict, List, Any
 
 class CryptoLibraryService:
     """
-    Service to handle .so and .a library files found in extracted firmware.
+    Service to handle .so, .a, and .o library files found in extracted firmware.
     
     - .so files: Shared objects are ELF binaries - sent DIRECTLY to Ghidra for disassembly
                  Cannot be "extracted" (they're already compiled), analyzed as-is
     - .a files: Static archives - EXTRACTED using 'ar x' to get individual .o files
                 Each .o file is then sent separately to Ghidra for analysis
+    - .o files: Object files found standalone - sent DIRECTLY to Ghidra after conversion to ELF
+                (conversion handled separately for Qiling analysis)
     """
     
     def __init__(self):
@@ -23,7 +25,7 @@ class CryptoLibraryService:
         Process discovered libraries from firmware extraction.
         
         Args:
-            crypto_libs: Dict with 'so_files' and 'a_files' lists
+            crypto_libs: Dict with 'so_files', 'a_files', and 'o_files' lists
             job_id: Parent job ID for tracking
             
         Returns:
@@ -32,11 +34,13 @@ class CryptoLibraryService:
         Processing flow:
             .so files → Direct PATH_A analysis (they're ELF binaries)
             .a files → Extract to .o files → Each .o to PATH_A analysis
+            .o files → Direct PATH_A analysis (standalone object files)
         """
         results = {
             "job_id": job_id,
             "so_files_processed": [],
             "a_files_processed": [],
+            "o_files_processed": [],
             "extracted_objects": [],
             "status": "processing"
         }
@@ -55,10 +59,16 @@ class CryptoLibraryService:
             if a_result.get('extracted_objects'):
                 results["extracted_objects"].extend(a_result['extracted_objects'])
         
+        # Process standalone .o files (object files found in filesystem)
+        for o_file in crypto_libs.get('o_files', []):
+            o_result = self._process_object_file(o_file, job_id)
+            results["o_files_processed"].append(o_result)
+        
         results["status"] = "complete"
         results["summary"] = {
             "total_so_files": len(results["so_files_processed"]),
             "total_a_files": len(results["a_files_processed"]),
+            "total_o_files": len(results["o_files_processed"]),
             "total_extracted_objects": len(results["extracted_objects"])
         }
         
@@ -186,10 +196,51 @@ class CryptoLibraryService:
         
         return result
     
+    def _process_object_file(self, o_file: Dict, job_id: str) -> Dict[str, Any]:
+        """
+        Process a standalone .o (object) file found in the filesystem.
+        
+        .o files are relocatable object files that need to be:
+        1. Converted to ELF format for dynamic analysis (Qiling)
+        2. Sent to Ghidra for static analysis
+        
+        Returns metadata for PATH_A pipeline processing.
+        """
+        result = {
+            "file": o_file["file"],
+            "path": o_file["path"],
+            "size": o_file["size"],
+            "type": "object_file",
+            "status": "ready_for_analysis",
+            "pipeline": "PATH_A_BARE_METAL",
+            "analysis_type": "object_file_analysis",
+            "needs_conversion": True  # Flag for Qiling conversion
+        }
+        
+        # Check if file exists and is readable
+        if not os.path.exists(o_file["path"]):
+            result["status"] = "error"
+            result["error"] = "File not found"
+            return result
+        
+        # Get basic file info
+        try:
+            file_type = subprocess.run(
+                ["file", o_file["path"]],
+                capture_output=True,
+                text=True,
+                timeout=5
+            )
+            result["file_type"] = file_type.stdout.strip()
+        except:
+            result["file_type"] = "unknown"
+        
+        return result
+    
     def get_objects_for_pipeline(self, results: Dict[str, Any]) -> List[Dict[str, Any]]:
         """
         Get list of all files ready for PATH_A pipeline processing.
-        Includes both .so files and extracted .o files from .a archives.
+        Includes .so files, standalone .o files, and extracted .o files from .a archives.
         
         Returns:
             List of file dicts ready for bare metal analysis
@@ -200,6 +251,11 @@ class CryptoLibraryService:
         for so_file in results.get("so_files_processed", []):
             if so_file.get("status") == "ready_for_analysis":
                 pipeline_files.append(so_file)
+        
+        # Add standalone .o files (analyzed after conversion)
+        for o_file in results.get("o_files_processed", []):
+            if o_file.get("status") == "ready_for_analysis":
+                pipeline_files.append(o_file)
         
         # Add extracted .o files from .a archives
         pipeline_files.extend(results.get("extracted_objects", []))

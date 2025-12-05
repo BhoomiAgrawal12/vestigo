@@ -119,6 +119,7 @@ class IngestService:
         workspace_path = ingest_result.get("analysis_workspace")
         file_path = None
         is_elf = False
+        is_object_file = False
         
         if workspace_path and os.path.exists(workspace_path):
             # Look for binary files in workspace (not .json files)
@@ -129,7 +130,8 @@ class IngestService:
             if binary_files:
                 file_path = binary_files[0]  # Use first binary file found
                 is_elf = self._is_elf_file(file_path)
-                logger.info(f"Found binary in workspace: {file_path}, is_elf: {is_elf}")
+                is_object_file = self._is_object_file(file_path)
+                logger.info(f"Found binary in workspace: {file_path}, is_elf: {is_elf}, is_object: {is_object_file}")
             else:
                 logger.warning(f"No binary files found in workspace: {workspace_path}")
         else:
@@ -138,12 +140,14 @@ class IngestService:
         response["analysis"]["binary_info"] = {
             "is_binary": True,
             "is_elf": is_elf,
+            "is_object_file": is_object_file,
+            "needs_conversion": is_object_file and not is_elf,  # .o files need conversion to .elf
             "analysis_ready": binary_analysis.get("processed", False),
             "features_extracted": binary_analysis.get("features_extracted", False),
             "classification_complete": binary_analysis.get("classification_complete", False),
             "analysis_type": binary_analysis.get("analysis_type", "unknown"),
             "file_path": binary_analysis.get("file_path"),
-            "qiling_analysis_available": is_elf
+            "qiling_analysis_available": is_elf or is_object_file  # Both ELF and .o can be analyzed (after conversion)
         }
         
         next_actions = [
@@ -155,14 +159,19 @@ class IngestService:
             }
         ]
         
-        # Add Qiling dynamic analysis if it's an ELF binary
-        if is_elf:
+        # Add Qiling dynamic analysis if it's an ELF binary or object file
+        if is_elf or is_object_file:
+            description = "Run Qiling dynamic crypto detection (for ELF binaries)"
+            if is_object_file:
+                description = "Convert .o to .elf and run Qiling dynamic crypto detection"
+            
             next_actions.append({
                 "action": "qiling_dynamic_analysis",
                 "endpoint": f"/job/{response['jobId']}/qiling-analysis",
-                "description": "Run Qiling dynamic crypto detection (for ELF binaries)",
+                "description": description,
                 "ready": True,
-                "parallel": True  # Can run in parallel with feature extraction
+                "parallel": True,  # Can run in parallel with feature extraction
+                "requires_conversion": is_object_file
             })
         
         next_actions.append({
@@ -239,6 +248,40 @@ class IngestService:
         except Exception as e:
             logger.error(f"Error checking ELF magic for {file_path}: {e}")
             return False
+    
+    def _is_object_file(self, file_path: str) -> bool:
+        """
+        Check if file is an object file (.o)
+        
+        Object files are relocatable ELF files that need to be linked into executables
+        """
+        if not file_path or not os.path.exists(file_path):
+            return False
+        
+        # Quick check: .o extension
+        if file_path.endswith('.o'):
+            return True
+        
+        # More thorough check: use readelf to check ELF type
+        try:
+            import subprocess
+            result = subprocess.run(
+                ['readelf', '-h', file_path],
+                capture_output=True,
+                text=True,
+                timeout=5
+            )
+            
+            if result.returncode == 0:
+                output = result.stdout
+                # Look for "Type: REL (Relocatable file)"
+                if 'REL (Relocatable file)' in output:
+                    logger.debug(f"Detected relocatable object file: {file_path}")
+                    return True
+        except Exception as e:
+            logger.debug(f"readelf check failed for {file_path}: {e}")
+        
+        return False
     
     def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
         """Get status of a specific job (placeholder for database integration)"""

@@ -43,7 +43,7 @@ class FilesystemScanService:
             "job_id": job_id,
             "scan_path": extracted_path,
             "status": "completed",
-            "crypto_libraries": {"so_files": [], "a_files": []},
+            "crypto_libraries": {"so_files": [], "a_files": [], "o_files": []},
             "ssl_configs": [],
             "certificates": [],
             "private_keys": [],
@@ -60,10 +60,12 @@ class FilesystemScanService:
         }
         
         try:
-            # 1. Find crypto libraries (.so, .a files)
+            # 1. Find crypto libraries (.so, .a, .o files)
             logger.info(f"Scanning for crypto libraries - JobID: {job_id}")
             scan_results["crypto_libraries"] = self._find_crypto_libraries(extracted_path)
-            total_libs = len(scan_results["crypto_libraries"].get("so_files", [])) + len(scan_results["crypto_libraries"].get("a_files", []))
+            total_libs = (len(scan_results["crypto_libraries"].get("so_files", [])) + 
+                         len(scan_results["crypto_libraries"].get("a_files", [])) +
+                         len(scan_results["crypto_libraries"].get("o_files", [])))
             scan_results["summary"]["total_crypto_libraries"] = total_libs
             
             # 2. Find SSL/TLS configurations
@@ -105,17 +107,20 @@ class FilesystemScanService:
             return scan_results
     
     def _find_crypto_libraries(self, search_path: str) -> Dict[str, List[Dict[str, Any]]]:
-        """Find cryptographic libraries (.so, .a files)"""
+        """Find cryptographic libraries (.so, .a, .o files)"""
         so_files = []
         a_files = []
+        o_files = []
         crypto_patterns = [
             "libcrypto", "libssl", "libustream", "libtls", "libmbedtls",
-            "libwolfssl", "libopenssl", "libgcrypt", "libnettle"
+            "libwolfssl", "libopenssl", "libgcrypt", "libnettle", "aes", "rsa", 
+            "sha", "md5", "crypto", "cipher"
         ]
         
         for root, dirs, files in os.walk(search_path):
             for file in files:
-                if file.endswith(('.so', '.a')) or '.so.' in file:
+                # Check for .so, .a, and .o files
+                if file.endswith(('.so', '.a', '.o')) or '.so.' in file:
                     # Check if it's a crypto-related library
                     file_lower = file.lower()
                     for pattern in crypto_patterns:
@@ -128,14 +133,16 @@ class FilesystemScanService:
                                 "size": os.path.getsize(full_path)
                             }
                             
-                            # Separate into .so and .a files
+                            # Separate into .so, .a, and .o files
                             if '.so' in file:
                                 so_files.append(lib_info)
                             elif file.endswith('.a'):
                                 a_files.append(lib_info)
+                            elif file.endswith('.o'):
+                                o_files.append(lib_info)
                             break
         
-        return {"so_files": so_files, "a_files": a_files}
+        return {"so_files": so_files, "a_files": a_files, "o_files": o_files}
     
     def _find_ssl_configs(self, search_path: str) -> List[Dict[str, Any]]:
         """Find SSL/TLS configuration files with insecure settings"""
