@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
-Crypto Function Detector v3.0 - Multi-Phase Detection
-Detects crypto functions via:
+Crypto Function Detector v4.0 - Advanced Classification System
+Detects and classifies crypto functions via:
 0. YARA static analysis (< 1 second, works on stripped binaries)
 1. Constant scanning (FindCrypt-style)
-2. Basic block profiling (10-100x faster than instruction hooks)
-3. Loop detection (identifies round functions)
-4. Entropy analysis and avalanche testing
+2. Syscall monitoring (getrandom, key sizes, entropy requests)
+3. Basic block profiling (10-100x faster than instruction hooks)
+4. Loop detection (identifies round functions)
+5. Algorithm classification (standard vs proprietary)
+6. Pattern detection (XOR-based, PRNG-based, custom ciphers)
 """
 
 import os
@@ -17,8 +19,9 @@ import tempfile
 import re
 import math
 import time
+from collections import defaultdict
 from qiling import Qiling
-from qiling.const import QL_VERBOSE
+from qiling.const import QL_VERBOSE, QL_INTERCEPT
 
 # Import our new modules
 from constant_scanner import scan_for_constants, print_scan_results
@@ -38,6 +41,20 @@ stats_total_blocks = 0
 stats_crypto_heavy_blocks = 0
 basic_blocks = {}  # Track block execution for loop detection
 
+# Syscall monitoring (NEW)
+syscall_events = {
+    'getrandom_calls': [],
+    'random_reads': [],
+    'memory_operations': [],
+}
+
+# Algorithm classification data
+algo_evidence = {
+    'standard_algorithms': {},  # AES, ChaCha20, RSA, etc.
+    'proprietary_indicators': [],  # Custom/XOR-based/PRNG patterns
+    'ruled_out': [],  # Algorithms we can eliminate
+}
+
 def get_entropy(data):
     """Calculate Shannon entropy (Max 4.0 for byte-level entropy of 16 bytes)."""
     if not data: return 0
@@ -49,6 +66,160 @@ def get_entropy(data):
             p_x = count / length
             entropy += - p_x * math.log2(p_x)
     return entropy
+
+def classify_by_key_size(size_bytes):
+    """
+    Classify algorithm based on key/nonce/IV size.
+    Returns: (likely_algorithms, ruled_out_algorithms)
+    """
+    likely = []
+    ruled_out = []
+    
+    if size_bytes == 8:  # 64 bits - Too small for modern crypto
+        likely.extend([
+            "XOR-based cipher (8-byte key)",
+            "PRNG-based stream cipher (8-byte seed)",
+            "Custom/proprietary cipher",
+            "Toy Feistel network",
+            "Simple obfuscation cipher"
+        ])
+        ruled_out.extend([
+            "AES (needs 16/24/32-byte key)",
+            "ChaCha20 (needs 32-byte key + 12-byte nonce)",
+            "RSA/ECC (needs much larger keys)",
+            "DES/3DES (needs proper key schedule, not just 8 bytes)"
+        ])
+    elif size_bytes == 16:  # 128 bits
+        likely.extend([
+            "AES-128",
+            "ChaCha20 (partial - needs 32-byte key)",
+            "MD5 output (not encryption)",
+        ])
+    elif size_bytes == 24:  # 192 bits
+        likely.append("AES-192")
+    elif size_bytes == 32:  # 256 bits
+        likely.extend([
+            "AES-256",
+            "ChaCha20 (with additional 12-byte nonce needed)",
+            "SHA-256 output (not encryption)"
+        ])
+    elif size_bytes < 8:
+        likely.extend([
+            "Extremely weak custom cipher",
+            "Simple XOR obfuscation"
+        ])
+        ruled_out.extend([
+            "All standard algorithms (key too small)"
+        ])
+    else:
+        likely.append("Unknown/Custom algorithm")
+    
+    return likely, ruled_out
+
+def detect_cipher_patterns(ql, input_data, output_data):
+    """
+    Analyze input/output patterns to detect cipher type.
+    Returns: list of detected patterns
+    """
+    patterns = []
+    
+    if len(input_data) != len(output_data):
+        patterns.append("LENGTH_MISMATCH")
+        return patterns
+    
+    if len(input_data) == len(output_data):
+        patterns.append("SAME_LENGTH (stream cipher or XOR)")
+    
+    # Check for simple XOR pattern
+    xor_result = bytes([a ^ b for a, b in zip(input_data[:16], output_data[:16])])
+    xor_entropy = get_entropy(xor_result)
+    
+    if xor_entropy < 1.5:  # Low entropy in XOR = repeating key
+        patterns.append("REPEATING_XOR_KEY (detected)")
+    
+    # Check for block alignment
+    if len(input_data) % 16 == 0 and len(output_data) % 16 == 0:
+        patterns.append("16_BYTE_BLOCKS (AES-like)")
+    elif len(input_data) % 8 == 0 and len(output_data) % 8 == 0:
+        patterns.append("8_BYTE_BLOCKS (DES-like or custom)")
+    else:
+        patterns.append("NO_BLOCK_ALIGNMENT (stream cipher)")
+    
+    # Check output entropy
+    out_entropy = get_entropy(output_data[:32])
+    if out_entropy > 3.5:
+        patterns.append("HIGH_ENTROPY_OUTPUT (good diffusion)")
+    elif out_entropy < 2.5:
+        patterns.append("LOW_ENTROPY_OUTPUT (weak cipher)")
+    
+    return patterns
+
+def hook_syscalls(ql):
+    """
+    Hook syscalls to monitor crypto-related operations.
+    Tracks: getrandom, read from /dev/random, memory operations
+    """
+    global syscall_events
+    
+    def syscall_getrandom(ql, buf, buflen, flags):
+        """Monitor getrandom() calls - critical for detecting key/nonce generation"""
+        try:
+            # Read the random data that will be generated
+            random_data = os.urandom(buflen)
+            ql.mem.write(buf, random_data)
+            
+            syscall_events['getrandom_calls'].append({
+                'size': buflen,
+                'data': random_data[:32],  # Store first 32 bytes
+                'flags': flags,
+                'entropy': get_entropy(random_data[:min(32, buflen)])
+            })
+            
+            print(f"[SYSCALL] getrandom() called: {buflen} bytes (0x{buflen:x})")
+            print(f"          Data: {random_data[:min(16, buflen)].hex()}")
+            
+            # Classify based on size
+            likely, ruled_out = classify_by_key_size(buflen)
+            if likely:
+                print(f"          Likely: {likely[0]}")
+            if ruled_out:
+                algo_evidence['ruled_out'].extend(ruled_out)
+            
+            return buflen
+        except Exception as e:
+            print(f"[!] getrandom hook error: {e}")
+            return -1
+    
+    def syscall_read(ql, fd, buf, count):
+        """Monitor reads from /dev/random or /dev/urandom"""
+        try:
+            # Check if reading from random device
+            if fd in [ql.os.fd.get('/dev/random'), ql.os.fd.get('/dev/urandom')]:
+                random_data = os.urandom(count)
+                ql.mem.write(buf, random_data)
+                
+                syscall_events['random_reads'].append({
+                    'size': count,
+                    'data': random_data[:32],
+                    'source': '/dev/random' if fd == ql.os.fd.get('/dev/random') else '/dev/urandom'
+                })
+                
+                print(f"[SYSCALL] read() from random device: {count} bytes")
+                return count
+        except:
+            pass
+        
+        # Default behavior
+        return ql.os.syscall_read_orig(ql, fd, buf, count)
+    
+    # Hook the syscalls
+    try:
+        ql.os.set_syscall("getrandom", syscall_getrandom)
+        # Save original read for fallback
+        ql.os.syscall_read_orig = ql.os.syscall_table.get("read", lambda *args: -1)
+        ql.os.set_syscall("read", syscall_read)
+    except Exception as e:
+        print(f"[!] Warning: Could not hook syscalls: {e}")
 
 def is_crypto_op(mnemonic):
     """Check if instruction mnemonic is a crypto operation."""
@@ -64,6 +235,217 @@ def is_crypto_op(mnemonic):
         'aes', 'sha',                            # Hardware crypto
     ]
     return any(mnemonic.startswith(op) for op in crypto_ops)
+
+def analyze_algorithm_evidence(constant_results, syscall_events, basic_blocks, io_captures):
+    """
+    Comprehensive analysis to classify the crypto algorithm.
+    Returns: classification report with confidence scores
+    """
+    report = {
+        'standard_algorithms': {},
+        'proprietary_likely': False,
+        'proprietary_patterns': [],
+        'ruled_out': set(),
+        'confidence': 'UNKNOWN',
+        'primary_classification': 'UNKNOWN'
+    }
+    
+    # 1. Analyze syscall evidence (CRITICAL)
+    if syscall_events['getrandom_calls']:
+        for call in syscall_events['getrandom_calls']:
+            size = call['size']
+            likely, ruled_out = classify_by_key_size(size)
+            
+            if size <= 8:
+                report['proprietary_likely'] = True
+                report['proprietary_patterns'].append(
+                    f"Small random key/nonce ({size} bytes) - too small for standard crypto"
+                )
+                report['ruled_out'].update(ruled_out)
+            elif size in [16, 24, 32]:
+                # Could be standard algorithm
+                for algo in likely:
+                    if algo not in report['standard_algorithms']:
+                        report['standard_algorithms'][algo] = {'evidence': [], 'score': 0}
+                    report['standard_algorithms'][algo]['evidence'].append(f"Key size: {size} bytes")
+                    report['standard_algorithms'][algo]['score'] += 30
+    
+    # 2. Analyze constant detection
+    if constant_results:
+        for algo, constants in constant_results.items():
+            if algo not in report['standard_algorithms']:
+                report['standard_algorithms'][algo] = {'evidence': [], 'score': 0}
+            report['standard_algorithms'][algo]['evidence'].append(
+                f"Known constants detected ({len(constants)} matches)"
+            )
+            report['standard_algorithms'][algo]['score'] += 40
+            
+            # Rule out other algorithms
+            if algo == 'AES':
+                report['ruled_out'].update(['ChaCha20', 'DES', 'RSA'])
+            elif algo == 'ChaCha20':
+                report['ruled_out'].update(['AES', 'DES'])
+    else:
+        # No constants found = likely proprietary
+        report['proprietary_patterns'].append("No known crypto constants detected")
+        report['proprietary_likely'] = True
+    
+    # 3. Analyze I/O patterns
+    if io_captures:
+        for func_name, captures in io_captures.items():
+            for capture in captures:
+                patterns = detect_cipher_patterns(None, capture['input'], capture['output'])
+                
+                if 'SAME_LENGTH' in patterns:
+                    report['proprietary_patterns'].append("Output length == input length (stream cipher pattern)")
+                    report['ruled_out'].update(['RSA', 'ECC'])  # Asymmetric changes length
+                
+                if 'REPEATING_XOR_KEY' in patterns:
+                    report['proprietary_likely'] = True
+                    report['proprietary_patterns'].append("XOR-based cipher detected")
+                    report['ruled_out'].update(['AES', 'ChaCha20', 'RSA', 'DES'])
+                
+                if 'NO_BLOCK_ALIGNMENT' in patterns:
+                    report['ruled_out'].update(['AES', 'DES', '3DES'])
+    
+    # 4. Analyze execution patterns
+    crypto_loops = [b for b in basic_blocks.values() 
+                    if b.get('is_loop') and b.get('total_ops', 0) > 0 
+                    and (b.get('crypto_ops', 0) / b['total_ops']) > 0.3]
+    
+    if len(crypto_loops) >= 10:
+        # Many rounds = likely AES/DES
+        if 'AES' in report['standard_algorithms']:
+            report['standard_algorithms']['AES']['score'] += 20
+    elif len(crypto_loops) <= 3:
+        # Few rounds = likely simple cipher
+        report['proprietary_patterns'].append("Few crypto loops (simple cipher)")
+        report['proprietary_likely'] = True
+    
+    # 5. Final classification
+    if report['standard_algorithms']:
+        # Find highest scoring standard algorithm
+        best_algo = max(report['standard_algorithms'].items(), 
+                       key=lambda x: x[1]['score'])
+        
+        if best_algo[1]['score'] >= 70:
+            report['primary_classification'] = f"STANDARD: {best_algo[0]}"
+            report['confidence'] = 'HIGH'
+        elif best_algo[1]['score'] >= 40:
+            report['primary_classification'] = f"LIKELY STANDARD: {best_algo[0]}"
+            report['confidence'] = 'MEDIUM'
+        else:
+            report['primary_classification'] = "PROPRIETARY/CUSTOM"
+            report['confidence'] = 'MEDIUM'
+    
+    if report['proprietary_likely'] or not report['standard_algorithms']:
+        # Determine proprietary type
+        if any('XOR' in p for p in report['proprietary_patterns']):
+            report['primary_classification'] = "PROPRIETARY: XOR-based cipher"
+        elif any('Small random' in p for p in report['proprietary_patterns']):
+            report['primary_classification'] = "PROPRIETARY: Lightweight/Custom cipher"
+        else:
+            report['primary_classification'] = "PROPRIETARY: Unknown custom algorithm"
+        
+        if len(report['proprietary_patterns']) >= 3:
+            report['confidence'] = 'HIGH'
+        elif len(report['proprietary_patterns']) >= 1:
+            report['confidence'] = 'MEDIUM'
+        else:
+            report['confidence'] = 'LOW'
+    
+    return report
+
+def print_classification_report(report, syscall_events=None):
+    """Print a detailed classification report"""
+    print("\n" + "="*70)
+    print("   ALGORITHM CLASSIFICATION REPORT")
+    print("="*70)
+    
+    print(f"\n[*] PRIMARY CLASSIFICATION: {report['primary_classification']}")
+    print(f"    Confidence: {report['confidence']}")
+    
+    # Standard algorithms detected
+    if report['standard_algorithms']:
+        print("\n[*] Standard Algorithms Detected:")
+        for algo, data in sorted(report['standard_algorithms'].items(), 
+                                key=lambda x: x[1]['score'], reverse=True):
+            print(f"\n    {algo} (Score: {data['score']}/100)")
+            for evidence in data['evidence']:
+                print(f"      ✓ {evidence}")
+    
+    # Proprietary indicators
+    if report['proprietary_patterns']:
+        print("\n[*] Proprietary/Custom Cipher Indicators:")
+        for pattern in report['proprietary_patterns']:
+            print(f"      ⚠ {pattern}")
+    
+    # Ruled out algorithms
+    if report['ruled_out']:
+        print("\n[*] Algorithms RULED OUT:")
+        for algo in sorted(report['ruled_out']):
+            print(f"      ❌ {algo}")
+    
+    # Dynamic Analysis Summary based on actual findings
+    print("\n[*] Analysis Summary:")
+    
+    if 'STANDARD' in report['primary_classification']:
+        # Extract the algorithm name
+        algo_name = report['primary_classification'].split(': ')[-1] if ': ' in report['primary_classification'] else "Unknown"
+        print(f"      → Binary uses STANDARD cryptography: {algo_name}")
+        print(f"      → Well-documented algorithm with extensive cryptanalysis")
+        
+        # Show key size if detected from syscalls
+        if syscall_events and syscall_events.get('getrandom_calls'):
+            key_size = syscall_events['getrandom_calls'][0]['size'] * 8  # Convert to bits
+            print(f"      → Key size: {key_size} bits")
+        
+        # Warn about implementation
+        print(f"      → Security depends on proper implementation (padding, IV, etc.)")
+        
+        # Show specific recommendations for the algorithm
+        if 'AES' in report['primary_classification']:
+            print(f"      → Recommendation: Use AES-256-GCM for best security")
+        elif 'ChaCha20' in report['primary_classification']:
+            print(f"      → Recommendation: Use ChaCha20-Poly1305 for authenticated encryption")
+    
+    elif 'PROPRIETARY' in report['primary_classification']:
+        print(f"      → Binary uses CUSTOM/PROPRIETARY cipher")
+        
+        # Show specific weaknesses detected
+        if report['proprietary_patterns']:
+            print(f"      → Detected {len(report['proprietary_patterns'])} weakness indicator(s):")
+            for pattern in report['proprietary_patterns'][:3]:  # Show top 3
+                print(f"         • {pattern}")
+        
+        # Specific warnings based on cipher type
+        if 'XOR' in report['primary_classification']:
+            print(f"      → ⚠ CRITICAL: XOR-based ciphers are trivially broken")
+            print(f"      → Vulnerable to: Known-plaintext attacks, frequency analysis")
+            print(f"      → Estimated strength: VERY WEAK (< 40 bits effective)")
+        elif 'Lightweight' in report['primary_classification'] or 'Custom' in report['primary_classification']:
+            print(f"      → ⚠ WARNING: Custom crypto is unvetted and likely weak")
+            print(f"      → No peer review or cryptanalysis available")
+            
+            # Show key size weakness if detected
+            if syscall_events and syscall_events.get('getrandom_calls'):
+                key_size = syscall_events['getrandom_calls'][0]['size'] * 8
+                if key_size <= 64:
+                    print(f"      → Key size too small: {key_size} bits (need ≥128 bits)")
+        
+        # Actionable recommendations
+        print(f"      → ⚠ URGENT: Replace with standard algorithms")
+        print(f"      → Recommended alternatives:")
+        print(f"         • AES-256-GCM (block cipher, hardware accelerated)")
+        print(f"         • ChaCha20-Poly1305 (stream cipher, software optimized)")
+    
+    else:
+        # Unknown classification
+        print(f"      → Classification: {report['primary_classification']}")
+        print(f"      → Unable to determine algorithm type conclusively")
+        print(f"      → Recommendation: Manual code review required")
+    
+    print("="*70)
 
 def profile_basic_block(ql, address, size):
     """
@@ -193,6 +575,33 @@ def detect_architecture(binary_path):
         print(f"[-] Failed to detect architecture: {e}")
         return None
 
+def check_glibc_requirements(binary_path):
+    """Check GLIBC version requirements of the binary."""
+    try:
+        result = subprocess.run(["objdump", "-T", binary_path], 
+                              capture_output=True, text=True, timeout=5)
+        if result.returncode != 0:
+            # Try readelf as fallback
+            result = subprocess.run(["readelf", "-V", binary_path],
+                                  capture_output=True, text=True, timeout=5)
+        
+        output = result.stdout
+        glibc_versions = []
+        
+        # Look for GLIBC version requirements
+        import re
+        for match in re.finditer(r'GLIBC_(\d+\.\d+)', output):
+            version = match.group(1)
+            if version not in glibc_versions:
+                glibc_versions.append(version)
+        
+        if glibc_versions:
+            glibc_versions.sort(key=lambda v: tuple(map(int, v.split('.'))))
+            return glibc_versions
+        return []
+    except Exception as e:
+        return []
+
 def get_rootfs(binary_path):
     """Determine rootfs based on automatically detected architecture."""
     arch = detect_architecture(binary_path)
@@ -283,12 +692,31 @@ def detect_crypto_functions(binary_path):
 
 def run_stripped_binary_analysis(binary_path, rootfs_path, filename, constant_results):
     """Analyze stripped/obfuscated binaries through behavioral monitoring + constant detection."""
-    global stats_total_blocks, stats_crypto_heavy_blocks, basic_blocks, logger
+    global stats_total_blocks, stats_crypto_heavy_blocks, basic_blocks, logger, syscall_events
     
     # Reset stats
     stats_total_blocks = 0
     stats_crypto_heavy_blocks = 0
     basic_blocks = {}
+    syscall_events = {
+        'getrandom_calls': [],
+        'random_reads': [],
+        'memory_operations': [],
+    }
+    
+    # Check GLIBC requirements
+    glibc_versions = check_glibc_requirements(binary_path)
+    if glibc_versions:
+        max_version = glibc_versions[-1]
+        print(f"[*] Binary requires GLIBC: {', '.join(glibc_versions)} (max: {max_version})")
+        
+        # Warn if newer than typical rootfs (2.31 is common in Qiling rootfs)
+        max_ver_tuple = tuple(map(int, max_version.split('.')))
+        if max_ver_tuple >= (2, 34):
+            print(f"[!] WARNING: Binary requires GLIBC {max_version}, but rootfs may have older version")
+            print(f"    If execution fails, try:")
+            print(f"    1. Compile binary with older GLIBC: gcc -static ...")
+            print(f"    2. Update rootfs libraries from your system")
     
     tmp_path = os.path.join(rootfs_path, "tmp")
     os.makedirs(tmp_path, exist_ok=True)
@@ -304,8 +732,13 @@ def run_stripped_binary_analysis(binary_path, rootfs_path, filename, constant_re
             arch_str = f"{ql.arch.type.name}"
             logger.log_architecture(arch_str)
         
+        # CRITICAL: Hook syscalls FIRST to catch getrandom() calls
+        print("[*] Installing syscall hooks (getrandom, read)...")
+        hook_syscalls(ql)
+        
         # Track memory writes with high entropy
         high_entropy_writes = []
+        io_captures = {}  # Track I/O for pattern detection
         
         def monitor_memory_write(ql, access, address, size, value):
             """Hook all memory writes to detect high-entropy data (encrypted output)."""
@@ -332,31 +765,82 @@ def run_stripped_binary_analysis(binary_path, rootfs_path, filename, constant_re
         ql.hook_mem_write(monitor_memory_write)
         ql.hook_block(profile_basic_block)  # MUCH FASTER than hook_code
         
-        print("[*] Executing binary with basic block profiling...")
-        print("    (Using basic block hooks for 10-100x better performance)")
+        print("[*] Executing binary with syscall + basic block monitoring...")
+        print("    (Tracking: getrandom, memory writes, crypto operations)")
+        
+        execution_failed = False
+        glibc_error = False
+        
         try:
             ql.run(timeout=50000000)
         except Exception as e:
+            execution_failed = True
+            error_msg = str(e)
+            
+            # Check for GLIBC version mismatch
+            if "GLIBC" in error_msg or "version" in error_msg.lower():
+                glibc_error = True
+                print("\n[!] GLIBC Version Mismatch Detected!")
+                print("    The binary requires a newer GLIBC version than available in rootfs.")
+                print("\n    Solutions:")
+                print("    1. Update rootfs: cd rootfs && git pull")
+                print("    2. Use static binary: compile with -static flag")
+                print("    3. Copy system libraries: cp /lib/x86_64-linux-gnu/libc.so.6 rootfs/x8664_linux/lib/")
+                print(f"\n    Error details: {error_msg}\n")
+            
             if logger:
-                logger.log_error(f"Execution error: {str(e)}", e)
+                logger.log_error(f"Execution error: {error_msg}", e)
         
-        # Results
-        print("\n" + "="*60)
-        print("   ENHANCED ANALYSIS RESULTS (v2.0)")
-        print("="*60)
-        print(f"\n[✓] Binary executed")
+        # ===== PHASE 1: Syscall Analysis =====
+        print("\n" + "="*70)
+        print("   PHASE 1: SYSCALL ANALYSIS")
+        print("="*70)
         
-        # Constant Detection Results
+        if execution_failed:
+            print(f"\n[!] Binary execution failed or crashed early")
+            if glibc_error:
+                print(f"[!] Reason: GLIBC version incompatibility")
+            print(f"[*] Falling back to static analysis results only\n")
+        else:
+            print(f"\n[✓] Binary executed successfully")
+        
+        # Syscall results
+        if syscall_events['getrandom_calls']:
+            print(f"\n[✓] Detected {len(syscall_events['getrandom_calls'])} getrandom() call(s):")
+            for i, call in enumerate(syscall_events['getrandom_calls'], 1):
+                print(f"    Call #{i}:")
+                print(f"      Size: {call['size']} bytes (0x{call['size']:x})")
+                print(f"      Data: {call['data'][:16].hex()}")
+                print(f"      Entropy: {call['entropy']:.2f}")
+                
+                # Immediate classification
+                likely, ruled_out = classify_by_key_size(call['size'])
+                if call['size'] <= 8:
+                    print(f"      ⚠ CRITICAL: Key/nonce too small for standard crypto!")
+                    print(f"         Likely: {likely[0]}")
+        else:
+            print(f"\n[-] No getrandom() calls detected")
+            print(f"    Note: Binary may use /dev/random or hardcoded keys")
+        
+        # ===== PHASE 2: Constant Detection =====
+        print("\n" + "="*70)
+        print("   PHASE 2: CONSTANT DETECTION")
+        print("="*70)
+        
         if constant_results:
-            print(f"\n[*] Constant Detection (FindCrypt):")
-            total_constants = sum(len(consts) for consts in constant_results.values())
-            print(f"    [✓] Detected {len(constant_results)} algorithm(s), {total_constants} constant(s)")
+            print(f"\n[✓] Detected {len(constant_results)} algorithm(s), "
+                  f"{sum(len(consts) for consts in constant_results.values())} constant(s)")
             for algo, constants in constant_results.items():
                 const_types = set(c['constant'] for c in constants)
-                print(f"      {algo}: {', '.join(const_types)}")
+                print(f"    {algo}: {', '.join(const_types)}")
         else:
-            print(f"\n[*] Constant Detection:")
-            print(f"    [-] No known crypto constants found")
+            print(f"\n[-] No known crypto constants found")
+            print(f"    → Likely proprietary or obfuscated algorithm")
+        
+        # ===== PHASE 3: Memory & Pattern Analysis =====
+        print("\n" + "="*70)
+        print("   PHASE 3: MEMORY & PATTERN ANALYSIS")
+        print("="*70)
         
         # Memory entropy analysis
         print(f"\n[*] Memory Entropy Analysis:")
@@ -399,73 +883,56 @@ def run_stripped_binary_analysis(binary_path, rootfs_path, filename, constant_re
             print(f"    Crypto Operations: {total_crypto_ops}")
             print(f"    Crypto-Op Ratio: {ratio:.2%}")
             print(f"    Crypto-Heavy Blocks: {stats_crypto_heavy_blocks}")
+            if execution_failed:
+                print(f"    [!] Note: Analysis incomplete due to execution failure")
+        elif execution_failed and glibc_error:
+            print(f"\n[*] Basic Block Analysis:")
+            print(f"    [!] Could not complete due to GLIBC incompatibility")
+            print(f"    [*] Relying on static analysis (constants) only")
         
-        # IMPROVED Confidence Scoring
-        confidence_score = 0
-        reasons = []
+        # ===== PHASE 4: Algorithm Classification =====
+        print("\n" + "="*70)
+        print("   PHASE 4: ALGORITHM CLASSIFICATION")
+        print("="*70)
         
-        # Factor 1: Crypto constants detected (up to 50 points)
-        # IMPORTANT: Only count STRONG constants (not RSA exponents which are common)
-        strong_constants = {k: v for k, v in constant_results.items() 
-                           if k not in ['RSA']}  # RSA exponents have false positives
+        classification = analyze_algorithm_evidence(
+            constant_results, 
+            syscall_events, 
+            basic_blocks,
+            io_captures
+        )
         
-        if strong_constants:
-            num_algos = len(strong_constants)
-            if num_algos >= 2:
-                confidence_score += 50
-                reasons.append(f"{num_algos} crypto algorithms detected (constants)")
-            elif num_algos == 1:
-                confidence_score += 40
-                reasons.append(f"Crypto constants detected ({list(strong_constants.keys())[0]})")
+        print_classification_report(classification, syscall_events)
         
-        # Factor 2: Crypto loops (up to 30 points)
-        if len(crypto_loops) >= 3:
-            confidence_score += 30
-            reasons.append(f"{len(crypto_loops)} crypto loops (round functions)")
-        elif len(crypto_loops) >= 1:
-            confidence_score += 20
-            reasons.append(f"{len(crypto_loops)} crypto loop(s)")
-        
-        # Factor 3: High-entropy writes (up to 20 points)
-        if len(high_entropy_writes) >= 3:
-            confidence_score += 20
-            reasons.append(f"{len(high_entropy_writes)} high-entropy writes")
-        elif len(high_entropy_writes) >= 1:
-            confidence_score += 10
-            reasons.append(f"{len(high_entropy_writes)} high-entropy write(s)")
-        
-        # Factor 4: Overall crypto-op ratio (up to 20 points)
-        # IMPORTANT: Increased threshold since normal code has arithmetic
-        if ratio > 0.30:  # Increased from 0.20 to reduce false positives
-            confidence_score += 20
-            reasons.append(f"Very high crypto-op ratio ({ratio:.1%})")
-        elif ratio > 0.20:
-            confidence_score += 15
-            reasons.append(f"High crypto-op ratio ({ratio:.1%})")
-        elif ratio > 0.15:
-            confidence_score += 10
-            reasons.append(f"Medium crypto-op ratio ({ratio:.1%})")
-        
-        # Cap at 100
-        confidence_score = min(confidence_score, 100)
-        
-        # Determine confidence
-        if confidence_score >= 70:
-            confidence = "HIGH"
-        elif confidence_score >= 40:
-            confidence = "MEDIUM"
-        else:
-            confidence = "LOW"
-        
-        # Log verdict
+        # Log results
         if logger:
-            logger.log_verdict(confidence_score, confidence, reasons)
+            # Calculate numeric confidence score for logging
+            confidence_level = classification.get('confidence', 'UNKNOWN')
+            confidence_map = {'HIGH': 80, 'MEDIUM': 50, 'LOW': 20, 'UNKNOWN': 0}
+            confidence_score = confidence_map.get(confidence_level, 0)
+            
+            # Add standard algorithm scores if any
+            if classification.get('standard_algorithms'):
+                max_algo_score = max([algo['score'] for algo in classification['standard_algorithms'].values()])
+                confidence_score = max(confidence_score, max_algo_score)
+            
+            reasons = classification.get('proprietary_patterns', [])
+            # Add standard algorithm evidence to reasons
+            for algo, data in classification.get('standard_algorithms', {}).items():
+                if data['score'] >= 40:
+                    reasons.extend(data['evidence'])
+            
+            logger.log_verdict(
+                confidence_score,
+                confidence_level,
+                reasons
+            )
+            
             # Log crypto loops
             for addr, block_info in basic_blocks.items():
                 if block_info['is_loop'] and block_info['exec_count'] >= 10:
                     crypto_ratio = block_info['crypto_ops'] / block_info['total_ops'] if block_info['total_ops'] > 0 else 0
                     if crypto_ratio > 0.3:
-                        # addr is already an integer, not a string
                         logger.log_crypto_loop(
                             addr,
                             block_info['exec_count'],
@@ -479,20 +946,7 @@ def run_stripped_binary_analysis(binary_path, rootfs_path, filename, constant_re
             
             # Finalize and save logs
             log_dir = logger.finalize()
-            print(f"[*] Logs saved to: {log_dir}")
-        
-        # Verdict
-        print("\n" + "="*60)
-        if confidence_score >= 40:
-            print(f"[*] VERDICT: Crypto behavior detected (Confidence: {confidence})")
-        else:
-            print(f"[*] VERDICT: No strong crypto indicators (Confidence: {confidence})")
-        print(f"    Confidence Score: {confidence_score}/100")
-        if reasons:
-            print(f"    Reasons:")
-            for reason in reasons:
-                print(f"      - {reason}")
-        print("="*60)
+            print(f"\n[*] Logs saved to: {log_dir}")
         
     finally:
         try:
@@ -657,12 +1111,29 @@ def analyze_binary():
     run_binary_with_hooks(BINARY_PATH, crypto_funcs, rootfs_path, filename, constant_results)
 
 def run_binary_with_hooks(binary_path, crypto_funcs, rootfs_path, filename, constant_results):
-    global stats_total_blocks, stats_crypto_heavy_blocks, basic_blocks
+    global stats_total_blocks, stats_crypto_heavy_blocks, basic_blocks, syscall_events
     
     # Reset stats
     stats_total_blocks = 0
     stats_crypto_heavy_blocks = 0
     basic_blocks = {}
+    syscall_events = {
+        'getrandom_calls': [],
+        'random_reads': [],
+        'memory_operations': [],
+    }
+    
+    # Check GLIBC requirements
+    glibc_versions = check_glibc_requirements(binary_path)
+    if glibc_versions:
+        max_version = glibc_versions[-1]
+        print(f"[*] Binary requires GLIBC: {', '.join(glibc_versions)} (max: {max_version})")
+        
+        # Warn if newer than typical rootfs
+        max_ver_tuple = tuple(map(int, max_version.split('.')))
+        if max_ver_tuple >= (2, 34):
+            print(f"[!] WARNING: Binary requires GLIBC {max_version}, but rootfs may have older version")
+            print(f"    If execution fails, try compiling with: gcc -static ...")
     
     tmp_path = os.path.join(rootfs_path, "tmp")
     os.makedirs(tmp_path, exist_ok=True)
@@ -673,6 +1144,10 @@ def run_binary_with_hooks(binary_path, crypto_funcs, rootfs_path, filename, cons
     try:
         ql = Qiling([temp_binary], rootfs_path, verbose=QL_VERBOSE.OFF, console=False)
         base_addr = ql.loader.images[0].base
+        
+        # CRITICAL: Hook syscalls FIRST
+        print("[*] Installing syscall hooks (getrandom, read)...")
+        hook_syscalls(ql)
         
         # S-Box Injection logic (preserved)
         try:
@@ -795,16 +1270,39 @@ def run_binary_with_hooks(binary_path, crypto_funcs, rootfs_path, filename, cons
         ql.hook_block(profile_basic_block)
         
         print("[*] Executing binary with basic block profiling...")
+        
+        execution_failed = False
+        glibc_error = False
+        
         try:
             ql.run(timeout=50000000) 
         except Exception as e:
-            pass
+            execution_failed = True
+            error_msg = str(e)
+            
+            # Check for GLIBC version mismatch
+            if "GLIBC" in error_msg or "version" in error_msg.lower():
+                glibc_error = True
+                print("\n[!] GLIBC Version Mismatch Detected!")
+                print("    The binary requires a newer GLIBC version than available in rootfs.")
+                print("\n    Solutions:")
+                print("    1. Update rootfs: cd rootfs && git pull")
+                print("    2. Use static binary: compile with -static flag")
+                print("    3. Copy system libraries: cp /lib/x86_64-linux-gnu/libc.so.6 rootfs/x8664_linux/lib/")
+                print(f"\n    Error details: {error_msg}\n")
         
         # Results
         print("\n" + "="*60)
         print("   ENHANCED ANALYSIS RESULTS (v2.0)")
         print("="*60)
-        print(f"\n[✓] Binary executed")
+        
+        if execution_failed:
+            print(f"\n[!] Binary execution failed or crashed early")
+            if glibc_error:
+                print(f"[!] Reason: GLIBC version incompatibility")
+            print(f"[*] Falling back to static analysis results only\n")
+        else:
+            print(f"\n[✓] Binary executed successfully")
         
         # Constant Detection Results
         if constant_results:
@@ -974,16 +1472,16 @@ def run_binary_with_hooks(binary_path, crypto_funcs, rootfs_path, filename, cons
             confidence = "MEDIUM"
         else:
             confidence = "LOW"
-            
-        # Verdict
-        print("\n" + "="*60)
-        print(f"[*] VERDICT: Crypto functions detected (Confidence: {confidence})")
-        print(f"    Confidence Score: {confidence_score}/100")
-        if reasons:
-            print(f"    Reasons:")
-            for reason in reasons:
-                print(f"      - {reason}")
-        print("="*60)
+        
+        # ===== ALGORITHM CLASSIFICATION =====
+        classification = analyze_algorithm_evidence(
+            constant_results,
+            syscall_events,
+            basic_blocks,
+            io_captures
+        )
+        
+        print_classification_report(classification, syscall_events)
         
     finally:
         try: shutil.rmtree(temp_dir)
