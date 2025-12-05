@@ -333,7 +333,7 @@ install_ghidra() {
     TEMP_DIR=$(mktemp -d)
     cd $TEMP_DIR
     
-    if ! wget -q --show-progress "$GHIDRA_URL" 2>/dev/null; then
+    if ! wget -q --show-progress "$GHIDRA_URL"; then
         print_warning "Direct download failed, trying alternative method..."
         print_info "Please download Ghidra manually from:"
         print_info "https://github.com/NationalSecurityAgency/ghidra/releases"
@@ -351,7 +351,12 @@ install_ghidra() {
     cd - > /dev/null
     rm -rf $TEMP_DIR
     
-    print_success "Ghidra installed at $GHIDRA_INSTALL_DIR"
+    if [ -f "$GHIDRA_INSTALL_DIR/ghidraRun" ]; then
+        print_success "Ghidra installed successfully at $GHIDRA_INSTALL_DIR"
+    else
+        print_error "Ghidra installation failed - ghidraRun not found at $GHIDRA_INSTALL_DIR"
+        return
+    fi
     
     # Set environment variable
     echo "export GHIDRA_INSTALL_DIR=$GHIDRA_INSTALL_DIR" >> ~/.bashrc
