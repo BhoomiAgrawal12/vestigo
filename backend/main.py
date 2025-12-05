@@ -22,6 +22,7 @@ from services.ingest_service import IngestService
 from services.feature_extraction_service import FeatureExtractionService
 from services.filesystem_scan_service import FilesystemScanService
 from services.secure_boot_analysis_service import SecureBootAnalysisService
+from services.crypto_library_service import CryptoLibraryService
 from services.job_manager import job_manager, JobStatus
 
 # ==========================================================
@@ -35,6 +36,7 @@ ingest_service = IngestService()
 feature_service = FeatureExtractionService()
 filesystem_service = FilesystemScanService()
 secureboot_service = SecureBootAnalysisService()
+cryptolib_service = CryptoLibraryService()
 
 logger.info("Vestigo Backend starting up...")
 
@@ -296,6 +298,14 @@ async def process_filesystem_scan(job_id: str, analysis_result: dict):
             # Update job with results (using feature_extraction_results for now)
             job_manager.update_job_feature_results(job_id, scan_results)
             
+            # If crypto libraries were found, process them
+            if "crypto_libraries" in scan_results:
+                crypto_libs = scan_results["crypto_libraries"]
+                if crypto_libs.get("so_files") or crypto_libs.get("a_files"):
+                    total_libs = len(crypto_libs.get("so_files", [])) + len(crypto_libs.get("a_files", []))
+                    logger.info(f"Processing {total_libs} crypto libraries found in filesystem scan")
+                    await process_crypto_libraries(job_id, crypto_libs)
+            
             logger.info(f"Background filesystem scan completed - JobID: {job_id}")
         else:
             logger.error(f"Extracted filesystem path not found - JobID: {job_id}")
@@ -357,6 +367,90 @@ async def process_bootloader_analyses(parent_job_id: str, bootloaders: list):
         
     except Exception as e:
         logger.error(f"Failed to create bootloader analysis jobs - ParentJob: {parent_job_id}, Error: {str(e)}", exc_info=True)
+
+
+async def process_crypto_libraries(parent_job_id: str, crypto_libs: dict):
+    """Background task to process crypto libraries (.so and .a files)"""
+    try:
+        logger.info(f"Starting crypto library processing - ParentJob: {parent_job_id}")
+        
+        # Process libraries using CryptoLibraryService
+        results = cryptolib_service.process_crypto_libraries(crypto_libs, parent_job_id)
+        
+        logger.info(f"Crypto library processing complete - ParentJob: {parent_job_id}, Summary: {results.get('summary', {})}")
+        
+        # Get all files ready for PATH_A pipeline
+        pipeline_files = cryptolib_service.get_objects_for_pipeline(results)
+        
+        if pipeline_files:
+            logger.info(f"Creating {len(pipeline_files)} analysis jobs for crypto library objects")
+            
+            import uuid
+            
+            # Create separate jobs for each object file from .a archives
+            for file_info in pipeline_files:
+                if file_info.get("analysis_type") == "object_file_analysis":
+                    # This is a .o file extracted from .a archive
+                    object_job_id = str(uuid.uuid4())
+                    
+                    job = job_manager.create_job(
+                        object_job_id,
+                        file_info["file"],
+                        file_info["size"]
+                    )
+                    
+                    job_manager.update_job_status(
+                        object_job_id,
+                        JobStatus.EXTRACTING_FEATURES,
+                        routing_decision="PATH_A_BARE_METAL",
+                        routing_reason=f"Object file from {file_info.get('parent_archive', 'archive')}",
+                        workspace_path=file_info["path"]
+                    )
+                    
+                    # Run feature extraction on the .o file
+                    try:
+                        features = await feature_service.extract_features_from_binary(object_job_id, file_info["path"])
+                        job_manager.update_job_feature_results(object_job_id, features)
+                        
+                        logger.info(f"Object file analysis completed - JobID: {object_job_id}, File: {file_info['file']}")
+                        
+                    except Exception as e:
+                        logger.error(f"Object file analysis failed - JobID: {object_job_id}, Error: {str(e)}")
+                        job_manager.mark_job_failed(object_job_id, f"Analysis failed: {str(e)}")
+                
+                elif file_info.get("type") == "shared_object":
+                    # This is a .so file - analyze directly
+                    so_job_id = str(uuid.uuid4())
+                    
+                    job = job_manager.create_job(
+                        so_job_id,
+                        file_info["file"],
+                        file_info["size"]
+                    )
+                    
+                    job_manager.update_job_status(
+                        so_job_id,
+                        JobStatus.EXTRACTING_FEATURES,
+                        routing_decision="PATH_A_BARE_METAL",
+                        routing_reason="Shared object library analysis",
+                        workspace_path=file_info["path"]
+                    )
+                    
+                    # Run feature extraction on the .so file
+                    try:
+                        features = await feature_service.extract_features_from_binary(so_job_id, file_info["path"])
+                        job_manager.update_job_feature_results(so_job_id, features)
+                        
+                        logger.info(f"Shared object analysis completed - JobID: {so_job_id}, File: {file_info['file']}")
+                        
+                    except Exception as e:
+                        logger.error(f"Shared object analysis failed - JobID: {so_job_id}, Error: {str(e)}")
+                        job_manager.mark_job_failed(so_job_id, f"Analysis failed: {str(e)}")
+        
+        logger.info(f"All crypto library jobs completed - ParentJob: {parent_job_id}")
+        
+    except Exception as e:
+        logger.error(f"Crypto library processing failed - ParentJob: {parent_job_id}, Error: {str(e)}", exc_info=True)
 
 
 # ==========================================================
