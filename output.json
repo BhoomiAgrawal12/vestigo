@@ -1,10 +1,10 @@
 {
   "analysis_metadata": {
-    "input_file": "/home/bhoomi/Desktop/compilerRepo/vestigo-data/ghidra_json/wolfssl_aes_riscv_O3.o_features.json",
+    "input_file": "/home/bhoomi/Desktop/compilerRepo/vestigo-data/ml/trainginJsonFiles/rsa4096_mips_clang_Os.elf_features.json",
     "output_file": "output.json",
     "csv_features_file": "output_features.csv",
-    "timestamp": "2025-12-06T02:16:29.473581",
-    "total_functions": 17,
+    "timestamp": "2025-12-06T02:39:16.501560",
+    "total_functions": 24,
     "model_info": {
       "model_name": "LightGBM",
       "model_accuracy": 0.7711442786069652,
@@ -26,1229 +26,314 @@
   },
   "file_analysis": {
     "file_info": {
-      "input_file": "/home/bhoomi/Desktop/compilerRepo/vestigo-data/ghidra_json/wolfssl_aes_riscv_O3.o_features.json",
-      "total_functions": 17,
-      "successful_analyses": 17,
+      "input_file": "/home/bhoomi/Desktop/compilerRepo/vestigo-data/ml/trainginJsonFiles/rsa4096_mips_clang_Os.elf_features.json",
+      "total_functions": 24,
+      "successful_analyses": 24,
       "failed_analyses": 0
     },
     "overall_assessment": {
       "file_status": "CRYPTO_HEAVY",
       "message": "File contains predominantly cryptographic functions",
-      "crypto_percentage": 82.35294117647058,
-      "average_confidence": 0.90593279383512,
-      "confidence_std": 0.14446248081656224
+      "crypto_percentage": 100.0,
+      "average_confidence": 0.9465663846359654,
+      "confidence_std": 0.11844827266303239
     },
     "encryption_distribution": {
-      "encrypted_functions": 14,
-      "possibly_encrypted_functions": 3,
+      "encrypted_functions": 24,
+      "possibly_encrypted_functions": 0,
       "not_encrypted_functions": 0,
-      "encrypted_percentage": 82.35294117647058,
-      "crypto_detected_percentage": 82.35294117647058
+      "encrypted_percentage": 100.0,
+      "crypto_detected_percentage": 100.0
     },
     "algorithm_distribution": {
       "counts": {
-        "Non-Crypto": 3,
-        "AES-128": 12,
-        "RSA-4096": 1,
-        "SHA-1": 1
+        "ECC": 24
       },
       "top_algorithms": [
         [
-          "AES-128",
-          12
-        ],
-        [
-          "Non-Crypto",
-          3
-        ],
-        [
-          "SHA-1",
-          1
-        ],
-        [
-          "RSA-4096",
-          1
+          "ECC",
+          24
         ]
       ],
-      "dominant_algorithm": "AES-128",
+      "dominant_algorithm": "ECC",
       "crypto_algorithm_counts": {
-        "AES-128": 12,
-        "RSA-4096": 1,
-        "SHA-1": 1
+        "ECC": 24
       },
-      "non_crypto_algorithm_counts": {
-        "Non-Crypto": 3
-      },
-      "algorithm_diversity": 4,
-      "crypto_algorithm_diversity": 3,
+      "non_crypto_algorithm_counts": {},
+      "algorithm_diversity": 1,
+      "crypto_algorithm_diversity": 1,
       "crypto_probability_analysis": {
         "AES-128": {
-          "avg_probability": 0.7317390105859977,
-          "max_probability": 0.9993963763408767,
-          "functions_with_significant_probability": 16
+          "avg_probability": 0.040738001290320576,
+          "max_probability": 0.39366584671128335,
+          "functions_with_significant_probability": 7
         },
         "AES-192": {
-          "avg_probability": 9.312305227771035e-06,
-          "max_probability": 5.343588042350943e-05,
-          "functions_with_significant_probability": 0
+          "avg_probability": 0.0009886979574892998,
+          "max_probability": 0.01272631449861821,
+          "functions_with_significant_probability": 1
         },
         "AES-256": {
-          "avg_probability": 0.0001805525079774518,
-          "max_probability": 0.002917084284892459,
+          "avg_probability": 6.298184216516e-05,
+          "max_probability": 0.0005234288869549362,
           "functions_with_significant_probability": 0
         },
         "ECC": {
-          "avg_probability": 0.01809852407085752,
-          "max_probability": 0.1045362785259234,
-          "functions_with_significant_probability": 6
+          "avg_probability": 0.9465663846359654,
+          "max_probability": 0.9993664064726805,
+          "functions_with_significant_probability": 24
         },
         "PRNG": {
-          "avg_probability": 5.192152702484051e-07,
-          "max_probability": 3.573775164519758e-06,
+          "avg_probability": 1.5190065576515127e-06,
+          "max_probability": 1.3508414411277592e-05,
           "functions_with_significant_probability": 0
         },
         "RSA-1024": {
-          "avg_probability": 3.149688458096099e-05,
-          "max_probability": 0.00011289648068416136,
-          "functions_with_significant_probability": 0
+          "avg_probability": 0.005406356197462394,
+          "max_probability": 0.051583844957869975,
+          "functions_with_significant_probability": 3
         },
         "RSA-4096": {
-          "avg_probability": 0.03346209758572187,
-          "max_probability": 0.5417683003370428,
-          "functions_with_significant_probability": 2
+          "avg_probability": 0.0002542398661469284,
+          "max_probability": 0.001333586358837841,
+          "functions_with_significant_probability": 0
         },
         "SHA-1": {
-          "avg_probability": 0.07623289218233478,
-          "max_probability": 0.9245251178031478,
-          "functions_with_significant_probability": 2
+          "avg_probability": 8.892590800199398e-05,
+          "max_probability": 0.0014352604104129003,
+          "functions_with_significant_probability": 0
         },
         "SHA-224": {
-          "avg_probability": 1.082179341882612e-05,
-          "max_probability": 6.171665322548911e-05,
+          "avg_probability": 0.00024944453984135736,
+          "max_probability": 0.0012342970699857631,
           "functions_with_significant_probability": 0
         },
         "SHA-256": {
-          "avg_probability": 5.2979024561774356e-05,
-          "max_probability": 0.0005593075583311358,
+          "avg_probability": 0.00027293067257621033,
+          "max_probability": 0.003343711411642852,
           "functions_with_significant_probability": 0
         },
         "XOR-CIPHER": {
-          "avg_probability": 0.000191685615536586,
-          "max_probability": 0.00172210418870677,
+          "avg_probability": 0.0004222902719428986,
+          "max_probability": 0.005472394164952371,
           "functions_with_significant_probability": 0
         }
       },
       "algorithm_ranking": [
         {
-          "algorithm": "AES-128",
-          "total_confidence": 12.43956317996196,
-          "avg_confidence": 0.7317390105859977,
-          "max_confidence": 0.9993963763408767,
-          "function_count": 12
-        },
-        {
-          "algorithm": "Non-Crypto",
-          "total_confidence": 2.3798318398847473,
-          "avg_confidence": 0.13999010822851454,
-          "max_confidence": 0.878308658587011,
-          "function_count": 3
-        },
-        {
-          "algorithm": "SHA-1",
-          "total_confidence": 1.2959591670996913,
-          "avg_confidence": 0.07623289218233478,
-          "max_confidence": 0.9245251178031478,
-          "function_count": 1
-        },
-        {
-          "algorithm": "RSA-4096",
-          "total_confidence": 0.5688556589572717,
-          "avg_confidence": 0.03346209758572187,
-          "max_confidence": 0.5417683003370428,
-          "function_count": 1
-        },
-        {
           "algorithm": "ECC",
-          "total_confidence": 0.30767490920457785,
-          "avg_confidence": 0.01809852407085752,
-          "max_confidence": 0.1045362785259234,
-          "function_count": 0
+          "total_confidence": 22.71759323126317,
+          "avg_confidence": 0.9465663846359654,
+          "max_confidence": 0.9993664064726805,
+          "function_count": 24
         },
         {
-          "algorithm": "XOR-CIPHER",
-          "total_confidence": 0.0032586554641219623,
-          "avg_confidence": 0.000191685615536586,
-          "max_confidence": 0.00172210418870677,
-          "function_count": 0
-        },
-        {
-          "algorithm": "AES-256",
-          "total_confidence": 0.0030693926356166806,
-          "avg_confidence": 0.0001805525079774518,
-          "max_confidence": 0.002917084284892459,
-          "function_count": 0
-        },
-        {
-          "algorithm": "SHA-256",
-          "total_confidence": 0.0009006434175501641,
-          "avg_confidence": 5.2979024561774356e-05,
-          "max_confidence": 0.0005593075583311358,
+          "algorithm": "AES-128",
+          "total_confidence": 0.9777120309676938,
+          "avg_confidence": 0.040738001290320576,
+          "max_confidence": 0.39366584671128335,
           "function_count": 0
         },
         {
           "algorithm": "RSA-1024",
-          "total_confidence": 0.0005354470378763368,
-          "avg_confidence": 3.149688458096099e-05,
-          "max_confidence": 0.00011289648068416136,
+          "total_confidence": 0.12975254873909745,
+          "avg_confidence": 0.005406356197462394,
+          "max_confidence": 0.051583844957869975,
           "function_count": 0
         },
         {
-          "algorithm": "SHA-224",
-          "total_confidence": 0.00018397048812004405,
-          "avg_confidence": 1.082179341882612e-05,
-          "max_confidence": 6.171665322548911e-05,
+          "algorithm": "Non-Crypto",
+          "total_confidence": 0.11875746747672683,
+          "avg_confidence": 0.004948227811530284,
+          "max_confidence": 0.0397873091259694,
           "function_count": 0
         },
         {
           "algorithm": "AES-192",
-          "total_confidence": 0.0001583091888721076,
-          "avg_confidence": 9.312305227771035e-06,
-          "max_confidence": 5.343588042350943e-05,
+          "total_confidence": 0.023728750979743196,
+          "avg_confidence": 0.0009886979574892998,
+          "max_confidence": 0.01272631449861821,
+          "function_count": 0
+        },
+        {
+          "algorithm": "XOR-CIPHER",
+          "total_confidence": 0.010134966526629567,
+          "avg_confidence": 0.0004222902719428986,
+          "max_confidence": 0.005472394164952371,
+          "function_count": 0
+        },
+        {
+          "algorithm": "SHA-256",
+          "total_confidence": 0.006550336141829048,
+          "avg_confidence": 0.00027293067257621033,
+          "max_confidence": 0.003343711411642852,
+          "function_count": 0
+        },
+        {
+          "algorithm": "RSA-4096",
+          "total_confidence": 0.006101756787526282,
+          "avg_confidence": 0.0002542398661469284,
+          "max_confidence": 0.001333586358837841,
+          "function_count": 0
+        },
+        {
+          "algorithm": "SHA-224",
+          "total_confidence": 0.005986668956192577,
+          "avg_confidence": 0.00024944453984135736,
+          "max_confidence": 0.0012342970699857631,
+          "function_count": 0
+        },
+        {
+          "algorithm": "SHA-1",
+          "total_confidence": 0.0021342217920478556,
+          "avg_confidence": 8.892590800199398e-05,
+          "max_confidence": 0.0014352604104129003,
+          "function_count": 0
+        },
+        {
+          "algorithm": "AES-256",
+          "total_confidence": 0.0015115642119638399,
+          "avg_confidence": 6.298184216516e-05,
+          "max_confidence": 0.0005234288869549362,
           "function_count": 0
         },
         {
           "algorithm": "PRNG",
-          "total_confidence": 8.826659594222887e-06,
-          "avg_confidence": 5.192152702484051e-07,
-          "max_confidence": 3.573775164519758e-06,
+          "total_confidence": 3.6456157383636307e-05,
+          "avg_confidence": 1.5190065576515127e-06,
+          "max_confidence": 1.3508414411277592e-05,
           "function_count": 0
         }
       ]
     },
     "confidence_statistics": {
-      "mean_confidence": 0.90593279383512,
-      "median_confidence": 0.9896207629764284,
-      "min_confidence": 0.5417683003370428,
-      "max_confidence": 0.9993963763408767,
-      "std_confidence": 0.14446248081656224
+      "mean_confidence": 0.9465663846359654,
+      "median_confidence": 0.9886959854773729,
+      "min_confidence": 0.5547647947089673,
+      "max_confidence": 0.9993664064726805,
+      "std_confidence": 0.11844827266303239
     }
   },
   "function_analyses": [
     {
       "function_info": {
         "function_index": 0,
-        "function_name": "GetTable_Multi",
-        "function_address": "00100000"
+        "function_name": "_init",
+        "function_address": "00010720"
       },
       "prediction": {
-        "predicted_algorithm": "Non-Crypto",
-        "confidence": 0.8231553282839116,
-        "confidence_percent": 82.31553282839116
-      },
-      "encryption_analysis": {
-        "is_encrypted": false,
-        "status": "POSSIBLY_ENCRYPTED",
-        "message": "Some crypto indicators present but classified as: Non-Crypto",
-        "crypto_probability": 0.17684467171608864,
-        "non_crypto_probability": 0.8231553282839116,
-        "overall_confidence": 0.6223625759525842
-      },
-      "crypto_indicators": {
-        "indicators": {
-          "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
-          "has_aes_rcon": 0,
-          "has_des_sbox": 0,
-          "has_sha_constants": 0,
-          "has_md5_constants": 0,
-          "has_rsa_constants": 0,
-          "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
-          "aes_round_detected": 0,
-          "des_round_detected": 0,
-          "sha_round_detected": 0,
-          "md5_round_detected": 0
-        },
-        "positive_indicators": 2,
-        "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
-      },
-      "algorithm_probabilities": {
-        "all_algorithms": {
-          "AES-128": 0.07003529756027348,
-          "AES-192": 1.2013087838269227e-05,
-          "AES-256": 4.201663165769217e-05,
-          "ECC": 0.1045362785259234,
-          "Non-Crypto": 0.8231553282839116,
-          "PRNG": 2.2320709136542318e-06,
-          "RSA-1024": 5.9815582494996406e-05,
-          "RSA-4096": 3.1093920752112902e-06,
-          "SHA-1": 0.0003456364588212527,
-          "SHA-224": 6.171665322548911e-05,
-          "SHA-256": 2.4451564158439257e-05,
-          "XOR-CIPHER": 0.00172210418870677
-        },
-        "crypto_algorithms": {
-          "AES-128": 0.07003529756027348,
-          "AES-192": 1.2013087838269227e-05,
-          "AES-256": 4.201663165769217e-05,
-          "ECC": 0.1045362785259234,
-          "PRNG": 2.2320709136542318e-06,
-          "RSA-1024": 5.9815582494996406e-05,
-          "RSA-4096": 3.1093920752112902e-06,
-          "SHA-1": 0.0003456364588212527,
-          "SHA-224": 6.171665322548911e-05,
-          "SHA-256": 2.4451564158439257e-05,
-          "XOR-CIPHER": 0.00172210418870677
-        },
-        "non_crypto_algorithms": {
-          "Non-Crypto": 0.8231553282839116
-        }
-      },
-      "top_predictions": [
-        {
-          "rank": 1,
-          "algorithm": "Non-Crypto",
-          "probability": 0.8231553282839116,
-          "confidence_percent": 82.31553282839116,
-          "is_crypto_algorithm": false,
-          "algorithm_type": "non-cryptographic"
-        },
-        {
-          "rank": 2,
-          "algorithm": "ECC",
-          "probability": 0.1045362785259234,
-          "confidence_percent": 10.45362785259234,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 3,
-          "algorithm": "AES-128",
-          "probability": 0.07003529756027348,
-          "confidence_percent": 7.003529756027348,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
-        },
-        {
-          "rank": 4,
-          "algorithm": "XOR-CIPHER",
-          "probability": 0.00172210418870677,
-          "confidence_percent": 0.172210418870677,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "cryptographic"
-        },
-        {
-          "rank": 5,
-          "algorithm": "SHA-1",
-          "probability": 0.0003456364588212527,
-          "confidence_percent": 0.03456364588212527,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
-        }
-      ],
-      "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
-        "optimization_level": "unknown",
-        "complexity": {
-          "basic_blocks": 62,
-          "instructions": 0,
-          "cyclomatic_complexity": 2
-        },
-        "crypto_features": {
-          "has_crypto_constants": false,
-          "detected_rounds": 0
-        }
-      }
-    },
-    {
-      "function_info": {
-        "function_index": 1,
-        "function_name": "XorTable_Multi",
-        "function_address": "0010012c"
-      },
-      "prediction": {
-        "predicted_algorithm": "Non-Crypto",
-        "confidence": 0.6781035489861309,
-        "confidence_percent": 67.81035489861308
-      },
-      "encryption_analysis": {
-        "is_encrypted": false,
-        "status": "POSSIBLY_ENCRYPTED",
-        "message": "Some crypto indicators present but classified as: Non-Crypto",
-        "crypto_probability": 0.3218964510138691,
-        "non_crypto_probability": 0.6781035489861309,
-        "overall_confidence": 0.5208263304441377
-      },
-      "crypto_indicators": {
-        "indicators": {
-          "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
-          "has_aes_rcon": 0,
-          "has_des_sbox": 0,
-          "has_sha_constants": 0,
-          "has_md5_constants": 0,
-          "has_rsa_constants": 0,
-          "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
-          "aes_round_detected": 0,
-          "des_round_detected": 0,
-          "sha_round_detected": 0,
-          "md5_round_detected": 0
-        },
-        "positive_indicators": 2,
-        "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
-      },
-      "algorithm_probabilities": {
-        "all_algorithms": {
-          "AES-128": 0.29257642208158974,
-          "AES-192": 7.98902194392234e-06,
-          "AES-256": 2.0108472816819993e-05,
-          "ECC": 0.02826617031392365,
-          "Non-Crypto": 0.6781035489861309,
-          "PRNG": 1.35555634061941e-06,
-          "RSA-1024": 4.6033108672530716e-05,
-          "RSA-4096": 2.0521371227910407e-06,
-          "SHA-1": 0.000113041026691981,
-          "SHA-224": 3.057812280379884e-05,
-          "SHA-256": 2.6083307577979434e-05,
-          "XOR-CIPHER": 0.0008066178643852805
-        },
-        "crypto_algorithms": {
-          "AES-128": 0.29257642208158974,
-          "AES-192": 7.98902194392234e-06,
-          "AES-256": 2.0108472816819993e-05,
-          "ECC": 0.02826617031392365,
-          "PRNG": 1.35555634061941e-06,
-          "RSA-1024": 4.6033108672530716e-05,
-          "RSA-4096": 2.0521371227910407e-06,
-          "SHA-1": 0.000113041026691981,
-          "SHA-224": 3.057812280379884e-05,
-          "SHA-256": 2.6083307577979434e-05,
-          "XOR-CIPHER": 0.0008066178643852805
-        },
-        "non_crypto_algorithms": {
-          "Non-Crypto": 0.6781035489861309
-        }
-      },
-      "top_predictions": [
-        {
-          "rank": 1,
-          "algorithm": "Non-Crypto",
-          "probability": 0.6781035489861309,
-          "confidence_percent": 67.81035489861308,
-          "is_crypto_algorithm": false,
-          "algorithm_type": "non-cryptographic"
-        },
-        {
-          "rank": 2,
-          "algorithm": "AES-128",
-          "probability": 0.29257642208158974,
-          "confidence_percent": 29.257642208158973,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
-        },
-        {
-          "rank": 3,
-          "algorithm": "ECC",
-          "probability": 0.02826617031392365,
-          "confidence_percent": 2.8266170313923653,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 4,
-          "algorithm": "XOR-CIPHER",
-          "probability": 0.0008066178643852805,
-          "confidence_percent": 0.08066178643852805,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "cryptographic"
-        },
-        {
-          "rank": 5,
-          "algorithm": "SHA-1",
-          "probability": 0.000113041026691981,
-          "confidence_percent": 0.0113041026691981,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
-        }
-      ],
-      "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
-        "optimization_level": "unknown",
-        "complexity": {
-          "basic_blocks": 69,
-          "instructions": 0,
-          "cyclomatic_complexity": 2
-        },
-        "crypto_features": {
-          "has_crypto_constants": false,
-          "detected_rounds": 0
-        }
-      }
-    },
-    {
-      "function_info": {
-        "function_index": 2,
-        "function_name": "AesEncrypt_C",
-        "function_address": "0010026c"
-      },
-      "prediction": {
-        "predicted_algorithm": "AES-128",
-        "confidence": 0.9947952554259406,
-        "confidence_percent": 99.47952554259406
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9672312040006785,
+        "confidence_percent": 96.72312040006786
       },
       "encryption_analysis": {
         "is_encrypted": true,
         "status": "ENCRYPTED",
-        "message": "Function appears to implement cryptographic algorithm: AES-128",
-        "crypto_probability": 0.999985517313506,
-        "non_crypto_probability": 1.448268649423867e-05,
-        "overall_confidence": 0.7425105249520045
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.987956207668508,
+        "non_crypto_probability": 0.012043792331492035,
+        "overall_confidence": 0.6770618428004749
       },
       "crypto_indicators": {
         "indicators": {
           "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
+          "has_aes_sbox": 0,
           "has_aes_rcon": 0,
           "has_des_sbox": 0,
           "has_sha_constants": 0,
           "has_md5_constants": 0,
           "has_rsa_constants": 0,
           "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
+          "rsa_bigint_detected": 0,
           "aes_round_detected": 0,
           "des_round_detected": 0,
           "sha_round_detected": 0,
           "md5_round_detected": 0
         },
-        "positive_indicators": 2,
+        "positive_indicators": 0,
         "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
+        "crypto_strength": 0.0
       },
       "algorithm_probabilities": {
         "all_algorithms": {
-          "AES-128": 0.9947952554259406,
-          "AES-192": 2.9717273187719376e-06,
-          "AES-256": 7.742485877382739e-07,
-          "ECC": 2.166287060449503e-05,
-          "Non-Crypto": 1.448268649423867e-05,
-          "PRNG": 7.46029504061429e-09,
-          "RSA-1024": 4.2294212008521333e-07,
-          "RSA-4096": 0.005135702019970273,
-          "SHA-1": 2.3871043405418564e-05,
-          "SHA-224": 1.6767736688676986e-07,
-          "SHA-256": 6.392208596801234e-07,
-          "XOR-CIPHER": 4.042677037008695e-06
+          "AES-128": 0.010056452367512247,
+          "AES-192": 0.000310994080143043,
+          "AES-256": 9.103242688568538e-05,
+          "ECC": 0.9672312040006785,
+          "Non-Crypto": 0.012043792331492035,
+          "PRNG": 2.952502876342295e-06,
+          "RSA-1024": 0.005006560562295057,
+          "RSA-4096": 0.00017956492273760307,
+          "SHA-1": 0.0014352604104129003,
+          "SHA-224": 0.00021903562513766632,
+          "SHA-256": 0.003343711411642852,
+          "XOR-CIPHER": 7.94393581861229e-05
         },
         "crypto_algorithms": {
-          "AES-128": 0.9947952554259406,
-          "AES-192": 2.9717273187719376e-06,
-          "AES-256": 7.742485877382739e-07,
-          "ECC": 2.166287060449503e-05,
-          "PRNG": 7.46029504061429e-09,
-          "RSA-1024": 4.2294212008521333e-07,
-          "RSA-4096": 0.005135702019970273,
-          "SHA-1": 2.3871043405418564e-05,
-          "SHA-224": 1.6767736688676986e-07,
-          "SHA-256": 6.392208596801234e-07,
-          "XOR-CIPHER": 4.042677037008695e-06
+          "AES-128": 0.010056452367512247,
+          "AES-192": 0.000310994080143043,
+          "AES-256": 9.103242688568538e-05,
+          "ECC": 0.9672312040006785,
+          "PRNG": 2.952502876342295e-06,
+          "RSA-1024": 0.005006560562295057,
+          "RSA-4096": 0.00017956492273760307,
+          "SHA-1": 0.0014352604104129003,
+          "SHA-224": 0.00021903562513766632,
+          "SHA-256": 0.003343711411642852,
+          "XOR-CIPHER": 7.94393581861229e-05
         },
         "non_crypto_algorithms": {
-          "Non-Crypto": 1.448268649423867e-05
+          "Non-Crypto": 0.012043792331492035
         }
       },
       "top_predictions": [
         {
           "rank": 1,
-          "algorithm": "AES-128",
-          "probability": 0.9947952554259406,
-          "confidence_percent": 99.47952554259406,
+          "algorithm": "ECC",
+          "probability": 0.9672312040006785,
+          "confidence_percent": 96.72312040006786,
           "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
+          "algorithm_type": "asymmetric-encryption"
         },
         {
           "rank": 2,
-          "algorithm": "RSA-4096",
-          "probability": 0.005135702019970273,
-          "confidence_percent": 0.5135702019970273,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 3,
-          "algorithm": "SHA-1",
-          "probability": 2.3871043405418564e-05,
-          "confidence_percent": 0.0023871043405418566,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
-        },
-        {
-          "rank": 4,
-          "algorithm": "ECC",
-          "probability": 2.166287060449503e-05,
-          "confidence_percent": 0.0021662870604495033,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 5,
           "algorithm": "Non-Crypto",
-          "probability": 1.448268649423867e-05,
-          "confidence_percent": 0.001448268649423867,
-          "is_crypto_algorithm": false,
-          "algorithm_type": "non-cryptographic"
-        }
-      ],
-      "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
-        "optimization_level": "unknown",
-        "complexity": {
-          "basic_blocks": 419,
-          "instructions": 0,
-          "cyclomatic_complexity": 59
-        },
-        "crypto_features": {
-          "has_crypto_constants": false,
-          "detected_rounds": 0
-        }
-      }
-    },
-    {
-      "function_info": {
-        "function_index": 3,
-        "function_name": "GetTable8_4",
-        "function_address": "0010135c"
-      },
-      "prediction": {
-        "predicted_algorithm": "Non-Crypto",
-        "confidence": 0.878308658587011,
-        "confidence_percent": 87.8308658587011
-      },
-      "encryption_analysis": {
-        "is_encrypted": false,
-        "status": "POSSIBLY_ENCRYPTED",
-        "message": "Some crypto indicators present but classified as: Non-Crypto",
-        "crypto_probability": 0.121691341412989,
-        "non_crypto_probability": 0.878308658587011,
-        "overall_confidence": 0.6609699071647539
-      },
-      "crypto_indicators": {
-        "indicators": {
-          "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
-          "has_aes_rcon": 0,
-          "has_des_sbox": 0,
-          "has_sha_constants": 0,
-          "has_md5_constants": 0,
-          "has_rsa_constants": 0,
-          "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
-          "aes_round_detected": 0,
-          "des_round_detected": 0,
-          "sha_round_detected": 0,
-          "md5_round_detected": 0
-        },
-        "positive_indicators": 2,
-        "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
-      },
-      "algorithm_probabilities": {
-        "all_algorithms": {
-          "AES-128": 0.0595605320905066,
-          "AES-192": 9.248648390461919e-06,
-          "AES-256": 0.002917084284892459,
-          "ECC": 0.05472987260626537,
-          "Non-Crypto": 0.878308658587011,
-          "PRNG": 3.573775164519758e-06,
-          "RSA-1024": 3.999365037457057e-05,
-          "RSA-4096": 2.4878724734720697e-05,
-          "SHA-1": 0.003825662745897063,
-          "SHA-224": 3.764977557551945e-05,
-          "SHA-256": 0.00027064554524690185,
-          "XOR-CIPHER": 0.00027219956594081297
-        },
-        "crypto_algorithms": {
-          "AES-128": 0.0595605320905066,
-          "AES-192": 9.248648390461919e-06,
-          "AES-256": 0.002917084284892459,
-          "ECC": 0.05472987260626537,
-          "PRNG": 3.573775164519758e-06,
-          "RSA-1024": 3.999365037457057e-05,
-          "RSA-4096": 2.4878724734720697e-05,
-          "SHA-1": 0.003825662745897063,
-          "SHA-224": 3.764977557551945e-05,
-          "SHA-256": 0.00027064554524690185,
-          "XOR-CIPHER": 0.00027219956594081297
-        },
-        "non_crypto_algorithms": {
-          "Non-Crypto": 0.878308658587011
-        }
-      },
-      "top_predictions": [
-        {
-          "rank": 1,
-          "algorithm": "Non-Crypto",
-          "probability": 0.878308658587011,
-          "confidence_percent": 87.8308658587011,
+          "probability": 0.012043792331492035,
+          "confidence_percent": 1.2043792331492034,
           "is_crypto_algorithm": false,
           "algorithm_type": "non-cryptographic"
         },
         {
-          "rank": 2,
-          "algorithm": "AES-128",
-          "probability": 0.0595605320905066,
-          "confidence_percent": 5.95605320905066,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
-        },
-        {
           "rank": 3,
-          "algorithm": "ECC",
-          "probability": 0.05472987260626537,
-          "confidence_percent": 5.472987260626537,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 4,
-          "algorithm": "SHA-1",
-          "probability": 0.003825662745897063,
-          "confidence_percent": 0.38256627458970627,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
-        },
-        {
-          "rank": 5,
-          "algorithm": "AES-256",
-          "probability": 0.002917084284892459,
-          "confidence_percent": 0.2917084284892459,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
-        }
-      ],
-      "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
-        "optimization_level": "unknown",
-        "complexity": {
-          "basic_blocks": 58,
-          "instructions": 0,
-          "cyclomatic_complexity": 2
-        },
-        "crypto_features": {
-          "has_crypto_constants": false,
-          "detected_rounds": 0
-        }
-      }
-    },
-    {
-      "function_info": {
-        "function_index": 4,
-        "function_name": "AesSetKey_C",
-        "function_address": "00101454"
-      },
-      "prediction": {
-        "predicted_algorithm": "AES-128",
-        "confidence": 0.9781746648247946,
-        "confidence_percent": 97.81746648247946
-      },
-      "encryption_analysis": {
-        "is_encrypted": true,
-        "status": "ENCRYPTED",
-        "message": "Function appears to implement cryptographic algorithm: AES-128",
-        "crypto_probability": 0.9999713628818105,
-        "non_crypto_probability": 2.8637118189195874e-05,
-        "overall_confidence": 0.7308761115312024
-      },
-      "crypto_indicators": {
-        "indicators": {
-          "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
-          "has_aes_rcon": 0,
-          "has_des_sbox": 0,
-          "has_sha_constants": 0,
-          "has_md5_constants": 0,
-          "has_rsa_constants": 0,
-          "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
-          "aes_round_detected": 0,
-          "des_round_detected": 0,
-          "sha_round_detected": 0,
-          "md5_round_detected": 0
-        },
-        "positive_indicators": 2,
-        "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
-      },
-      "algorithm_probabilities": {
-        "all_algorithms": {
-          "AES-128": 0.9781746648247946,
-          "AES-192": 5.635941183401661e-07,
-          "AES-256": 3.724051390209331e-06,
-          "ECC": 7.945321146688849e-05,
-          "Non-Crypto": 2.8637118189195874e-05,
-          "PRNG": 1.5460240937078473e-08,
-          "RSA-1024": 3.657851641058666e-06,
-          "RSA-4096": 0.021699945848058788,
-          "SHA-1": 6.108459371648646e-06,
-          "SHA-224": 2.6117527257866735e-07,
-          "SHA-256": 1.1881327001672694e-07,
-          "XOR-CIPHER": 2.8495921854256685e-06
-        },
-        "crypto_algorithms": {
-          "AES-128": 0.9781746648247946,
-          "AES-192": 5.635941183401661e-07,
-          "AES-256": 3.724051390209331e-06,
-          "ECC": 7.945321146688849e-05,
-          "PRNG": 1.5460240937078473e-08,
-          "RSA-1024": 3.657851641058666e-06,
-          "RSA-4096": 0.021699945848058788,
-          "SHA-1": 6.108459371648646e-06,
-          "SHA-224": 2.6117527257866735e-07,
-          "SHA-256": 1.1881327001672694e-07,
-          "XOR-CIPHER": 2.8495921854256685e-06
-        },
-        "non_crypto_algorithms": {
-          "Non-Crypto": 2.8637118189195874e-05
-        }
-      },
-      "top_predictions": [
-        {
-          "rank": 1,
           "algorithm": "AES-128",
-          "probability": 0.9781746648247946,
-          "confidence_percent": 97.81746648247946,
+          "probability": 0.010056452367512247,
+          "confidence_percent": 1.0056452367512247,
           "is_crypto_algorithm": true,
           "algorithm_type": "symmetric-encryption"
-        },
-        {
-          "rank": 2,
-          "algorithm": "RSA-4096",
-          "probability": 0.021699945848058788,
-          "confidence_percent": 2.169994584805879,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 3,
-          "algorithm": "ECC",
-          "probability": 7.945321146688849e-05,
-          "confidence_percent": 0.007945321146688849,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 4,
-          "algorithm": "Non-Crypto",
-          "probability": 2.8637118189195874e-05,
-          "confidence_percent": 0.002863711818919587,
-          "is_crypto_algorithm": false,
-          "algorithm_type": "non-cryptographic"
-        },
-        {
-          "rank": 5,
-          "algorithm": "SHA-1",
-          "probability": 6.108459371648646e-06,
-          "confidence_percent": 0.0006108459371648646,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
-        }
-      ],
-      "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
-        "optimization_level": "unknown",
-        "complexity": {
-          "basic_blocks": 949,
-          "instructions": 0,
-          "cyclomatic_complexity": 63
-        },
-        "crypto_features": {
-          "has_crypto_constants": false,
-          "detected_rounds": 0
-        }
-      }
-    },
-    {
-      "function_info": {
-        "function_index": 5,
-        "function_name": "wc_AesSetKey",
-        "function_address": "00102434"
-      },
-      "prediction": {
-        "predicted_algorithm": "AES-128",
-        "confidence": 0.9972926954281057,
-        "confidence_percent": 99.72926954281057
-      },
-      "encryption_analysis": {
-        "is_encrypted": true,
-        "status": "ENCRYPTED",
-        "message": "Function appears to implement cryptographic algorithm: AES-128",
-        "crypto_probability": 0.9999919958084218,
-        "non_crypto_probability": 8.004191578205616e-06,
-        "overall_confidence": 0.7442587329535202
-      },
-      "crypto_indicators": {
-        "indicators": {
-          "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
-          "has_aes_rcon": 0,
-          "has_des_sbox": 0,
-          "has_sha_constants": 0,
-          "has_md5_constants": 0,
-          "has_rsa_constants": 0,
-          "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
-          "aes_round_detected": 0,
-          "des_round_detected": 0,
-          "sha_round_detected": 0,
-          "md5_round_detected": 0
-        },
-        "positive_indicators": 2,
-        "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
-      },
-      "algorithm_probabilities": {
-        "all_algorithms": {
-          "AES-128": 0.9972926954281057,
-          "AES-192": 2.114162261697428e-06,
-          "AES-256": 1.0962706468030332e-06,
-          "ECC": 0.001738191330481481,
-          "Non-Crypto": 8.004191578205616e-06,
-          "PRNG": 1.9082879152240253e-08,
-          "RSA-1024": 5.71062149771778e-06,
-          "RSA-4096": 9.734037278415494e-07,
-          "SHA-1": 0.0009482815718873203,
-          "SHA-224": 5.489856228018865e-07,
-          "SHA-256": 4.656763719662808e-07,
-          "XOR-CIPHER": 1.8992749393389885e-06
-        },
-        "crypto_algorithms": {
-          "AES-128": 0.9972926954281057,
-          "AES-192": 2.114162261697428e-06,
-          "AES-256": 1.0962706468030332e-06,
-          "ECC": 0.001738191330481481,
-          "PRNG": 1.9082879152240253e-08,
-          "RSA-1024": 5.71062149771778e-06,
-          "RSA-4096": 9.734037278415494e-07,
-          "SHA-1": 0.0009482815718873203,
-          "SHA-224": 5.489856228018865e-07,
-          "SHA-256": 4.656763719662808e-07,
-          "XOR-CIPHER": 1.8992749393389885e-06
-        },
-        "non_crypto_algorithms": {
-          "Non-Crypto": 8.004191578205616e-06
-        }
-      },
-      "top_predictions": [
-        {
-          "rank": 1,
-          "algorithm": "AES-128",
-          "probability": 0.9972926954281057,
-          "confidence_percent": 99.72926954281057,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
-        },
-        {
-          "rank": 2,
-          "algorithm": "ECC",
-          "probability": 0.001738191330481481,
-          "confidence_percent": 0.1738191330481481,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 3,
-          "algorithm": "SHA-1",
-          "probability": 0.0009482815718873203,
-          "confidence_percent": 0.09482815718873203,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
-        },
-        {
-          "rank": 4,
-          "algorithm": "Non-Crypto",
-          "probability": 8.004191578205616e-06,
-          "confidence_percent": 0.0008004191578205615,
-          "is_crypto_algorithm": false,
-          "algorithm_type": "non-cryptographic"
-        },
-        {
-          "rank": 5,
-          "algorithm": "RSA-1024",
-          "probability": 5.71062149771778e-06,
-          "confidence_percent": 0.000571062149771778,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        }
-      ],
-      "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
-        "optimization_level": "unknown",
-        "complexity": {
-          "basic_blocks": 88,
-          "instructions": 0,
-          "cyclomatic_complexity": 13
-        },
-        "crypto_features": {
-          "has_crypto_constants": false,
-          "detected_rounds": 0
-        }
-      }
-    },
-    {
-      "function_info": {
-        "function_index": 6,
-        "function_name": "wc_AesSetKeyDirect",
-        "function_address": "0010261c"
-      },
-      "prediction": {
-        "predicted_algorithm": "AES-128",
-        "confidence": 0.9972929606026701,
-        "confidence_percent": 99.72929606026702
-      },
-      "encryption_analysis": {
-        "is_encrypted": true,
-        "status": "ENCRYPTED",
-        "message": "Function appears to implement cryptographic algorithm: AES-128",
-        "crypto_probability": 0.9999919958062934,
-        "non_crypto_probability": 8.004193706475507e-06,
-        "overall_confidence": 0.7442589185757151
-      },
-      "crypto_indicators": {
-        "indicators": {
-          "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
-          "has_aes_rcon": 0,
-          "has_des_sbox": 0,
-          "has_sha_constants": 0,
-          "has_md5_constants": 0,
-          "has_rsa_constants": 0,
-          "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
-          "aes_round_detected": 0,
-          "des_round_detected": 0,
-          "sha_round_detected": 0,
-          "md5_round_detected": 0
-        },
-        "positive_indicators": 2,
-        "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
-      },
-      "algorithm_probabilities": {
-        "all_algorithms": {
-          "AES-128": 0.9972929606026701,
-          "AES-192": 2.11416282384138e-06,
-          "AES-256": 1.0962709382952827e-06,
-          "ECC": 0.0017381917926568592,
-          "Non-Crypto": 8.004193706475507e-06,
-          "PRNG": 1.9082884226271368e-08,
-          "RSA-1024": 5.71062301614018e-06,
-          "RSA-4096": 9.734039866641707e-07,
-          "SHA-1": 0.0009482818240301004,
-          "SHA-224": 5.489857687741011e-07,
-          "SHA-256": 4.6567649578703037e-07,
-          "XOR-CIPHER": 1.633381022581133e-06
-        },
-        "crypto_algorithms": {
-          "AES-128": 0.9972929606026701,
-          "AES-192": 2.11416282384138e-06,
-          "AES-256": 1.0962709382952827e-06,
-          "ECC": 0.0017381917926568592,
-          "PRNG": 1.9082884226271368e-08,
-          "RSA-1024": 5.71062301614018e-06,
-          "RSA-4096": 9.734039866641707e-07,
-          "SHA-1": 0.0009482818240301004,
-          "SHA-224": 5.489857687741011e-07,
-          "SHA-256": 4.6567649578703037e-07,
-          "XOR-CIPHER": 1.633381022581133e-06
-        },
-        "non_crypto_algorithms": {
-          "Non-Crypto": 8.004193706475507e-06
-        }
-      },
-      "top_predictions": [
-        {
-          "rank": 1,
-          "algorithm": "AES-128",
-          "probability": 0.9972929606026701,
-          "confidence_percent": 99.72929606026702,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
-        },
-        {
-          "rank": 2,
-          "algorithm": "ECC",
-          "probability": 0.0017381917926568592,
-          "confidence_percent": 0.17381917926568594,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 3,
-          "algorithm": "SHA-1",
-          "probability": 0.0009482818240301004,
-          "confidence_percent": 0.09482818240301004,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
-        },
-        {
-          "rank": 4,
-          "algorithm": "Non-Crypto",
-          "probability": 8.004193706475507e-06,
-          "confidence_percent": 0.0008004193706475507,
-          "is_crypto_algorithm": false,
-          "algorithm_type": "non-cryptographic"
-        },
-        {
-          "rank": 5,
-          "algorithm": "RSA-1024",
-          "probability": 5.71062301614018e-06,
-          "confidence_percent": 0.000571062301614018,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        }
-      ],
-      "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
-        "optimization_level": "unknown",
-        "complexity": {
-          "basic_blocks": 88,
-          "instructions": 0,
-          "cyclomatic_complexity": 13
-        },
-        "crypto_features": {
-          "has_crypto_constants": false,
-          "detected_rounds": 0
-        }
-      }
-    },
-    {
-      "function_info": {
-        "function_index": 7,
-        "function_name": "wc_AesSetIV",
-        "function_address": "00102804"
-      },
-      "prediction": {
-        "predicted_algorithm": "AES-128",
-        "confidence": 0.9988012256511621,
-        "confidence_percent": 99.88012256511621
-      },
-      "encryption_analysis": {
-        "is_encrypted": true,
-        "status": "ENCRYPTED",
-        "message": "Function appears to implement cryptographic algorithm: AES-128",
-        "crypto_probability": 0.9999977150061943,
-        "non_crypto_probability": 2.284993805865215e-06,
-        "overall_confidence": 0.7453147041096597
-      },
-      "crypto_indicators": {
-        "indicators": {
-          "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
-          "has_aes_rcon": 0,
-          "has_des_sbox": 0,
-          "has_sha_constants": 0,
-          "has_md5_constants": 0,
-          "has_rsa_constants": 0,
-          "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
-          "aes_round_detected": 0,
-          "des_round_detected": 0,
-          "sha_round_detected": 0,
-          "md5_round_detected": 0
-        },
-        "positive_indicators": 2,
-        "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
-      },
-      "algorithm_probabilities": {
-        "all_algorithms": {
-          "AES-128": 0.9988012256511621,
-          "AES-192": 7.987268709993747e-07,
-          "AES-256": 4.3893781536206773e-07,
-          "ECC": 0.0006282250247846588,
-          "Non-Crypto": 2.284993805865215e-06,
-          "PRNG": 5.0406544122690555e-08,
-          "RSA-1024": 1.182811766030545e-05,
-          "RSA-4096": 4.51085504892861e-06,
-          "SHA-1": 0.0005489380648766085,
-          "SHA-224": 3.8089234466341097e-07,
-          "SHA-256": 1.1234037619872723e-07,
-          "XOR-CIPHER": 1.2059887103227586e-06
-        },
-        "crypto_algorithms": {
-          "AES-128": 0.9988012256511621,
-          "AES-192": 7.987268709993747e-07,
-          "AES-256": 4.3893781536206773e-07,
-          "ECC": 0.0006282250247846588,
-          "PRNG": 5.0406544122690555e-08,
-          "RSA-1024": 1.182811766030545e-05,
-          "RSA-4096": 4.51085504892861e-06,
-          "SHA-1": 0.0005489380648766085,
-          "SHA-224": 3.8089234466341097e-07,
-          "SHA-256": 1.1234037619872723e-07,
-          "XOR-CIPHER": 1.2059887103227586e-06
-        },
-        "non_crypto_algorithms": {
-          "Non-Crypto": 2.284993805865215e-06
-        }
-      },
-      "top_predictions": [
-        {
-          "rank": 1,
-          "algorithm": "AES-128",
-          "probability": 0.9988012256511621,
-          "confidence_percent": 99.88012256511621,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
-        },
-        {
-          "rank": 2,
-          "algorithm": "ECC",
-          "probability": 0.0006282250247846588,
-          "confidence_percent": 0.06282250247846588,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 3,
-          "algorithm": "SHA-1",
-          "probability": 0.0005489380648766085,
-          "confidence_percent": 0.05489380648766085,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
         },
         {
           "rank": 4,
           "algorithm": "RSA-1024",
-          "probability": 1.182811766030545e-05,
-          "confidence_percent": 0.001182811766030545,
+          "probability": 0.005006560562295057,
+          "confidence_percent": 0.5006560562295057,
           "is_crypto_algorithm": true,
           "algorithm_type": "asymmetric-encryption"
         },
         {
           "rank": 5,
-          "algorithm": "RSA-4096",
-          "probability": 4.51085504892861e-06,
-          "confidence_percent": 0.00045108550489286097,
+          "algorithm": "SHA-256",
+          "probability": 0.003343711411642852,
+          "confidence_percent": 0.3343711411642852,
           "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
+          "algorithm_type": "hash-function"
         }
       ],
       "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
+        "architecture": "mips",
+        "compiler": "clang",
         "optimization_level": "unknown",
         "complexity": {
-          "basic_blocks": 20,
+          "basic_blocks": 5,
           "instructions": 0,
           "cyclomatic_complexity": 3
         },
@@ -1260,509 +345,125 @@
     },
     {
       "function_info": {
-        "function_index": 8,
-        "function_name": "wc_AesCbcEncrypt",
-        "function_address": "00102848"
+        "function_index": 1,
+        "function_name": "__start",
+        "function_address": "000107b0"
       },
       "prediction": {
-        "predicted_algorithm": "AES-128",
-        "confidence": 0.9978103529570034,
-        "confidence_percent": 99.78103529570033
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9882321196697658,
+        "confidence_percent": 98.82321196697657
       },
       "encryption_analysis": {
         "is_encrypted": true,
         "status": "ENCRYPTED",
-        "message": "Function appears to implement cryptographic algorithm: AES-128",
-        "crypto_probability": 0.9999905612321657,
-        "non_crypto_probability": 9.438767834482887e-06,
-        "overall_confidence": 0.7446210932237485
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9922325334481576,
+        "non_crypto_probability": 0.00776746655184246,
+        "overall_confidence": 0.691762483768836
       },
       "crypto_indicators": {
         "indicators": {
           "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
+          "has_aes_sbox": 0,
           "has_aes_rcon": 0,
           "has_des_sbox": 0,
           "has_sha_constants": 0,
           "has_md5_constants": 0,
           "has_rsa_constants": 0,
           "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
+          "rsa_bigint_detected": 0,
           "aes_round_detected": 0,
           "des_round_detected": 0,
           "sha_round_detected": 0,
           "md5_round_detected": 0
         },
-        "positive_indicators": 2,
+        "positive_indicators": 0,
         "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
+        "crypto_strength": 0.0
       },
       "algorithm_probabilities": {
         "all_algorithms": {
-          "AES-128": 0.9978103529570034,
-          "AES-192": 2.8581149232782264e-06,
-          "AES-256": 3.1086698336041697e-06,
-          "ECC": 0.0017754406772362138,
-          "Non-Crypto": 9.438767834482887e-06,
-          "PRNG": 6.353090185099914e-08,
-          "RSA-1024": 1.3757042465472886e-05,
-          "RSA-4096": 3.537675727407889e-05,
-          "SHA-1": 0.00015969032514991352,
-          "SHA-224": 4.964499777628033e-07,
-          "SHA-256": 3.456458999601836e-06,
-          "XOR-CIPHER": 0.00018596024840051718
+          "AES-128": 0.0019399548137882757,
+          "AES-192": 4.958211978302168e-05,
+          "AES-256": 1.913018394143011e-05,
+          "ECC": 0.9882321196697658,
+          "Non-Crypto": 0.00776746655184246,
+          "PRNG": 3.8051694726330423e-07,
+          "RSA-1024": 0.0014483318107469398,
+          "RSA-4096": 4.451143170902028e-05,
+          "SHA-1": 2.941873268682784e-05,
+          "SHA-224": 0.0003196237506465204,
+          "SHA-256": 9.916091047583365e-05,
+          "XOR-CIPHER": 5.031950766671641e-05
         },
         "crypto_algorithms": {
-          "AES-128": 0.9978103529570034,
-          "AES-192": 2.8581149232782264e-06,
-          "AES-256": 3.1086698336041697e-06,
-          "ECC": 0.0017754406772362138,
-          "PRNG": 6.353090185099914e-08,
-          "RSA-1024": 1.3757042465472886e-05,
-          "RSA-4096": 3.537675727407889e-05,
-          "SHA-1": 0.00015969032514991352,
-          "SHA-224": 4.964499777628033e-07,
-          "SHA-256": 3.456458999601836e-06,
-          "XOR-CIPHER": 0.00018596024840051718
+          "AES-128": 0.0019399548137882757,
+          "AES-192": 4.958211978302168e-05,
+          "AES-256": 1.913018394143011e-05,
+          "ECC": 0.9882321196697658,
+          "PRNG": 3.8051694726330423e-07,
+          "RSA-1024": 0.0014483318107469398,
+          "RSA-4096": 4.451143170902028e-05,
+          "SHA-1": 2.941873268682784e-05,
+          "SHA-224": 0.0003196237506465204,
+          "SHA-256": 9.916091047583365e-05,
+          "XOR-CIPHER": 5.031950766671641e-05
         },
         "non_crypto_algorithms": {
-          "Non-Crypto": 9.438767834482887e-06
+          "Non-Crypto": 0.00776746655184246
         }
       },
       "top_predictions": [
         {
           "rank": 1,
-          "algorithm": "AES-128",
-          "probability": 0.9978103529570034,
-          "confidence_percent": 99.78103529570033,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
-        },
-        {
-          "rank": 2,
           "algorithm": "ECC",
-          "probability": 0.0017754406772362138,
-          "confidence_percent": 0.17754406772362138,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 3,
-          "algorithm": "XOR-CIPHER",
-          "probability": 0.00018596024840051718,
-          "confidence_percent": 0.01859602484005172,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "cryptographic"
-        },
-        {
-          "rank": 4,
-          "algorithm": "SHA-1",
-          "probability": 0.00015969032514991352,
-          "confidence_percent": 0.015969032514991353,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
-        },
-        {
-          "rank": 5,
-          "algorithm": "RSA-4096",
-          "probability": 3.537675727407889e-05,
-          "confidence_percent": 0.003537675727407889,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        }
-      ],
-      "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
-        "optimization_level": "unknown",
-        "complexity": {
-          "basic_blocks": 184,
-          "instructions": 0,
-          "cyclomatic_complexity": 36
-        },
-        "crypto_features": {
-          "has_crypto_constants": false,
-          "detected_rounds": 0
-        }
-      }
-    },
-    {
-      "function_info": {
-        "function_index": 9,
-        "function_name": "wc_AesCbcDecrypt",
-        "function_address": "00102c6e"
-      },
-      "prediction": {
-        "predicted_algorithm": "RSA-4096",
-        "confidence": 0.5417683003370428,
-        "confidence_percent": 54.176830033704285
-      },
-      "encryption_analysis": {
-        "is_encrypted": true,
-        "status": "ENCRYPTED",
-        "message": "Function appears to implement cryptographic algorithm: RSA-4096",
-        "crypto_probability": 0.9999972015351934,
-        "non_crypto_probability": 2.7984648062792337e-06,
-        "overall_confidence": 0.4253916563897761
-      },
-      "crypto_indicators": {
-        "indicators": {
-          "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
-          "has_aes_rcon": 0,
-          "has_des_sbox": 0,
-          "has_sha_constants": 0,
-          "has_md5_constants": 0,
-          "has_rsa_constants": 0,
-          "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
-          "aes_round_detected": 0,
-          "des_round_detected": 0,
-          "sha_round_detected": 0,
-          "md5_round_detected": 0
-        },
-        "positive_indicators": 2,
-        "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
-      },
-      "algorithm_probabilities": {
-        "all_algorithms": {
-          "AES-128": 0.45753447299435346,
-          "AES-192": 5.316340660015278e-05,
-          "AES-256": 7.601322806199789e-07,
-          "ECC": 7.91059142008158e-05,
-          "Non-Crypto": 2.7984648062792337e-06,
-          "PRNG": 4.7506136151886877e-08,
-          "RSA-1024": 5.657515441487383e-06,
-          "RSA-4096": 0.5417683003370428,
-          "SHA-1": 0.000517244253180235,
-          "SHA-224": 8.828733045875176e-07,
-          "SHA-256": 1.153426413355124e-06,
-          "XOR-CIPHER": 3.641317623980984e-05
-        },
-        "crypto_algorithms": {
-          "AES-128": 0.45753447299435346,
-          "AES-192": 5.316340660015278e-05,
-          "AES-256": 7.601322806199789e-07,
-          "ECC": 7.91059142008158e-05,
-          "PRNG": 4.7506136151886877e-08,
-          "RSA-1024": 5.657515441487383e-06,
-          "RSA-4096": 0.5417683003370428,
-          "SHA-1": 0.000517244253180235,
-          "SHA-224": 8.828733045875176e-07,
-          "SHA-256": 1.153426413355124e-06,
-          "XOR-CIPHER": 3.641317623980984e-05
-        },
-        "non_crypto_algorithms": {
-          "Non-Crypto": 2.7984648062792337e-06
-        }
-      },
-      "top_predictions": [
-        {
-          "rank": 1,
-          "algorithm": "RSA-4096",
-          "probability": 0.5417683003370428,
-          "confidence_percent": 54.176830033704285,
+          "probability": 0.9882321196697658,
+          "confidence_percent": 98.82321196697657,
           "is_crypto_algorithm": true,
           "algorithm_type": "asymmetric-encryption"
         },
         {
           "rank": 2,
-          "algorithm": "AES-128",
-          "probability": 0.45753447299435346,
-          "confidence_percent": 45.753447299435344,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
-        },
-        {
-          "rank": 3,
-          "algorithm": "SHA-1",
-          "probability": 0.000517244253180235,
-          "confidence_percent": 0.051724425318023494,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
-        },
-        {
-          "rank": 4,
-          "algorithm": "ECC",
-          "probability": 7.91059142008158e-05,
-          "confidence_percent": 0.007910591420081579,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 5,
-          "algorithm": "AES-192",
-          "probability": 5.316340660015278e-05,
-          "confidence_percent": 0.005316340660015278,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
-        }
-      ],
-      "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
-        "optimization_level": "unknown",
-        "complexity": {
-          "basic_blocks": 551,
-          "instructions": 0,
-          "cyclomatic_complexity": 93
-        },
-        "crypto_features": {
-          "has_crypto_constants": false,
-          "detected_rounds": 0
-        }
-      }
-    },
-    {
-      "function_info": {
-        "function_index": 10,
-        "function_name": "wc_AesCtrEncrypt",
-        "function_address": "0010405e"
-      },
-      "prediction": {
-        "predicted_algorithm": "AES-128",
-        "confidence": 0.9993963763408767,
-        "confidence_percent": 99.93963763408767
-      },
-      "encryption_analysis": {
-        "is_encrypted": true,
-        "status": "ENCRYPTED",
-        "message": "Function appears to implement cryptographic algorithm: AES-128",
-        "crypto_probability": 0.9999967113526192,
-        "non_crypto_probability": 3.2886473807351853e-06,
-        "overall_confidence": 0.7457313095924598
-      },
-      "crypto_indicators": {
-        "indicators": {
-          "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
-          "has_aes_rcon": 0,
-          "has_des_sbox": 0,
-          "has_sha_constants": 0,
-          "has_md5_constants": 0,
-          "has_rsa_constants": 0,
-          "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
-          "aes_round_detected": 0,
-          "des_round_detected": 0,
-          "sha_round_detected": 0,
-          "md5_round_detected": 0
-        },
-        "positive_indicators": 2,
-        "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
-      },
-      "algorithm_probabilities": {
-        "all_algorithms": {
-          "AES-128": 0.9993963763408767,
-          "AES-192": 1.8259062545949625e-06,
-          "AES-256": 1.3984810785894711e-07,
-          "ECC": 0.0005020436992130693,
-          "Non-Crypto": 3.2886473807351853e-06,
-          "PRNG": 2.928107859321379e-08,
-          "RSA-1024": 9.747555175577877e-06,
-          "RSA-4096": 4.240875033089003e-05,
-          "SHA-1": 1.3922976976791063e-05,
-          "SHA-224": 1.8105302445422063e-07,
-          "SHA-256": 4.086989196914536e-06,
-          "XOR-CIPHER": 2.5948952383800658e-05
-        },
-        "crypto_algorithms": {
-          "AES-128": 0.9993963763408767,
-          "AES-192": 1.8259062545949625e-06,
-          "AES-256": 1.3984810785894711e-07,
-          "ECC": 0.0005020436992130693,
-          "PRNG": 2.928107859321379e-08,
-          "RSA-1024": 9.747555175577877e-06,
-          "RSA-4096": 4.240875033089003e-05,
-          "SHA-1": 1.3922976976791063e-05,
-          "SHA-224": 1.8105302445422063e-07,
-          "SHA-256": 4.086989196914536e-06,
-          "XOR-CIPHER": 2.5948952383800658e-05
-        },
-        "non_crypto_algorithms": {
-          "Non-Crypto": 3.2886473807351853e-06
-        }
-      },
-      "top_predictions": [
-        {
-          "rank": 1,
-          "algorithm": "AES-128",
-          "probability": 0.9993963763408767,
-          "confidence_percent": 99.93963763408767,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
-        },
-        {
-          "rank": 2,
-          "algorithm": "ECC",
-          "probability": 0.0005020436992130693,
-          "confidence_percent": 0.050204369921306925,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 3,
-          "algorithm": "RSA-4096",
-          "probability": 4.240875033089003e-05,
-          "confidence_percent": 0.004240875033089003,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 4,
-          "algorithm": "XOR-CIPHER",
-          "probability": 2.5948952383800658e-05,
-          "confidence_percent": 0.002594895238380066,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "cryptographic"
-        },
-        {
-          "rank": 5,
-          "algorithm": "SHA-1",
-          "probability": 1.3922976976791063e-05,
-          "confidence_percent": 0.0013922976976791064,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
-        }
-      ],
-      "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
-        "optimization_level": "unknown",
-        "complexity": {
-          "basic_blocks": 366,
-          "instructions": 0,
-          "cyclomatic_complexity": 89
-        },
-        "crypto_features": {
-          "has_crypto_constants": false,
-          "detected_rounds": 0
-        }
-      }
-    },
-    {
-      "function_info": {
-        "function_index": 11,
-        "function_name": "wc_AesCtrSetKey",
-        "function_address": "001048ea"
-      },
-      "prediction": {
-        "predicted_algorithm": "AES-128",
-        "confidence": 0.6272337392149328,
-        "confidence_percent": 62.72337392149328
-      },
-      "encryption_analysis": {
-        "is_encrypted": true,
-        "status": "ENCRYPTED",
-        "message": "Function appears to implement cryptographic algorithm: AES-128",
-        "crypto_probability": 0.9999141048690198,
-        "non_crypto_probability": 8.589513098031229e-05,
-        "overall_confidence": 0.48521746360429907
-      },
-      "crypto_indicators": {
-        "indicators": {
-          "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
-          "has_aes_rcon": 0,
-          "has_des_sbox": 0,
-          "has_sha_constants": 0,
-          "has_md5_constants": 0,
-          "has_rsa_constants": 0,
-          "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
-          "aes_round_detected": 0,
-          "des_round_detected": 0,
-          "sha_round_detected": 0,
-          "md5_round_detected": 0
-        },
-        "positive_indicators": 2,
-        "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
-      },
-      "algorithm_probabilities": {
-        "all_algorithms": {
-          "AES-128": 0.6272337392149328,
-          "AES-192": 5.343588042350943e-05,
-          "AES-256": 3.697286403922229e-05,
-          "ECC": 0.017945677573871645,
-          "Non-Crypto": 8.589513098031229e-05,
-          "PRNG": 1.444692991285145e-07,
-          "RSA-1024": 5.006361743008678e-05,
-          "RSA-4096": 1.665528616980168e-05,
-          "SHA-1": 0.35396065074218075,
-          "SHA-224": 3.3665050792326376e-05,
-          "SHA-256": 0.0005593075583311358,
-          "XOR-CIPHER": 2.3792611549400982e-05
-        },
-        "crypto_algorithms": {
-          "AES-128": 0.6272337392149328,
-          "AES-192": 5.343588042350943e-05,
-          "AES-256": 3.697286403922229e-05,
-          "ECC": 0.017945677573871645,
-          "PRNG": 1.444692991285145e-07,
-          "RSA-1024": 5.006361743008678e-05,
-          "RSA-4096": 1.665528616980168e-05,
-          "SHA-1": 0.35396065074218075,
-          "SHA-224": 3.3665050792326376e-05,
-          "SHA-256": 0.0005593075583311358,
-          "XOR-CIPHER": 2.3792611549400982e-05
-        },
-        "non_crypto_algorithms": {
-          "Non-Crypto": 8.589513098031229e-05
-        }
-      },
-      "top_predictions": [
-        {
-          "rank": 1,
-          "algorithm": "AES-128",
-          "probability": 0.6272337392149328,
-          "confidence_percent": 62.72337392149328,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
-        },
-        {
-          "rank": 2,
-          "algorithm": "SHA-1",
-          "probability": 0.35396065074218075,
-          "confidence_percent": 35.39606507421807,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
-        },
-        {
-          "rank": 3,
-          "algorithm": "ECC",
-          "probability": 0.017945677573871645,
-          "confidence_percent": 1.7945677573871646,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 4,
-          "algorithm": "SHA-256",
-          "probability": 0.0005593075583311358,
-          "confidence_percent": 0.05593075583311358,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
-        },
-        {
-          "rank": 5,
           "algorithm": "Non-Crypto",
-          "probability": 8.589513098031229e-05,
-          "confidence_percent": 0.008589513098031229,
+          "probability": 0.00776746655184246,
+          "confidence_percent": 0.776746655184246,
           "is_crypto_algorithm": false,
           "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 3,
+          "algorithm": "AES-128",
+          "probability": 0.0019399548137882757,
+          "confidence_percent": 0.19399548137882758,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 4,
+          "algorithm": "RSA-1024",
+          "probability": 0.0014483318107469398,
+          "confidence_percent": 0.14483318107469398,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 5,
+          "algorithm": "SHA-224",
+          "probability": 0.0003196237506465204,
+          "confidence_percent": 0.03196237506465204,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "hash-function"
         }
       ],
       "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
+        "architecture": "mips",
+        "compiler": "clang",
         "optimization_level": "unknown",
         "complexity": {
-          "basic_blocks": 18,
+          "basic_blocks": 3,
           "instructions": 0,
-          "cyclomatic_complexity": 13
+          "cyclomatic_complexity": 3
         },
         "crypto_features": {
           "has_crypto_constants": false,
@@ -1772,125 +473,381 @@
     },
     {
       "function_info": {
-        "function_index": 12,
-        "function_name": "wc_AesNew",
-        "function_address": "00104ad2"
+        "function_index": 2,
+        "function_name": "deregister_tm_clones",
+        "function_address": "00010810"
       },
       "prediction": {
-        "predicted_algorithm": "AES-128",
-        "confidence": 0.9913994643800843,
-        "confidence_percent": 99.13994643800844
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9989408360626201,
+        "confidence_percent": 99.894083606262
       },
       "encryption_analysis": {
         "is_encrypted": true,
         "status": "ENCRYPTED",
-        "message": "Function appears to implement cryptographic algorithm: AES-128",
-        "crypto_probability": 0.9999972439975019,
-        "non_crypto_probability": 2.756002498076602e-06,
-        "overall_confidence": 0.740133471219905
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9993688499154914,
+        "non_crypto_probability": 0.000631150084508715,
+        "overall_confidence": 0.699258585243834
       },
       "crypto_indicators": {
         "indicators": {
           "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
+          "has_aes_sbox": 0,
           "has_aes_rcon": 0,
           "has_des_sbox": 0,
           "has_sha_constants": 0,
           "has_md5_constants": 0,
           "has_rsa_constants": 0,
           "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
+          "rsa_bigint_detected": 0,
           "aes_round_detected": 0,
           "des_round_detected": 0,
           "sha_round_detected": 0,
           "md5_round_detected": 0
         },
-        "positive_indicators": 2,
+        "positive_indicators": 0,
         "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
+        "crypto_strength": 0.0
       },
       "algorithm_probabilities": {
         "all_algorithms": {
-          "AES-128": 0.9913994643800843,
-          "AES-192": 5.240983398493522e-07,
-          "AES-256": 2.02319871826525e-06,
-          "ECC": 0.004024808859548016,
-          "Non-Crypto": 2.756002498076602e-06,
-          "PRNG": 1.76582042989769e-07,
-          "RSA-1024": 5.743225776835289e-05,
-          "RSA-4096": 1.822561373780067e-05,
-          "SHA-1": 0.004471028707517878,
-          "SHA-224": 1.0133693085846136e-06,
-          "SHA-256": 8.875685955888801e-07,
-          "XOR-CIPHER": 2.1659361840271454e-05
+          "AES-128": 0.00013976062282606378,
+          "AES-192": 6.540021899551935e-06,
+          "AES-256": 7.299853070328594e-07,
+          "ECC": 0.9989408360626201,
+          "Non-Crypto": 0.000631150084508715,
+          "PRNG": 2.3370685454056197e-08,
+          "RSA-1024": 0.00020677083385146913,
+          "RSA-4096": 4.202190109407205e-06,
+          "SHA-1": 4.887181239758587e-06,
+          "SHA-224": 5.126177884222916e-06,
+          "SHA-256": 4.655283679964889e-05,
+          "XOR-CIPHER": 1.3420632268651287e-05
         },
         "crypto_algorithms": {
-          "AES-128": 0.9913994643800843,
-          "AES-192": 5.240983398493522e-07,
-          "AES-256": 2.02319871826525e-06,
-          "ECC": 0.004024808859548016,
-          "PRNG": 1.76582042989769e-07,
-          "RSA-1024": 5.743225776835289e-05,
-          "RSA-4096": 1.822561373780067e-05,
-          "SHA-1": 0.004471028707517878,
-          "SHA-224": 1.0133693085846136e-06,
-          "SHA-256": 8.875685955888801e-07,
-          "XOR-CIPHER": 2.1659361840271454e-05
+          "AES-128": 0.00013976062282606378,
+          "AES-192": 6.540021899551935e-06,
+          "AES-256": 7.299853070328594e-07,
+          "ECC": 0.9989408360626201,
+          "PRNG": 2.3370685454056197e-08,
+          "RSA-1024": 0.00020677083385146913,
+          "RSA-4096": 4.202190109407205e-06,
+          "SHA-1": 4.887181239758587e-06,
+          "SHA-224": 5.126177884222916e-06,
+          "SHA-256": 4.655283679964889e-05,
+          "XOR-CIPHER": 1.3420632268651287e-05
         },
         "non_crypto_algorithms": {
-          "Non-Crypto": 2.756002498076602e-06
+          "Non-Crypto": 0.000631150084508715
         }
       },
       "top_predictions": [
         {
           "rank": 1,
-          "algorithm": "AES-128",
-          "probability": 0.9913994643800843,
-          "confidence_percent": 99.13994643800844,
+          "algorithm": "ECC",
+          "probability": 0.9989408360626201,
+          "confidence_percent": 99.894083606262,
           "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
+          "algorithm_type": "asymmetric-encryption"
         },
         {
           "rank": 2,
-          "algorithm": "SHA-1",
-          "probability": 0.004471028707517878,
-          "confidence_percent": 0.4471028707517878,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
+          "algorithm": "Non-Crypto",
+          "probability": 0.000631150084508715,
+          "confidence_percent": 0.06311500845087151,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
         },
         {
           "rank": 3,
-          "algorithm": "ECC",
-          "probability": 0.004024808859548016,
-          "confidence_percent": 0.4024808859548016,
+          "algorithm": "RSA-1024",
+          "probability": 0.00020677083385146913,
+          "confidence_percent": 0.020677083385146913,
           "is_crypto_algorithm": true,
           "algorithm_type": "asymmetric-encryption"
         },
         {
           "rank": 4,
+          "algorithm": "AES-128",
+          "probability": 0.00013976062282606378,
+          "confidence_percent": 0.013976062282606378,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 5,
+          "algorithm": "SHA-256",
+          "probability": 4.655283679964889e-05,
+          "confidence_percent": 0.00465528367996489,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "hash-function"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 4,
+          "instructions": 0,
+          "cyclomatic_complexity": 3
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 3,
+        "function_name": "register_tm_clones",
+        "function_address": "00010848"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9891598512849801,
+        "confidence_percent": 98.91598512849801
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9947169486450236,
+        "non_crypto_probability": 0.005283051354976362,
+        "overall_confidence": 0.692411895899486
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 0.0026920685895655645,
+          "AES-192": 7.52549645575307e-05,
+          "AES-256": 7.989139223888732e-06,
+          "ECC": 0.9891598512849801,
+          "Non-Crypto": 0.005283051354976362,
+          "PRNG": 1.8972110882694366e-07,
+          "RSA-1024": 0.0025399985264177543,
+          "RSA-4096": 3.214222139356949e-05,
+          "SHA-1": 1.9049136137179448e-05,
+          "SHA-224": 3.128561895963855e-05,
+          "SHA-256": 0.00015699438857876897,
+          "XOR-CIPHER": 2.125054100737717e-06
+        },
+        "crypto_algorithms": {
+          "AES-128": 0.0026920685895655645,
+          "AES-192": 7.52549645575307e-05,
+          "AES-256": 7.989139223888732e-06,
+          "ECC": 0.9891598512849801,
+          "PRNG": 1.8972110882694366e-07,
+          "RSA-1024": 0.0025399985264177543,
+          "RSA-4096": 3.214222139356949e-05,
+          "SHA-1": 1.9049136137179448e-05,
+          "SHA-224": 3.128561895963855e-05,
+          "SHA-256": 0.00015699438857876897,
+          "XOR-CIPHER": 2.125054100737717e-06
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.005283051354976362
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.9891598512849801,
+          "confidence_percent": 98.91598512849801,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "Non-Crypto",
+          "probability": 0.005283051354976362,
+          "confidence_percent": 0.5283051354976362,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 3,
+          "algorithm": "AES-128",
+          "probability": 0.0026920685895655645,
+          "confidence_percent": 0.26920685895655644,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 4,
           "algorithm": "RSA-1024",
-          "probability": 5.743225776835289e-05,
-          "confidence_percent": 0.005743225776835289,
+          "probability": 0.0025399985264177543,
+          "confidence_percent": 0.25399985264177544,
           "is_crypto_algorithm": true,
           "algorithm_type": "asymmetric-encryption"
         },
         {
           "rank": 5,
+          "algorithm": "SHA-256",
+          "probability": 0.00015699438857876897,
+          "confidence_percent": 0.015699438857876898,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "hash-function"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 4,
+          "instructions": 0,
+          "cyclomatic_complexity": 3
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 4,
+        "function_name": "__do_global_dtors_aux",
+        "function_address": "00010894"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9831409345302038,
+        "confidence_percent": 98.31409345302038
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9989963675165155,
+        "non_crypto_probability": 0.00100363248348439,
+        "overall_confidence": 0.6881986541711426
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 0.00916129098691794,
+          "AES-192": 7.43361776489981e-05,
+          "AES-256": 2.4886383253186157e-05,
+          "ECC": 0.9831409345302038,
+          "Non-Crypto": 0.00100363248348439,
+          "PRNG": 2.7293747071332947e-07,
+          "RSA-1024": 0.005622030942227921,
+          "RSA-4096": 0.00012342243683188017,
+          "SHA-1": 9.877868622447814e-05,
+          "SHA-224": 0.00020040120450129468,
+          "SHA-256": 0.00010657161341692612,
+          "XOR-CIPHER": 0.00044344161781844884
+        },
+        "crypto_algorithms": {
+          "AES-128": 0.00916129098691794,
+          "AES-192": 7.43361776489981e-05,
+          "AES-256": 2.4886383253186157e-05,
+          "ECC": 0.9831409345302038,
+          "PRNG": 2.7293747071332947e-07,
+          "RSA-1024": 0.005622030942227921,
+          "RSA-4096": 0.00012342243683188017,
+          "SHA-1": 9.877868622447814e-05,
+          "SHA-224": 0.00020040120450129468,
+          "SHA-256": 0.00010657161341692612,
+          "XOR-CIPHER": 0.00044344161781844884
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.00100363248348439
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.9831409345302038,
+          "confidence_percent": 98.31409345302038,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "AES-128",
+          "probability": 0.00916129098691794,
+          "confidence_percent": 0.916129098691794,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "RSA-1024",
+          "probability": 0.005622030942227921,
+          "confidence_percent": 0.562203094222792,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 4,
+          "algorithm": "Non-Crypto",
+          "probability": 0.00100363248348439,
+          "confidence_percent": 0.100363248348439,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 5,
           "algorithm": "XOR-CIPHER",
-          "probability": 2.1659361840271454e-05,
-          "confidence_percent": 0.0021659361840271453,
+          "probability": 0.00044344161781844884,
+          "confidence_percent": 0.04434416178184488,
           "is_crypto_algorithm": true,
           "algorithm_type": "cryptographic"
         }
       ],
       "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
+        "architecture": "mips",
+        "compiler": "clang",
         "optimization_level": "unknown",
         "complexity": {
-          "basic_blocks": 18,
+          "basic_blocks": 8,
           "instructions": 0,
-          "cyclomatic_complexity": 5
+          "cyclomatic_complexity": 7
         },
         "crypto_features": {
           "has_crypto_constants": false,
@@ -1900,251 +857,123 @@
     },
     {
       "function_info": {
-        "function_index": 13,
-        "function_name": "wc_AesDelete",
-        "function_address": "00104b1a"
+        "function_index": 5,
+        "function_name": "frame_dummy",
+        "function_address": "00010974"
       },
       "prediction": {
-        "predicted_algorithm": "AES-128",
-        "confidence": 0.9876289419628512,
-        "confidence_percent": 98.76289419628512
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9988334562257793,
+        "confidence_percent": 99.88334562257793
       },
       "encryption_analysis": {
         "is_encrypted": true,
         "status": "ENCRYPTED",
-        "message": "Function appears to implement cryptographic algorithm: AES-128",
-        "crypto_probability": 0.9999928267153908,
-        "non_crypto_probability": 7.173284609398138e-06,
-        "overall_confidence": 0.7374941055278419
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9990106651301328,
+        "non_crypto_probability": 0.0009893348698677,
+        "overall_confidence": 0.6991834193580455
       },
       "crypto_indicators": {
         "indicators": {
           "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
+          "has_aes_sbox": 0,
           "has_aes_rcon": 0,
           "has_des_sbox": 0,
           "has_sha_constants": 0,
           "has_md5_constants": 0,
           "has_rsa_constants": 0,
           "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
+          "rsa_bigint_detected": 0,
           "aes_round_detected": 0,
           "des_round_detected": 0,
           "sha_round_detected": 0,
           "md5_round_detected": 0
         },
-        "positive_indicators": 2,
+        "positive_indicators": 0,
         "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
+        "crypto_strength": 0.0
       },
       "algorithm_probabilities": {
         "all_algorithms": {
-          "AES-128": 0.9876289419628512,
-          "AES-192": 4.872483440242403e-07,
-          "AES-256": 6.380947448861023e-06,
-          "ECC": 0.010022143380959275,
-          "Non-Crypto": 7.173284609398138e-06,
-          "PRNG": 1.6157962487741947e-07,
-          "RSA-1024": 7.774133266731584e-05,
-          "RSA-4096": 1.3134083070948048e-05,
-          "SHA-1": 0.002227005518014661,
-          "SHA-224": 5.8105633184270495e-06,
-          "SHA-256": 5.814485033589912e-06,
-          "XOR-CIPHER": 5.205614057581437e-06
+          "AES-128": 6.873125585467552e-05,
+          "AES-192": 1.0815574287846996e-05,
+          "AES-256": 5.9849729164620665e-06,
+          "ECC": 0.9988334562257793,
+          "Non-Crypto": 0.0009893348698677,
+          "PRNG": 8.569808755594853e-08,
+          "RSA-1024": 3.2960186111432454e-05,
+          "RSA-4096": 2.2573301327347808e-05,
+          "SHA-1": 3.277360129106322e-05,
+          "SHA-224": 2.017998245346875e-06,
+          "SHA-256": 2.190835792927311e-07,
+          "XOR-CIPHER": 1.047232652395282e-06
         },
         "crypto_algorithms": {
-          "AES-128": 0.9876289419628512,
-          "AES-192": 4.872483440242403e-07,
-          "AES-256": 6.380947448861023e-06,
-          "ECC": 0.010022143380959275,
-          "PRNG": 1.6157962487741947e-07,
-          "RSA-1024": 7.774133266731584e-05,
-          "RSA-4096": 1.3134083070948048e-05,
-          "SHA-1": 0.002227005518014661,
-          "SHA-224": 5.8105633184270495e-06,
-          "SHA-256": 5.814485033589912e-06,
-          "XOR-CIPHER": 5.205614057581437e-06
+          "AES-128": 6.873125585467552e-05,
+          "AES-192": 1.0815574287846996e-05,
+          "AES-256": 5.9849729164620665e-06,
+          "ECC": 0.9988334562257793,
+          "PRNG": 8.569808755594853e-08,
+          "RSA-1024": 3.2960186111432454e-05,
+          "RSA-4096": 2.2573301327347808e-05,
+          "SHA-1": 3.277360129106322e-05,
+          "SHA-224": 2.017998245346875e-06,
+          "SHA-256": 2.190835792927311e-07,
+          "XOR-CIPHER": 1.047232652395282e-06
         },
         "non_crypto_algorithms": {
-          "Non-Crypto": 7.173284609398138e-06
+          "Non-Crypto": 0.0009893348698677
         }
       },
       "top_predictions": [
         {
           "rank": 1,
-          "algorithm": "AES-128",
-          "probability": 0.9876289419628512,
-          "confidence_percent": 98.76289419628512,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
-        },
-        {
-          "rank": 2,
           "algorithm": "ECC",
-          "probability": 0.010022143380959275,
-          "confidence_percent": 1.0022143380959276,
+          "probability": 0.9988334562257793,
+          "confidence_percent": 99.88334562257793,
           "is_crypto_algorithm": true,
           "algorithm_type": "asymmetric-encryption"
         },
         {
+          "rank": 2,
+          "algorithm": "Non-Crypto",
+          "probability": 0.0009893348698677,
+          "confidence_percent": 0.09893348698676999,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
           "rank": 3,
-          "algorithm": "SHA-1",
-          "probability": 0.002227005518014661,
-          "confidence_percent": 0.22270055180146608,
+          "algorithm": "AES-128",
+          "probability": 6.873125585467552e-05,
+          "confidence_percent": 0.006873125585467552,
           "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
+          "algorithm_type": "symmetric-encryption"
         },
         {
           "rank": 4,
           "algorithm": "RSA-1024",
-          "probability": 7.774133266731584e-05,
-          "confidence_percent": 0.007774133266731584,
+          "probability": 3.2960186111432454e-05,
+          "confidence_percent": 0.0032960186111432453,
           "is_crypto_algorithm": true,
           "algorithm_type": "asymmetric-encryption"
         },
         {
           "rank": 5,
-          "algorithm": "RSA-4096",
-          "probability": 1.3134083070948048e-05,
-          "confidence_percent": 0.0013134083070948047,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        }
-      ],
-      "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
-        "optimization_level": "unknown",
-        "complexity": {
-          "basic_blocks": 40,
-          "instructions": 0,
-          "cyclomatic_complexity": 12
-        },
-        "crypto_features": {
-          "has_crypto_constants": false,
-          "detected_rounds": 0
-        }
-      }
-    },
-    {
-      "function_info": {
-        "function_index": 14,
-        "function_name": "wc_AesInit",
-        "function_address": "00104be2"
-      },
-      "prediction": {
-        "predicted_algorithm": "AES-128",
-        "confidence": 0.9955501014349464,
-        "confidence_percent": 99.55501014349464
-      },
-      "encryption_analysis": {
-        "is_encrypted": true,
-        "status": "ENCRYPTED",
-        "message": "Function appears to implement cryptographic algorithm: AES-128",
-        "crypto_probability": 0.9999965670807337,
-        "non_crypto_probability": 3.432919266525951e-06,
-        "overall_confidence": 0.7430389171583085
-      },
-      "crypto_indicators": {
-        "indicators": {
-          "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
-          "has_aes_rcon": 0,
-          "has_des_sbox": 0,
-          "has_sha_constants": 0,
-          "has_md5_constants": 0,
-          "has_rsa_constants": 0,
-          "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
-          "aes_round_detected": 0,
-          "des_round_detected": 0,
-          "sha_round_detected": 0,
-          "md5_round_detected": 0
-        },
-        "positive_indicators": 2,
-        "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
-      },
-      "algorithm_probabilities": {
-        "all_algorithms": {
-          "AES-128": 0.9955501014349464,
-          "AES-192": 1.2735825081212825e-06,
-          "AES-256": 4.1802169226860625e-07,
-          "ECC": 0.0021778845552824053,
-          "Non-Crypto": 3.432919266525951e-06,
-          "PRNG": 5.842616090777379e-08,
-          "RSA-1024": 1.81760185750757e-05,
-          "RSA-4096": 1.563490797228314e-05,
-          "SHA-1": 0.0022249581679938276,
-          "SHA-224": 7.68506457455618e-07,
-          "SHA-256": 8.347313422823495e-08,
-          "XOR-CIPHER": 7.209986010736637e-06
-        },
-        "crypto_algorithms": {
-          "AES-128": 0.9955501014349464,
-          "AES-192": 1.2735825081212825e-06,
-          "AES-256": 4.1802169226860625e-07,
-          "ECC": 0.0021778845552824053,
-          "PRNG": 5.842616090777379e-08,
-          "RSA-1024": 1.81760185750757e-05,
-          "RSA-4096": 1.563490797228314e-05,
-          "SHA-1": 0.0022249581679938276,
-          "SHA-224": 7.68506457455618e-07,
-          "SHA-256": 8.347313422823495e-08,
-          "XOR-CIPHER": 7.209986010736637e-06
-        },
-        "non_crypto_algorithms": {
-          "Non-Crypto": 3.432919266525951e-06
-        }
-      },
-      "top_predictions": [
-        {
-          "rank": 1,
-          "algorithm": "AES-128",
-          "probability": 0.9955501014349464,
-          "confidence_percent": 99.55501014349464,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
-        },
-        {
-          "rank": 2,
           "algorithm": "SHA-1",
-          "probability": 0.0022249581679938276,
-          "confidence_percent": 0.22249581679938277,
+          "probability": 3.277360129106322e-05,
+          "confidence_percent": 0.003277360129106322,
           "is_crypto_algorithm": true,
           "algorithm_type": "hash-function"
-        },
-        {
-          "rank": 3,
-          "algorithm": "ECC",
-          "probability": 0.0021778845552824053,
-          "confidence_percent": 0.21778845552824053,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 4,
-          "algorithm": "RSA-1024",
-          "probability": 1.81760185750757e-05,
-          "confidence_percent": 0.0018176018575075698,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
-        },
-        {
-          "rank": 5,
-          "algorithm": "RSA-4096",
-          "probability": 1.563490797228314e-05,
-          "confidence_percent": 0.001563490797228314,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "asymmetric-encryption"
         }
       ],
       "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
+        "architecture": "mips",
+        "compiler": "clang",
         "optimization_level": "unknown",
         "complexity": {
-          "basic_blocks": 17,
+          "basic_blocks": 1,
           "instructions": 0,
           "cyclomatic_complexity": 2
         },
@@ -2156,125 +985,1277 @@
     },
     {
       "function_info": {
-        "function_index": 15,
-        "function_name": "wc_AesFree",
-        "function_address": "00104c14"
+        "function_index": 6,
+        "function_name": "mod_exp",
+        "function_address": "00010990"
       },
       "prediction": {
-        "predicted_algorithm": "SHA-1",
-        "confidence": 0.9245251178031478,
-        "confidence_percent": 92.45251178031478
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9939318048613982,
+        "confidence_percent": 99.39318048613983
       },
       "encryption_analysis": {
         "is_encrypted": true,
         "status": "ENCRYPTED",
-        "message": "Function appears to implement cryptographic algorithm: SHA-1",
-        "crypto_probability": 0.9999702294600734,
-        "non_crypto_probability": 2.9770539926464064e-05,
-        "overall_confidence": 0.6933214286160496
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9977098703455345,
+        "non_crypto_probability": 0.0022901296544655223,
+        "overall_confidence": 0.6957522634029787
       },
       "crypto_indicators": {
         "indicators": {
           "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
+          "has_aes_sbox": 0,
           "has_aes_rcon": 0,
           "has_des_sbox": 0,
           "has_sha_constants": 0,
           "has_md5_constants": 0,
           "has_rsa_constants": 0,
           "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
+          "rsa_bigint_detected": 0,
           "aes_round_detected": 0,
           "des_round_detected": 0,
           "sha_round_detected": 0,
           "md5_round_detected": 0
         },
-        "positive_indicators": 2,
+        "positive_indicators": 0,
         "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
+        "crypto_strength": 0.0
       },
       "algorithm_probabilities": {
         "all_algorithms": {
-          "AES-128": 0.004859914035441319,
-          "AES-192": 3.0807778071333123e-06,
-          "AES-256": 3.162341741234675e-05,
-          "ECC": 0.07027738084708798,
-          "Non-Crypto": 2.9770539926464064e-05,
-          "PRNG": 6.346829708760503e-07,
-          "RSA-1024": 0.00011289648068416136,
-          "RSA-4096": 1.5248334576671824e-05,
-          "SHA-1": 0.9245251178031478,
-          "SHA-224": 1.856916387527241e-06,
-          "SHA-256": 2.8519223256516895e-06,
-          "XOR-CIPHER": 0.00013962424223193812
+          "AES-128": 0.0025858112447062144,
+          "AES-192": 0.00014031722877099875,
+          "AES-256": 2.2735898504447827e-05,
+          "ECC": 0.9939318048613982,
+          "Non-Crypto": 0.0022901296544655223,
+          "PRNG": 4.322150267202391e-07,
+          "RSA-1024": 0.0007923879370210086,
+          "RSA-4096": 8.24001847246994e-05,
+          "SHA-1": 1.3635383726725519e-05,
+          "SHA-224": 9.047766811378548e-05,
+          "SHA-256": 1.684082821539492e-05,
+          "XOR-CIPHER": 3.30268953262833e-05
         },
         "crypto_algorithms": {
-          "AES-128": 0.004859914035441319,
-          "AES-192": 3.0807778071333123e-06,
-          "AES-256": 3.162341741234675e-05,
-          "ECC": 0.07027738084708798,
-          "PRNG": 6.346829708760503e-07,
-          "RSA-1024": 0.00011289648068416136,
-          "RSA-4096": 1.5248334576671824e-05,
-          "SHA-1": 0.9245251178031478,
-          "SHA-224": 1.856916387527241e-06,
-          "SHA-256": 2.8519223256516895e-06,
-          "XOR-CIPHER": 0.00013962424223193812
+          "AES-128": 0.0025858112447062144,
+          "AES-192": 0.00014031722877099875,
+          "AES-256": 2.2735898504447827e-05,
+          "ECC": 0.9939318048613982,
+          "PRNG": 4.322150267202391e-07,
+          "RSA-1024": 0.0007923879370210086,
+          "RSA-4096": 8.24001847246994e-05,
+          "SHA-1": 1.3635383726725519e-05,
+          "SHA-224": 9.047766811378548e-05,
+          "SHA-256": 1.684082821539492e-05,
+          "XOR-CIPHER": 3.30268953262833e-05
         },
         "non_crypto_algorithms": {
-          "Non-Crypto": 2.9770539926464064e-05
+          "Non-Crypto": 0.0022901296544655223
         }
       },
       "top_predictions": [
         {
           "rank": 1,
-          "algorithm": "SHA-1",
-          "probability": 0.9245251178031478,
-          "confidence_percent": 92.45251178031478,
+          "algorithm": "ECC",
+          "probability": 0.9939318048613982,
+          "confidence_percent": 99.39318048613983,
           "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
+          "algorithm_type": "asymmetric-encryption"
         },
         {
           "rank": 2,
+          "algorithm": "AES-128",
+          "probability": 0.0025858112447062144,
+          "confidence_percent": 0.2585811244706214,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "Non-Crypto",
+          "probability": 0.0022901296544655223,
+          "confidence_percent": 0.22901296544655222,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 4,
+          "algorithm": "RSA-1024",
+          "probability": 0.0007923879370210086,
+          "confidence_percent": 0.07923879370210087,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 5,
+          "algorithm": "AES-192",
+          "probability": 0.00014031722877099875,
+          "confidence_percent": 0.014031722877099875,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 8,
+          "instructions": 0,
+          "cyclomatic_complexity": 6
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 7,
+        "function_name": "extended_gcd",
+        "function_address": "00010ac4"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.8809492711625323,
+        "confidence_percent": 88.09492711625323
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.998009620386716,
+        "non_crypto_probability": 0.00199037961328367,
+        "overall_confidence": 0.6166644898137725
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 0.09701375204454976,
+          "AES-192": 0.003148468747440427,
+          "AES-256": 0.0002397466390827718,
+          "ECC": 0.8809492711625323,
+          "Non-Crypto": 0.00199037961328367,
+          "PRNG": 1.3063744433333662e-06,
+          "RSA-1024": 0.014149598132717064,
+          "RSA-4096": 0.00044259170475876734,
+          "SHA-1": 5.281894770258469e-05,
+          "SHA-224": 0.0009283842534543252,
+          "SHA-256": 3.431537274007274e-05,
+          "XOR-CIPHER": 0.0010493670072946378
+        },
+        "crypto_algorithms": {
+          "AES-128": 0.09701375204454976,
+          "AES-192": 0.003148468747440427,
+          "AES-256": 0.0002397466390827718,
+          "ECC": 0.8809492711625323,
+          "PRNG": 1.3063744433333662e-06,
+          "RSA-1024": 0.014149598132717064,
+          "RSA-4096": 0.00044259170475876734,
+          "SHA-1": 5.281894770258469e-05,
+          "SHA-224": 0.0009283842534543252,
+          "SHA-256": 3.431537274007274e-05,
+          "XOR-CIPHER": 0.0010493670072946378
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.00199037961328367
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
           "algorithm": "ECC",
-          "probability": 0.07027738084708798,
-          "confidence_percent": 7.0277380847087985,
+          "probability": 0.8809492711625323,
+          "confidence_percent": 88.09492711625323,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "AES-128",
+          "probability": 0.09701375204454976,
+          "confidence_percent": 9.701375204454976,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "RSA-1024",
+          "probability": 0.014149598132717064,
+          "confidence_percent": 1.4149598132717065,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 4,
+          "algorithm": "AES-192",
+          "probability": 0.003148468747440427,
+          "confidence_percent": 0.3148468747440427,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 5,
+          "algorithm": "Non-Crypto",
+          "probability": 0.00199037961328367,
+          "confidence_percent": 0.19903796132836699,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 4,
+          "instructions": 0,
+          "cyclomatic_complexity": 4
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 8,
+        "function_name": "mod_inverse",
+        "function_address": "00010c34"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9151285393623502,
+        "confidence_percent": 91.51285393623502
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9980731013449315,
+        "non_crypto_probability": 0.0019268986550685983,
+        "overall_confidence": 0.6405899775536451
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 0.027527019822601338,
+          "AES-192": 0.0009254652662353081,
+          "AES-256": 5.346528041402164e-05,
+          "ECC": 0.9151285393623502,
+          "Non-Crypto": 0.0019268986550685983,
+          "PRNG": 5.290301652827528e-07,
+          "RSA-1024": 0.051583844957869975,
+          "RSA-4096": 0.0006689312851909013,
+          "SHA-1": 4.936826304665228e-06,
+          "SHA-224": 0.0012342970699857631,
+          "SHA-256": 0.0005658648101039169,
+          "XOR-CIPHER": 0.00038020763371025547
+        },
+        "crypto_algorithms": {
+          "AES-128": 0.027527019822601338,
+          "AES-192": 0.0009254652662353081,
+          "AES-256": 5.346528041402164e-05,
+          "ECC": 0.9151285393623502,
+          "PRNG": 5.290301652827528e-07,
+          "RSA-1024": 0.051583844957869975,
+          "RSA-4096": 0.0006689312851909013,
+          "SHA-1": 4.936826304665228e-06,
+          "SHA-224": 0.0012342970699857631,
+          "SHA-256": 0.0005658648101039169,
+          "XOR-CIPHER": 0.00038020763371025547
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.0019268986550685983
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.9151285393623502,
+          "confidence_percent": 91.51285393623502,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "RSA-1024",
+          "probability": 0.051583844957869975,
+          "confidence_percent": 5.158384495786997,
           "is_crypto_algorithm": true,
           "algorithm_type": "asymmetric-encryption"
         },
         {
           "rank": 3,
           "algorithm": "AES-128",
-          "probability": 0.004859914035441319,
-          "confidence_percent": 0.4859914035441319,
+          "probability": 0.027527019822601338,
+          "confidence_percent": 2.7527019822601337,
           "is_crypto_algorithm": true,
           "algorithm_type": "symmetric-encryption"
         },
         {
           "rank": 4,
-          "algorithm": "XOR-CIPHER",
-          "probability": 0.00013962424223193812,
-          "confidence_percent": 0.013962424223193812,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "cryptographic"
+          "algorithm": "Non-Crypto",
+          "probability": 0.0019268986550685983,
+          "confidence_percent": 0.19268986550685985,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
         },
         {
           "rank": 5,
+          "algorithm": "SHA-224",
+          "probability": 0.0012342970699857631,
+          "confidence_percent": 0.12342970699857632,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "hash-function"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 1,
+          "instructions": 0,
+          "cyclomatic_complexity": 4
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 9,
+        "function_name": "is_prime",
+        "function_address": "00010ccc"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9832744060905598,
+        "confidence_percent": 98.32744060905598
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9970968774308728,
+        "non_crypto_probability": 0.0029031225691274823,
+        "overall_confidence": 0.6882920842633918
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 0.011605943156922214,
+          "AES-192": 0.0002595324643223377,
+          "AES-256": 4.18513399408125e-06,
+          "ECC": 0.9832744060905598,
+          "Non-Crypto": 0.0029031225691274823,
+          "PRNG": 4.4665504697834024e-07,
+          "RSA-1024": 0.0012739097219561946,
+          "RSA-4096": 6.249231312597362e-05,
+          "SHA-1": 2.1535110005193502e-05,
+          "SHA-224": 0.00023953004075014382,
+          "SHA-256": 6.986715684981833e-06,
+          "XOR-CIPHER": 0.00034791002850488096
+        },
+        "crypto_algorithms": {
+          "AES-128": 0.011605943156922214,
+          "AES-192": 0.0002595324643223377,
+          "AES-256": 4.18513399408125e-06,
+          "ECC": 0.9832744060905598,
+          "PRNG": 4.4665504697834024e-07,
+          "RSA-1024": 0.0012739097219561946,
+          "RSA-4096": 6.249231312597362e-05,
+          "SHA-1": 2.1535110005193502e-05,
+          "SHA-224": 0.00023953004075014382,
+          "SHA-256": 6.986715684981833e-06,
+          "XOR-CIPHER": 0.00034791002850488096
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.0029031225691274823
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.9832744060905598,
+          "confidence_percent": 98.32744060905598,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "AES-128",
+          "probability": 0.011605943156922214,
+          "confidence_percent": 1.1605943156922214,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "Non-Crypto",
+          "probability": 0.0029031225691274823,
+          "confidence_percent": 0.2903122569127482,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 4,
           "algorithm": "RSA-1024",
-          "probability": 0.00011289648068416136,
-          "confidence_percent": 0.011289648068416137,
+          "probability": 0.0012739097219561946,
+          "confidence_percent": 0.12739097219561946,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 5,
+          "algorithm": "XOR-CIPHER",
+          "probability": 0.00034791002850488096,
+          "confidence_percent": 0.0347910028504881,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "cryptographic"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 10,
+          "instructions": 0,
+          "cyclomatic_complexity": 14
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 10,
+        "function_name": "generate_prime",
+        "function_address": "00010e70"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9879460540410804,
+        "confidence_percent": 98.79460540410804
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.998423752297804,
+        "non_crypto_probability": 0.0015762477021959965,
+        "overall_confidence": 0.6915622378287563
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 0.005894303923278636,
+          "AES-192": 0.00018381854517926264,
+          "AES-256": 5.105906992564833e-05,
+          "ECC": 0.9879460540410804,
+          "Non-Crypto": 0.0015762477021959965,
+          "PRNG": 4.447339293520755e-07,
+          "RSA-1024": 0.0035519569842044725,
+          "RSA-4096": 0.00011661328400719044,
+          "SHA-1": 2.9623454975733105e-05,
+          "SHA-224": 0.0002973889007044614,
+          "SHA-256": 0.00026134305359706747,
+          "XOR-CIPHER": 9.114630692176338e-05
+        },
+        "crypto_algorithms": {
+          "AES-128": 0.005894303923278636,
+          "AES-192": 0.00018381854517926264,
+          "AES-256": 5.105906992564833e-05,
+          "ECC": 0.9879460540410804,
+          "PRNG": 4.447339293520755e-07,
+          "RSA-1024": 0.0035519569842044725,
+          "RSA-4096": 0.00011661328400719044,
+          "SHA-1": 2.9623454975733105e-05,
+          "SHA-224": 0.0002973889007044614,
+          "SHA-256": 0.00026134305359706747,
+          "XOR-CIPHER": 9.114630692176338e-05
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.0015762477021959965
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.9879460540410804,
+          "confidence_percent": 98.79460540410804,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "AES-128",
+          "probability": 0.005894303923278636,
+          "confidence_percent": 0.5894303923278635,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "RSA-1024",
+          "probability": 0.0035519569842044725,
+          "confidence_percent": 0.35519569842044724,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 4,
+          "algorithm": "Non-Crypto",
+          "probability": 0.0015762477021959965,
+          "confidence_percent": 0.15762477021959964,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 5,
+          "algorithm": "SHA-224",
+          "probability": 0.0002973889007044614,
+          "confidence_percent": 0.029738890070446142,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "hash-function"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 3,
+          "instructions": 0,
+          "cyclomatic_complexity": 5
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 11,
+        "function_name": "rsa4096_generate_keypair",
+        "function_address": "00010f54"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.5547647947089673,
+        "confidence_percent": 55.476479470896734
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9602126908740305,
+        "non_crypto_probability": 0.0397873091259694,
+        "overall_confidence": 0.38833535629627713
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 0.39366584671128335,
+          "AES-192": 0.001530235568621978,
+          "AES-256": 0.0005234288869549362,
+          "ECC": 0.5547647947089673,
+          "Non-Crypto": 0.0397873091259694,
+          "PRNG": 2.84493221129953e-06,
+          "RSA-1024": 0.006863760865179277,
+          "RSA-4096": 0.001333586358837841,
+          "SHA-1": 2.787777508850872e-05,
+          "SHA-224": 0.0006052924668442194,
+          "SHA-256": 0.0005144389230148514,
+          "XOR-CIPHER": 0.00038058367702686007
+        },
+        "crypto_algorithms": {
+          "AES-128": 0.39366584671128335,
+          "AES-192": 0.001530235568621978,
+          "AES-256": 0.0005234288869549362,
+          "ECC": 0.5547647947089673,
+          "PRNG": 2.84493221129953e-06,
+          "RSA-1024": 0.006863760865179277,
+          "RSA-4096": 0.001333586358837841,
+          "SHA-1": 2.787777508850872e-05,
+          "SHA-224": 0.0006052924668442194,
+          "SHA-256": 0.0005144389230148514,
+          "XOR-CIPHER": 0.00038058367702686007
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.0397873091259694
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.5547647947089673,
+          "confidence_percent": 55.476479470896734,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "AES-128",
+          "probability": 0.39366584671128335,
+          "confidence_percent": 39.36658467112834,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "Non-Crypto",
+          "probability": 0.0397873091259694,
+          "confidence_percent": 3.9787309125969403,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 4,
+          "algorithm": "RSA-1024",
+          "probability": 0.006863760865179277,
+          "confidence_percent": 0.6863760865179277,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 5,
+          "algorithm": "AES-192",
+          "probability": 0.001530235568621978,
+          "confidence_percent": 0.15302355686219782,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 8,
+          "instructions": 0,
+          "cyclomatic_complexity": 16
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 12,
+        "function_name": "rsa4096_encrypt",
+        "function_address": "0001122c"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9993363033643031,
+        "confidence_percent": 99.93363033643031
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9998825941472298,
+        "non_crypto_probability": 0.00011740585276991433,
+        "overall_confidence": 0.6995354123550122
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 1.0430578535515992e-05,
+          "AES-192": 2.218312896318788e-05,
+          "AES-256": 1.6201138996844501e-06,
+          "ECC": 0.9993363033643031,
+          "Non-Crypto": 0.00011740585276991433,
+          "PRNG": 3.670764782251281e-08,
+          "RSA-1024": 0.0004796092102399826,
+          "RSA-4096": 2.0386100113102254e-05,
+          "SHA-1": 7.417345883372148e-07,
+          "SHA-224": 4.2083182081742414e-06,
+          "SHA-256": 3.49832860944209e-06,
+          "XOR-CIPHER": 3.5765621214599617e-06
+        },
+        "crypto_algorithms": {
+          "AES-128": 1.0430578535515992e-05,
+          "AES-192": 2.218312896318788e-05,
+          "AES-256": 1.6201138996844501e-06,
+          "ECC": 0.9993363033643031,
+          "PRNG": 3.670764782251281e-08,
+          "RSA-1024": 0.0004796092102399826,
+          "RSA-4096": 2.0386100113102254e-05,
+          "SHA-1": 7.417345883372148e-07,
+          "SHA-224": 4.2083182081742414e-06,
+          "SHA-256": 3.49832860944209e-06,
+          "XOR-CIPHER": 3.5765621214599617e-06
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.00011740585276991433
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.9993363033643031,
+          "confidence_percent": 99.93363033643031,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "RSA-1024",
+          "probability": 0.0004796092102399826,
+          "confidence_percent": 0.04796092102399826,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "Non-Crypto",
+          "probability": 0.00011740585276991433,
+          "confidence_percent": 0.011740585276991433,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 4,
+          "algorithm": "AES-192",
+          "probability": 2.218312896318788e-05,
+          "confidence_percent": 0.002218312896318788,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 5,
+          "algorithm": "RSA-4096",
+          "probability": 2.0386100113102254e-05,
+          "confidence_percent": 0.0020386100113102255,
           "is_crypto_algorithm": true,
           "algorithm_type": "asymmetric-encryption"
         }
       ],
       "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
+        "architecture": "mips",
+        "compiler": "clang",
         "optimization_level": "unknown",
         "complexity": {
-          "basic_blocks": 39,
+          "basic_blocks": 1,
           "instructions": 0,
-          "cyclomatic_complexity": 12
+          "cyclomatic_complexity": 2
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 13,
+        "function_name": "rsa4096_decrypt",
+        "function_address": "00011268"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9993363033643031,
+        "confidence_percent": 99.93363033643031
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9998825941472298,
+        "non_crypto_probability": 0.00011740585276991433,
+        "overall_confidence": 0.6995354123550122
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 1.0430578535515992e-05,
+          "AES-192": 2.218312896318788e-05,
+          "AES-256": 1.6201138996844501e-06,
+          "ECC": 0.9993363033643031,
+          "Non-Crypto": 0.00011740585276991433,
+          "PRNG": 3.670764782251281e-08,
+          "RSA-1024": 0.0004796092102399826,
+          "RSA-4096": 2.0386100113102254e-05,
+          "SHA-1": 7.417345883372148e-07,
+          "SHA-224": 4.2083182081742414e-06,
+          "SHA-256": 3.49832860944209e-06,
+          "XOR-CIPHER": 3.5765621214599617e-06
+        },
+        "crypto_algorithms": {
+          "AES-128": 1.0430578535515992e-05,
+          "AES-192": 2.218312896318788e-05,
+          "AES-256": 1.6201138996844501e-06,
+          "ECC": 0.9993363033643031,
+          "PRNG": 3.670764782251281e-08,
+          "RSA-1024": 0.0004796092102399826,
+          "RSA-4096": 2.0386100113102254e-05,
+          "SHA-1": 7.417345883372148e-07,
+          "SHA-224": 4.2083182081742414e-06,
+          "SHA-256": 3.49832860944209e-06,
+          "XOR-CIPHER": 3.5765621214599617e-06
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.00011740585276991433
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.9993363033643031,
+          "confidence_percent": 99.93363033643031,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "RSA-1024",
+          "probability": 0.0004796092102399826,
+          "confidence_percent": 0.04796092102399826,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "Non-Crypto",
+          "probability": 0.00011740585276991433,
+          "confidence_percent": 0.011740585276991433,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 4,
+          "algorithm": "AES-192",
+          "probability": 2.218312896318788e-05,
+          "confidence_percent": 0.002218312896318788,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 5,
+          "algorithm": "RSA-4096",
+          "probability": 2.0386100113102254e-05,
+          "confidence_percent": 0.0020386100113102255,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 1,
+          "instructions": 0,
+          "cyclomatic_complexity": 2
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 14,
+        "function_name": "main",
+        "function_address": "000112a4"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.5752952491910049,
+        "confidence_percent": 57.529524919100496
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.989943426966561,
+        "non_crypto_probability": 0.01005657303343903,
+        "overall_confidence": 0.40270667443370345
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 0.3805044682104719,
+          "AES-192": 0.0016211287301673817,
+          "AES-256": 0.0002104583394354501,
+          "ECC": 0.5752952491910049,
+          "Non-Crypto": 0.01005657303343903,
+          "PRNG": 2.918195791917785e-06,
+          "RSA-1024": 0.030056016382792698,
+          "RSA-4096": 0.00029340016117009775,
+          "SHA-1": 7.660937718792218e-05,
+          "SHA-224": 8.564243072654798e-05,
+          "SHA-256": 0.0007720798667735965,
+          "XOR-CIPHER": 0.0010254560810385694
+        },
+        "crypto_algorithms": {
+          "AES-128": 0.3805044682104719,
+          "AES-192": 0.0016211287301673817,
+          "AES-256": 0.0002104583394354501,
+          "ECC": 0.5752952491910049,
+          "PRNG": 2.918195791917785e-06,
+          "RSA-1024": 0.030056016382792698,
+          "RSA-4096": 0.00029340016117009775,
+          "SHA-1": 7.660937718792218e-05,
+          "SHA-224": 8.564243072654798e-05,
+          "SHA-256": 0.0007720798667735965,
+          "XOR-CIPHER": 0.0010254560810385694
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.01005657303343903
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.5752952491910049,
+          "confidence_percent": 57.529524919100496,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "AES-128",
+          "probability": 0.3805044682104719,
+          "confidence_percent": 38.05044682104719,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "RSA-1024",
+          "probability": 0.030056016382792698,
+          "confidence_percent": 3.00560163827927,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 4,
+          "algorithm": "Non-Crypto",
+          "probability": 0.01005657303343903,
+          "confidence_percent": 1.0056573033439031,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 5,
+          "algorithm": "AES-192",
+          "probability": 0.0016211287301673817,
+          "confidence_percent": 0.16211287301673818,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 1,
+          "instructions": 0,
+          "cyclomatic_complexity": 9
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 15,
+        "function_name": "__divdi3",
+        "function_address": "000113f0"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9516145521860014,
+        "confidence_percent": 95.16145521860014
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9941891383257966,
+        "non_crypto_probability": 0.00581086167420372,
+        "overall_confidence": 0.666130186530201
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 0.021161666761295685,
+          "AES-192": 0.01272631449861821,
+          "AES-256": 8.647605091857368e-05,
+          "ECC": 0.9516145521860014,
+          "Non-Crypto": 0.00581086167420372,
+          "PRNG": 1.3508414411277592e-05,
+          "RSA-1024": 0.0020342018295608183,
+          "RSA-4096": 0.0005020714443593873,
+          "SHA-1": 9.242298798850363e-05,
+          "SHA-224": 0.0004489620083217059,
+          "SHA-256": 3.65679793686591e-05,
+          "XOR-CIPHER": 0.005472394164952371
+        },
+        "crypto_algorithms": {
+          "AES-128": 0.021161666761295685,
+          "AES-192": 0.01272631449861821,
+          "AES-256": 8.647605091857368e-05,
+          "ECC": 0.9516145521860014,
+          "PRNG": 1.3508414411277592e-05,
+          "RSA-1024": 0.0020342018295608183,
+          "RSA-4096": 0.0005020714443593873,
+          "SHA-1": 9.242298798850363e-05,
+          "SHA-224": 0.0004489620083217059,
+          "SHA-256": 3.65679793686591e-05,
+          "XOR-CIPHER": 0.005472394164952371
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.00581086167420372
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.9516145521860014,
+          "confidence_percent": 95.16145521860014,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "AES-128",
+          "probability": 0.021161666761295685,
+          "confidence_percent": 2.1161666761295685,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "AES-192",
+          "probability": 0.01272631449861821,
+          "confidence_percent": 1.272631449861821,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 4,
+          "algorithm": "Non-Crypto",
+          "probability": 0.00581086167420372,
+          "confidence_percent": 0.581086167420372,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 5,
+          "algorithm": "XOR-CIPHER",
+          "probability": 0.005472394164952371,
+          "confidence_percent": 0.5472394164952371,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "cryptographic"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 70,
+          "instructions": 0,
+          "cyclomatic_complexity": 39
         },
         "crypto_features": {
           "has_crypto_constants": false,
@@ -2285,124 +2266,1020 @@
     {
       "function_info": {
         "function_index": 16,
-        "function_name": "wc_AesGetKeySize",
-        "function_address": "00104cc6"
+        "function_name": "__umoddi3",
+        "function_address": "000118a0"
       },
       "prediction": {
-        "predicted_algorithm": "AES-128",
-        "confidence": 0.9896207629764284,
-        "confidence_percent": 98.96207629764284
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9878078170042195,
+        "confidence_percent": 98.78078170042195
       },
       "encryption_analysis": {
         "is_encrypted": true,
         "status": "ENCRYPTED",
-        "message": "Function appears to implement cryptographic algorithm: AES-128",
-        "crypto_probability": 0.9999416629133826,
-        "non_crypto_probability": 5.833708661734412e-05,
-        "overall_confidence": 0.738888380237346
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9993833706454103,
+        "non_crypto_probability": 0.0006166293545893279,
+        "overall_confidence": 0.6914654719029536
       },
       "crypto_indicators": {
         "indicators": {
           "has_crypto_constants": 0,
-          "has_aes_sbox": 1,
+          "has_aes_sbox": 0,
           "has_aes_rcon": 0,
           "has_des_sbox": 0,
           "has_sha_constants": 0,
           "has_md5_constants": 0,
           "has_rsa_constants": 0,
           "has_ecc_constants": 0,
-          "rsa_bigint_detected": 1,
+          "rsa_bigint_detected": 0,
           "aes_round_detected": 0,
           "des_round_detected": 0,
           "sha_round_detected": 0,
           "md5_round_detected": 0
         },
-        "positive_indicators": 2,
+        "positive_indicators": 0,
         "total_indicators": 13,
-        "crypto_strength": 0.15384615384615385
+        "crypto_strength": 0.0
       },
       "algorithm_probabilities": {
         "all_algorithms": {
-          "AES-128": 0.9896207629764284,
-          "AES-192": 3.847042105140249e-06,
-          "AES-256": 1.6263673382549335e-06,
-          "ECC": 0.009132378021071705,
-          "Non-Crypto": 5.833708661734412e-05,
-          "PRNG": 2.377061165749667e-07,
-          "RSA-1024": 1.6802720191401188e-05,
-          "RSA-4096": 5.85291023713052e-05,
-          "SHA-1": 0.0010997274105479216,
-          "SHA-224": 7.44343756840635e-06,
-          "SHA-256": 1.9391163128700337e-08,
-          "XOR-CIPHER": 2.8873848036463553e-07
+          "AES-128": 0.007677190562817224,
+          "AES-192": 0.0022490330845297856,
+          "AES-256": 4.247076337030292e-05,
+          "ECC": 0.9878078170042195,
+          "Non-Crypto": 0.0006166293545893279,
+          "PRNG": 8.742785850494948e-06,
+          "RSA-1024": 0.0009010033032145047,
+          "RSA-4096": 0.0001492094853296011,
+          "SHA-1": 2.9723522701967172e-05,
+          "SHA-224": 0.00014512044030111915,
+          "SHA-256": 1.0920013915778164e-05,
+          "XOR-CIPHER": 0.00036213967915999873
         },
         "crypto_algorithms": {
-          "AES-128": 0.9896207629764284,
-          "AES-192": 3.847042105140249e-06,
-          "AES-256": 1.6263673382549335e-06,
-          "ECC": 0.009132378021071705,
-          "PRNG": 2.377061165749667e-07,
-          "RSA-1024": 1.6802720191401188e-05,
-          "RSA-4096": 5.85291023713052e-05,
-          "SHA-1": 0.0010997274105479216,
-          "SHA-224": 7.44343756840635e-06,
-          "SHA-256": 1.9391163128700337e-08,
-          "XOR-CIPHER": 2.8873848036463553e-07
+          "AES-128": 0.007677190562817224,
+          "AES-192": 0.0022490330845297856,
+          "AES-256": 4.247076337030292e-05,
+          "ECC": 0.9878078170042195,
+          "PRNG": 8.742785850494948e-06,
+          "RSA-1024": 0.0009010033032145047,
+          "RSA-4096": 0.0001492094853296011,
+          "SHA-1": 2.9723522701967172e-05,
+          "SHA-224": 0.00014512044030111915,
+          "SHA-256": 1.0920013915778164e-05,
+          "XOR-CIPHER": 0.00036213967915999873
         },
         "non_crypto_algorithms": {
-          "Non-Crypto": 5.833708661734412e-05
+          "Non-Crypto": 0.0006166293545893279
         }
       },
       "top_predictions": [
         {
           "rank": 1,
-          "algorithm": "AES-128",
-          "probability": 0.9896207629764284,
-          "confidence_percent": 98.96207629764284,
-          "is_crypto_algorithm": true,
-          "algorithm_type": "symmetric-encryption"
-        },
-        {
-          "rank": 2,
           "algorithm": "ECC",
-          "probability": 0.009132378021071705,
-          "confidence_percent": 0.9132378021071705,
+          "probability": 0.9878078170042195,
+          "confidence_percent": 98.78078170042195,
           "is_crypto_algorithm": true,
           "algorithm_type": "asymmetric-encryption"
         },
         {
-          "rank": 3,
-          "algorithm": "SHA-1",
-          "probability": 0.0010997274105479216,
-          "confidence_percent": 0.10997274105479216,
+          "rank": 2,
+          "algorithm": "AES-128",
+          "probability": 0.007677190562817224,
+          "confidence_percent": 0.7677190562817224,
           "is_crypto_algorithm": true,
-          "algorithm_type": "hash-function"
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "AES-192",
+          "probability": 0.0022490330845297856,
+          "confidence_percent": 0.22490330845297857,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
         },
         {
           "rank": 4,
-          "algorithm": "RSA-4096",
-          "probability": 5.85291023713052e-05,
-          "confidence_percent": 0.00585291023713052,
+          "algorithm": "RSA-1024",
+          "probability": 0.0009010033032145047,
+          "confidence_percent": 0.09010033032145047,
           "is_crypto_algorithm": true,
           "algorithm_type": "asymmetric-encryption"
         },
         {
           "rank": 5,
           "algorithm": "Non-Crypto",
-          "probability": 5.833708661734412e-05,
-          "confidence_percent": 0.005833708661734412,
+          "probability": 0.0006166293545893279,
+          "confidence_percent": 0.06166293545893279,
           "is_crypto_algorithm": false,
           "algorithm_type": "non-cryptographic"
         }
       ],
       "feature_summary": {
-        "architecture": "unknown",
-        "compiler": "gcc",
+        "architecture": "mips",
+        "compiler": "clang",
         "optimization_level": "unknown",
         "complexity": {
-          "basic_blocks": 18,
+          "basic_blocks": 56,
+          "instructions": 0,
+          "cyclomatic_complexity": 33
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 17,
+        "function_name": "__do_global_ctors_aux",
+        "function_address": "00011cd0"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9939824849649342,
+        "confidence_percent": 99.39824849649342
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9986975787743267,
+        "non_crypto_probability": 0.0013024212256735473,
+        "overall_confidence": 0.6957877394754539
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 0.00240521137774683,
+          "AES-192": 4.0453292272419666e-05,
+          "AES-256": 1.607524161969599e-05,
+          "ECC": 0.9939824849649342,
+          "Non-Crypto": 0.0013024212256735473,
+          "PRNG": 9.958640972409788e-08,
+          "RSA-1024": 0.001341578757707452,
+          "RSA-4096": 4.969403236330175e-05,
+          "SHA-1": 4.089264681311353e-05,
+          "SHA-224": 4.693669974537993e-05,
+          "SHA-256": 0.00040245046429735745,
+          "XOR-CIPHER": 0.0003717017104172116
+        },
+        "crypto_algorithms": {
+          "AES-128": 0.00240521137774683,
+          "AES-192": 4.0453292272419666e-05,
+          "AES-256": 1.607524161969599e-05,
+          "ECC": 0.9939824849649342,
+          "PRNG": 9.958640972409788e-08,
+          "RSA-1024": 0.001341578757707452,
+          "RSA-4096": 4.969403236330175e-05,
+          "SHA-1": 4.089264681311353e-05,
+          "SHA-224": 4.693669974537993e-05,
+          "SHA-256": 0.00040245046429735745,
+          "XOR-CIPHER": 0.0003717017104172116
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.0013024212256735473
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.9939824849649342,
+          "confidence_percent": 99.39824849649342,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "AES-128",
+          "probability": 0.00240521137774683,
+          "confidence_percent": 0.24052113777468298,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "RSA-1024",
+          "probability": 0.001341578757707452,
+          "confidence_percent": 0.1341578757707452,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 4,
+          "algorithm": "Non-Crypto",
+          "probability": 0.0013024212256735473,
+          "confidence_percent": 0.13024212256735473,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 5,
+          "algorithm": "SHA-256",
+          "probability": 0.00040245046429735745,
+          "confidence_percent": 0.04024504642973575,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "hash-function"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 4,
           "instructions": 0,
           "cyclomatic_complexity": 4
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 18,
+        "function_name": "_MIPS_STUBS_",
+        "function_address": "00011d30"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9993664064726805,
+        "confidence_percent": 99.93664064726805
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9998304614979223,
+        "non_crypto_probability": 0.00016953850207793077,
+        "overall_confidence": 0.6995564845308763
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 3.61620150347912e-05,
+          "AES-192": 3.3702966061674405e-06,
+          "AES-256": 8.089343892145961e-07,
+          "ECC": 0.9993664064726805,
+          "Non-Crypto": 0.00016953850207793077,
+          "PRNG": 1.798471161636655e-08,
+          "RSA-1024": 7.448303807207709e-05,
+          "RSA-4096": 0.000337522546017484,
+          "SHA-1": 1.2996466019399363e-06,
+          "SHA-224": 2.26009430110857e-06,
+          "SHA-256": 5.500742445542227e-06,
+          "XOR-CIPHER": 2.629727061925434e-06
+        },
+        "crypto_algorithms": {
+          "AES-128": 3.61620150347912e-05,
+          "AES-192": 3.3702966061674405e-06,
+          "AES-256": 8.089343892145961e-07,
+          "ECC": 0.9993664064726805,
+          "PRNG": 1.798471161636655e-08,
+          "RSA-1024": 7.448303807207709e-05,
+          "RSA-4096": 0.000337522546017484,
+          "SHA-1": 1.2996466019399363e-06,
+          "SHA-224": 2.26009430110857e-06,
+          "SHA-256": 5.500742445542227e-06,
+          "XOR-CIPHER": 2.629727061925434e-06
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.00016953850207793077
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.9993664064726805,
+          "confidence_percent": 99.93664064726805,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "RSA-4096",
+          "probability": 0.000337522546017484,
+          "confidence_percent": 0.0337522546017484,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "Non-Crypto",
+          "probability": 0.00016953850207793077,
+          "confidence_percent": 0.016953850207793077,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 4,
+          "algorithm": "RSA-1024",
+          "probability": 7.448303807207709e-05,
+          "confidence_percent": 0.007448303807207709,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 5,
+          "algorithm": "AES-128",
+          "probability": 3.61620150347912e-05,
+          "confidence_percent": 0.00361620150347912,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 1,
+          "instructions": 0,
+          "cyclomatic_complexity": 2
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 19,
+        "function_name": "printf",
+        "function_address": "00011d40"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9993664064726805,
+        "confidence_percent": 99.93664064726805
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9998304614979223,
+        "non_crypto_probability": 0.00016953850207793077,
+        "overall_confidence": 0.6995564845308763
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 3.61620150347912e-05,
+          "AES-192": 3.3702966061674405e-06,
+          "AES-256": 8.089343892145961e-07,
+          "ECC": 0.9993664064726805,
+          "Non-Crypto": 0.00016953850207793077,
+          "PRNG": 1.798471161636655e-08,
+          "RSA-1024": 7.448303807207709e-05,
+          "RSA-4096": 0.000337522546017484,
+          "SHA-1": 1.2996466019399363e-06,
+          "SHA-224": 2.26009430110857e-06,
+          "SHA-256": 5.500742445542227e-06,
+          "XOR-CIPHER": 2.629727061925434e-06
+        },
+        "crypto_algorithms": {
+          "AES-128": 3.61620150347912e-05,
+          "AES-192": 3.3702966061674405e-06,
+          "AES-256": 8.089343892145961e-07,
+          "ECC": 0.9993664064726805,
+          "PRNG": 1.798471161636655e-08,
+          "RSA-1024": 7.448303807207709e-05,
+          "RSA-4096": 0.000337522546017484,
+          "SHA-1": 1.2996466019399363e-06,
+          "SHA-224": 2.26009430110857e-06,
+          "SHA-256": 5.500742445542227e-06,
+          "XOR-CIPHER": 2.629727061925434e-06
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.00016953850207793077
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.9993664064726805,
+          "confidence_percent": 99.93664064726805,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "RSA-4096",
+          "probability": 0.000337522546017484,
+          "confidence_percent": 0.0337522546017484,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "Non-Crypto",
+          "probability": 0.00016953850207793077,
+          "confidence_percent": 0.016953850207793077,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 4,
+          "algorithm": "RSA-1024",
+          "probability": 7.448303807207709e-05,
+          "confidence_percent": 0.007448303807207709,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 5,
+          "algorithm": "AES-128",
+          "probability": 3.61620150347912e-05,
+          "confidence_percent": 0.00361620150347912,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 1,
+          "instructions": 0,
+          "cyclomatic_complexity": 2
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 20,
+        "function_name": "puts",
+        "function_address": "00011d50"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9993664064726805,
+        "confidence_percent": 99.93664064726805
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9998304614979223,
+        "non_crypto_probability": 0.00016953850207793077,
+        "overall_confidence": 0.6995564845308763
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 3.61620150347912e-05,
+          "AES-192": 3.3702966061674405e-06,
+          "AES-256": 8.089343892145961e-07,
+          "ECC": 0.9993664064726805,
+          "Non-Crypto": 0.00016953850207793077,
+          "PRNG": 1.798471161636655e-08,
+          "RSA-1024": 7.448303807207709e-05,
+          "RSA-4096": 0.000337522546017484,
+          "SHA-1": 1.2996466019399363e-06,
+          "SHA-224": 2.26009430110857e-06,
+          "SHA-256": 5.500742445542227e-06,
+          "XOR-CIPHER": 2.629727061925434e-06
+        },
+        "crypto_algorithms": {
+          "AES-128": 3.61620150347912e-05,
+          "AES-192": 3.3702966061674405e-06,
+          "AES-256": 8.089343892145961e-07,
+          "ECC": 0.9993664064726805,
+          "PRNG": 1.798471161636655e-08,
+          "RSA-1024": 7.448303807207709e-05,
+          "RSA-4096": 0.000337522546017484,
+          "SHA-1": 1.2996466019399363e-06,
+          "SHA-224": 2.26009430110857e-06,
+          "SHA-256": 5.500742445542227e-06,
+          "XOR-CIPHER": 2.629727061925434e-06
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.00016953850207793077
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.9993664064726805,
+          "confidence_percent": 99.93664064726805,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "RSA-4096",
+          "probability": 0.000337522546017484,
+          "confidence_percent": 0.0337522546017484,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "Non-Crypto",
+          "probability": 0.00016953850207793077,
+          "confidence_percent": 0.016953850207793077,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 4,
+          "algorithm": "RSA-1024",
+          "probability": 7.448303807207709e-05,
+          "confidence_percent": 0.007448303807207709,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 5,
+          "algorithm": "AES-128",
+          "probability": 3.61620150347912e-05,
+          "confidence_percent": 0.00361620150347912,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 1,
+          "instructions": 0,
+          "cyclomatic_complexity": 2
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 21,
+        "function_name": "srand",
+        "function_address": "00011d60"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9992722064506009,
+        "confidence_percent": 99.92722064506009
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9998147099884477,
+        "non_crypto_probability": 0.00018529001155210664,
+        "overall_confidence": 0.6994905445154206
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 0.00011006960285493277,
+          "AES-192": 3.6834246465368664e-06,
+          "AES-256": 1.098026364134319e-06,
+          "ECC": 0.9992722064506009,
+          "Non-Crypto": 0.00018529001155210664,
+          "PRNG": 1.9655637995586897e-08,
+          "RSA-1024": 4.6571563698694004e-05,
+          "RSA-4096": 0.0003688811431277652,
+          "SHA-1": 7.998391935496184e-07,
+          "SHA-224": 2.4700754933458306e-06,
+          "SHA-256": 6.011806278736483e-06,
+          "XOR-CIPHER": 2.898400551100527e-06
+        },
+        "crypto_algorithms": {
+          "AES-128": 0.00011006960285493277,
+          "AES-192": 3.6834246465368664e-06,
+          "AES-256": 1.098026364134319e-06,
+          "ECC": 0.9992722064506009,
+          "PRNG": 1.9655637995586897e-08,
+          "RSA-1024": 4.6571563698694004e-05,
+          "RSA-4096": 0.0003688811431277652,
+          "SHA-1": 7.998391935496184e-07,
+          "SHA-224": 2.4700754933458306e-06,
+          "SHA-256": 6.011806278736483e-06,
+          "XOR-CIPHER": 2.898400551100527e-06
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.00018529001155210664
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.9992722064506009,
+          "confidence_percent": 99.92722064506009,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "RSA-4096",
+          "probability": 0.0003688811431277652,
+          "confidence_percent": 0.03688811431277652,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 3,
+          "algorithm": "Non-Crypto",
+          "probability": 0.00018529001155210664,
+          "confidence_percent": 0.018529001155210664,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 4,
+          "algorithm": "AES-128",
+          "probability": 0.00011006960285493277,
+          "confidence_percent": 0.011006960285493276,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 5,
+          "algorithm": "RSA-1024",
+          "probability": 4.6571563698694004e-05,
+          "confidence_percent": 0.004657156369869401,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 1,
+          "instructions": 0,
+          "cyclomatic_complexity": 2
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 22,
+        "function_name": "rand",
+        "function_address": "00011d70"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9966200023577211,
+        "confidence_percent": 99.66200023577211
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9974631391784242,
+        "non_crypto_probability": 0.0025368608215758674,
+        "overall_confidence": 0.6976340016504047
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 0.0002735353621492025,
+          "AES-192": 6.755554598847127e-06,
+          "AES-256": 1.0357912778107099e-05,
+          "ECC": 0.9966200023577211,
+          "Non-Crypto": 0.0025368608215758674,
+          "PRNG": 1.4301141097804903e-07,
+          "RSA-1024": 1.5554431141045293e-05,
+          "RSA-4096": 0.000467939112467798,
+          "SHA-1": 3.2379441738082448e-06,
+          "SHA-224": 2.010302433809406e-05,
+          "SHA-256": 3.835888125451781e-05,
+          "XOR-CIPHER": 7.15158639076676e-06
+        },
+        "crypto_algorithms": {
+          "AES-128": 0.0002735353621492025,
+          "AES-192": 6.755554598847127e-06,
+          "AES-256": 1.0357912778107099e-05,
+          "ECC": 0.9966200023577211,
+          "PRNG": 1.4301141097804903e-07,
+          "RSA-1024": 1.5554431141045293e-05,
+          "RSA-4096": 0.000467939112467798,
+          "SHA-1": 3.2379441738082448e-06,
+          "SHA-224": 2.010302433809406e-05,
+          "SHA-256": 3.835888125451781e-05,
+          "XOR-CIPHER": 7.15158639076676e-06
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.0025368608215758674
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.9966200023577211,
+          "confidence_percent": 99.66200023577211,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "Non-Crypto",
+          "probability": 0.0025368608215758674,
+          "confidence_percent": 0.25368608215758676,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 3,
+          "algorithm": "RSA-4096",
+          "probability": 0.000467939112467798,
+          "confidence_percent": 0.0467939112467798,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 4,
+          "algorithm": "AES-128",
+          "probability": 0.0002735353621492025,
+          "confidence_percent": 0.02735353621492025,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 5,
+          "algorithm": "SHA-256",
+          "probability": 3.835888125451781e-05,
+          "confidence_percent": 0.0038358881254517813,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "hash-function"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 1,
+          "instructions": 0,
+          "cyclomatic_complexity": 2
+        },
+        "crypto_features": {
+          "has_crypto_constants": false,
+          "detected_rounds": 0
+        }
+      }
+    },
+    {
+      "function_info": {
+        "function_index": 23,
+        "function_name": "_fini",
+        "function_address": "00011d90"
+      },
+      "prediction": {
+        "predicted_algorithm": "ECC",
+        "confidence": 0.9746958209611216,
+        "confidence_percent": 97.46958209611216
+      },
+      "encryption_analysis": {
+        "is_encrypted": true,
+        "status": "ENCRYPTED",
+        "message": "Function appears to implement cryptographic algorithm: ECC",
+        "crypto_probability": 0.9806871108523627,
+        "non_crypto_probability": 0.019312889147637284,
+        "overall_confidence": 0.682287074672785
+      },
+      "crypto_indicators": {
+        "indicators": {
+          "has_crypto_constants": 0,
+          "has_aes_sbox": 0,
+          "has_aes_rcon": 0,
+          "has_des_sbox": 0,
+          "has_sha_constants": 0,
+          "has_md5_constants": 0,
+          "has_rsa_constants": 0,
+          "has_ecc_constants": 0,
+          "rsa_bigint_detected": 0,
+          "aes_round_detected": 0,
+          "des_round_detected": 0,
+          "sha_round_detected": 0,
+          "md5_round_detected": 0
+        },
+        "positive_indicators": 0,
+        "total_indicators": 13,
+        "crypto_strength": 0.0
+      },
+      "algorithm_probabilities": {
+        "all_algorithms": {
+          "AES-128": 0.0030996063483761443,
+          "AES-192": 0.0003115444882748387,
+          "AES-256": 9.458684610697052e-05,
+          "ECC": 0.9746958209611216,
+          "Non-Crypto": 0.019312889147637284,
+          "PRNG": 9.884504416319383e-07,
+          "RSA-1024": 0.0011028434756874578,
+          "RSA-4096": 0.00010418993567547487,
+          "SHA-1": 0.00011455781921087785,
+          "SHA-224": 0.0010493765827193238,
+          "SHA-256": 0.00010744829753528381,
+          "XOR-CIPHER": 6.147647213101053e-06
+        },
+        "crypto_algorithms": {
+          "AES-128": 0.0030996063483761443,
+          "AES-192": 0.0003115444882748387,
+          "AES-256": 9.458684610697052e-05,
+          "ECC": 0.9746958209611216,
+          "PRNG": 9.884504416319383e-07,
+          "RSA-1024": 0.0011028434756874578,
+          "RSA-4096": 0.00010418993567547487,
+          "SHA-1": 0.00011455781921087785,
+          "SHA-224": 0.0010493765827193238,
+          "SHA-256": 0.00010744829753528381,
+          "XOR-CIPHER": 6.147647213101053e-06
+        },
+        "non_crypto_algorithms": {
+          "Non-Crypto": 0.019312889147637284
+        }
+      },
+      "top_predictions": [
+        {
+          "rank": 1,
+          "algorithm": "ECC",
+          "probability": 0.9746958209611216,
+          "confidence_percent": 97.46958209611216,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 2,
+          "algorithm": "Non-Crypto",
+          "probability": 0.019312889147637284,
+          "confidence_percent": 1.9312889147637284,
+          "is_crypto_algorithm": false,
+          "algorithm_type": "non-cryptographic"
+        },
+        {
+          "rank": 3,
+          "algorithm": "AES-128",
+          "probability": 0.0030996063483761443,
+          "confidence_percent": 0.30996063483761443,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "symmetric-encryption"
+        },
+        {
+          "rank": 4,
+          "algorithm": "RSA-1024",
+          "probability": 0.0011028434756874578,
+          "confidence_percent": 0.11028434756874578,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "asymmetric-encryption"
+        },
+        {
+          "rank": 5,
+          "algorithm": "SHA-224",
+          "probability": 0.0010493765827193238,
+          "confidence_percent": 0.10493765827193238,
+          "is_crypto_algorithm": true,
+          "algorithm_type": "hash-function"
+        }
+      ],
+      "feature_summary": {
+        "architecture": "mips",
+        "compiler": "clang",
+        "optimization_level": "unknown",
+        "complexity": {
+          "basic_blocks": 2,
+          "instructions": 0,
+          "cyclomatic_complexity": 1
         },
         "crypto_features": {
           "has_crypto_constants": false,

@@ -693,10 +693,10 @@ class EnhancedCryptoAnalysisPipeline:
         if model_path is None:
             # Try multiple possible locations for the model files
             possible_model_paths = [
-                Path(__file__).parent / 'ml' / 'saved_models' / 'current_crypto_model.pkl',
-                Path(__file__).parent / 'saved_models' / 'current_crypto_model.pkl',
-                Path('ml/saved_models/current_crypto_model.pkl'),
-                Path('saved_models/current_crypto_model.pkl')
+                Path(__file__).parent / 'ml' / 'saved_models' / 'non_crypto_model.pkl',
+                Path(__file__).parent / 'saved_models' / 'non_crypto_model.pkl',
+                Path('ml/saved_models/non_crypto_model.pkl'),
+                Path('saved_models/non_crypto_model.pkl')
             ]
             model_path = None
             for path in possible_model_paths:
@@ -707,10 +707,10 @@ class EnhancedCryptoAnalysisPipeline:
         if metadata_path is None:
             # Try multiple possible locations for the metadata files
             possible_metadata_paths = [
-                Path(__file__).parent / 'ml' / 'saved_models' / 'current_model_metadata.pkl',
-                Path(__file__).parent / 'saved_models' / 'current_model_metadata.pkl',
-                Path('ml/saved_models/current_model_metadata.pkl'),
-                Path('saved_models/current_model_metadata.pkl')
+                Path(__file__).parent / 'ml' / 'saved_models' / 'non_crypto_model_metadata.pkl',
+                Path(__file__).parent / 'saved_models' / 'non_crypto_model_metadata.pkl',
+                Path('ml/saved_models/non_crypto_model_metadata.pkl'),
+                Path('saved_models/non_crypto_model_metadata.pkl')
             ]
             metadata_path = None
             for path in possible_metadata_paths:
