@@ -888,7 +888,7 @@ def run_analysis():
     if len(args) > 0:
         output_dir = args[0]
     else:
-        output_dir = os.path.join(".", "test_dataset_json")
+        output_dir = os.path.join(".", "ghidra_json_new")
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
