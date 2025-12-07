@@ -235,6 +235,7 @@ const JobAnalysis = () => {
 
             <TabsContent value="ml-classification" className="space-y-6">
               <MLClassificationCard jobData={jobData} />
+              <GNNClassificationCard jobData={jobData} />
             </TabsContent>
 
             <TabsContent value="features" className="space-y-6">
@@ -867,6 +868,237 @@ const FeatureExtractionCard = ({ jobData }: { jobData: unknown }) => {
   );
 };
 
+// Component for GNN Classification Results
+const GNNClassificationCard = ({ jobData }: { jobData: unknown }) => {
+  const getGNNData = () => {
+    if (!jobData || typeof jobData !== 'object') return null;
+    
+    const data = jobData as Record<string, unknown>;
+    const featureExtraction = data.feature_extraction_results as Record<string, unknown>;
+    if (!featureExtraction) return null;
+    
+    return featureExtraction.gnn_classification as Record<string, unknown> || null;
+  };
+
+  const gnnData = getGNNData();
+
+  if (!gnnData || gnnData.status !== 'completed') {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Network className="w-5 h-5" />
+            GNN Classification (Graph Neural Network)
+          </CardTitle>
+          <CardDescription>
+            Advanced graph-based cryptographic pattern recognition
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="text-center py-8">
+            <Network className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+            <p className="text-muted-foreground">
+              {gnnData?.status === 'failed' 
+                ? 'GNN classification failed or unavailable.'
+                : 'GNN classification data not available yet.'}
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const summary = gnnData.summary as Record<string, unknown>;
+  const functionPredictions = gnnData.function_predictions as Array<{
+    function_name: string;
+    function_address: string;
+    predicted_class: string;
+    confidence: number;
+    is_crypto: boolean;
+    probabilities: Record<string, number>;
+    graph_features?: {
+      num_nodes: number;
+      num_edges: number;
+    };
+  }>;
+  const algorithmDistribution = gnnData.algorithm_distribution as Record<string, number>;
+
+  // Get top algorithm predictions from probabilities
+  const getTopPredictions = (probabilities: Record<string, number>, topN = 5) => {
+    return Object.entries(probabilities)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, topN)
+      .map(([algorithm, probability]) => ({ algorithm, probability }));
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* GNN Overview */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Network className="w-5 h-5" />
+            GNN Classification Overview
+          </CardTitle>
+          <CardDescription>
+            Graph Neural Network analysis using control flow and data flow patterns
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="text-center p-4 bg-muted rounded-lg">
+              <p className="text-sm text-muted-foreground mb-1">Total Functions</p>
+              <div className="text-2xl font-bold">
+                {Number(summary?.total_functions) || 0}
+              </div>
+            </div>
+            
+            <div className="text-center p-4 bg-muted rounded-lg">
+              <p className="text-sm text-muted-foreground mb-1">Crypto Functions</p>
+              <div className="text-2xl font-bold text-red-600">
+                {Number(summary?.crypto_functions) || 0}
+              </div>
+            </div>
+            
+            <div className="text-center p-4 bg-muted rounded-lg">
+              <p className="text-sm text-muted-foreground mb-1">Crypto Percentage</p>
+              <div className="text-2xl font-bold">
+                {typeof summary?.crypto_percentage === 'number' 
+                  ? `${summary.crypto_percentage.toFixed(1)}%` 
+                  : 'N/A'}
+              </div>
+            </div>
+          </div>
+
+          {/* Algorithm Distribution */}
+          {algorithmDistribution && Object.keys(algorithmDistribution).length > 0 && (
+            <div className="mt-6">
+              <h4 className="font-semibold mb-3">Algorithm Distribution</h4>
+              <div className="flex flex-wrap gap-2">
+                {Object.entries(algorithmDistribution).map(([algo, count]) => (
+                  <Badge 
+                    key={algo} 
+                    className="bg-purple-100 text-purple-800 border-purple-200"
+                  >
+                    {algo}: {count}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Function Predictions */}
+      {functionPredictions && functionPredictions.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle>GNN Function Analysis</CardTitle>
+            <CardDescription>
+              Detailed predictions for each analyzed function
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {functionPredictions.map((func, idx) => {
+                const topPredictions = getTopPredictions(func.probabilities, 5);
+                
+                return (
+                  <div key={idx} className="border rounded-lg p-4 bg-muted/30">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h4 className="font-semibold text-lg">
+                          {func.function_name}
+                        </h4>
+                        <p className="text-sm text-muted-foreground">
+                          Address: {func.function_address}
+                        </p>
+                      </div>
+                      <Badge className={
+                        func.is_crypto 
+                          ? 'bg-red-100 text-red-800 border-red-200'
+                          : 'bg-green-100 text-green-800 border-green-200'
+                      }>
+                        {func.is_crypto ? 'Crypto' : 'Non-Crypto'}
+                      </Badge>
+                    </div>
+
+                    <div className="mb-3">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-sm font-medium">
+                          Predicted: {func.predicted_class}
+                        </span>
+                        <span className="text-sm text-muted-foreground">
+                          Confidence: {(func.confidence * 100).toFixed(2)}%
+                        </span>
+                      </div>
+                      <Progress value={func.confidence * 100} className="h-2" />
+                    </div>
+
+                    {/* Graph Features */}
+                    {func.graph_features && (
+                      <div className="grid grid-cols-2 gap-2 mb-3 text-sm">
+                        <div className="flex items-center gap-2">
+                          <Network className="w-4 h-4 text-muted-foreground" />
+                          <span>Nodes: {func.graph_features.num_nodes}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Activity className="w-4 h-4 text-muted-foreground" />
+                          <span>Edges: {func.graph_features.num_edges}</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Top Predictions */}
+                    <div>
+                      <h5 className="text-sm font-semibold mb-2">Top Algorithm Probabilities:</h5>
+                      <div className="space-y-2">
+                        {topPredictions.map(({ algorithm, probability }, index) => (
+                          <div key={algorithm} className="flex items-center gap-2">
+                            <Badge variant="outline" className="min-w-[30px] justify-center">
+                              {index + 1}
+                            </Badge>
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="text-sm font-medium">{algorithm}</span>
+                                <span className="text-xs text-muted-foreground">
+                                  {(probability * 100).toFixed(4)}%
+                                </span>
+                              </div>
+                              <Progress 
+                                value={probability * 100} 
+                                className="h-1.5"
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Binary Info */}
+      {gnnData.binary_info && gnnData.binary_info !== 'unknown' && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Binary Information</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <pre className="bg-muted p-4 rounded-lg text-sm overflow-auto">
+              {JSON.stringify(gnnData.binary_info, null, 2)}
+            </pre>
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  );
+};
+
 // Component for Qiling Dynamic Analysis
 const QilingAnalysisCard = ({ qilingData }: { qilingData: unknown }) => {
   // Extract qiling results from job data
@@ -933,7 +1165,7 @@ const QilingAnalysisCard = ({ qilingData }: { qilingData: unknown }) => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="text-center p-4 bg-muted rounded-lg">
               <p className="text-sm text-muted-foreground mb-1">Status</p>
               {getStatusBadge(status)}
@@ -956,7 +1188,40 @@ const QilingAnalysisCard = ({ qilingData }: { qilingData: unknown }) => {
                 {verdict?.crypto_detected ? 'Detected' : 'Not Detected'}
               </Badge>
             </div>
+
+            <div className="text-center p-4 bg-muted rounded-lg">
+              <p className="text-sm text-muted-foreground mb-1">Confidence</p>
+              <div className="space-y-1">
+                <Badge className={
+                  verdict?.confidence === 'HIGH' ? 'bg-red-100 text-red-800 border-red-200' :
+                  verdict?.confidence === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800 border-yellow-200' :
+                  'bg-green-100 text-green-800 border-green-200'
+                }>
+                  {verdict?.confidence as string || 'UNKNOWN'}
+                </Badge>
+                {typeof verdict?.confidence_score === 'number' && (
+                  <div className="text-sm font-semibold">
+                    {verdict.confidence_score}%
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
+
+          {/* Verdict Reasons */}
+          {verdict?.reasons && Array.isArray(verdict.reasons) && (verdict.reasons as string[]).length > 0 && (
+            <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <h4 className="font-semibold mb-2 flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4" />
+                Detection Reasons:
+              </h4>
+              <ul className="list-disc list-inside space-y-1 text-sm">
+                {(verdict.reasons as string[]).map((reason, idx) => (
+                  <li key={idx}>{reason}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -968,6 +1233,23 @@ const QilingAnalysisCard = ({ qilingData }: { qilingData: unknown }) => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
+              {/* Packer Detection */}
+              {phases.packer_detection && (
+                <div className="p-4 bg-muted/50 rounded-lg">
+                  <h4 className="font-semibold mb-2">Packer Detection</h4>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">Binary Packed:</span>
+                    <Badge variant={
+                      (phases.packer_detection as Record<string, unknown>)?.packed 
+                        ? "destructive" 
+                        : "default"
+                    }>
+                      {(phases.packer_detection as Record<string, unknown>)?.packed ? 'Yes - Packed Binary' : 'No - Unpacked'}
+                    </Badge>
+                  </div>
+                </div>
+              )}
+
               {/* YARA Analysis */}
               {phases.yara_analysis && (
                 <div className="p-4 bg-muted/50 rounded-lg">
@@ -999,16 +1281,25 @@ const QilingAnalysisCard = ({ qilingData }: { qilingData: unknown }) => {
               {/* Constant Detection */}
               {phases.constant_detection && (
                 <div className="p-4 bg-muted/50 rounded-lg">
-                  <h4 className="font-semibold mb-2">Crypto Constants</h4>
-                  <div className="flex flex-wrap gap-1">
-                    {Array.isArray((phases.constant_detection as Record<string, unknown>)?.algorithms_detected)
-                      ? ((phases.constant_detection as Record<string, unknown>).algorithms_detected as string[]).map(algo => (
-                          <Badge key={algo} className="bg-blue-100 text-blue-800 border-blue-200">
-                            {algo}
-                          </Badge>
-                        ))
-                      : <span className="text-sm text-muted-foreground">None detected</span>
-                    }
+                  <h4 className="font-semibold mb-2 flex items-center justify-between">
+                    <span>Crypto Constants Detection</span>
+                    {typeof (phases.constant_detection as Record<string, unknown>)?.count === 'number' && (
+                      <Badge variant="outline">
+                        {Number((phases.constant_detection as Record<string, unknown>).count)} detected
+                      </Badge>
+                    )}
+                  </h4>
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap gap-1">
+                      {Array.isArray((phases.constant_detection as Record<string, unknown>)?.algorithms_detected)
+                        ? ((phases.constant_detection as Record<string, unknown>).algorithms_detected as string[]).map(algo => (
+                            <Badge key={algo} className="bg-blue-100 text-blue-800 border-blue-200">
+                              {algo}
+                            </Badge>
+                          ))
+                        : <span className="text-sm text-muted-foreground">None detected</span>
+                      }
+                    </div>
                   </div>
                 </div>
               )}
@@ -1016,7 +1307,14 @@ const QilingAnalysisCard = ({ qilingData }: { qilingData: unknown }) => {
               {/* Function Symbols */}
               {phases.function_symbols && (
                 <div className="p-4 bg-muted/50 rounded-lg">
-                  <h4 className="font-semibold mb-2">Function Symbols</h4>
+                  <h4 className="font-semibold mb-2 flex items-center justify-between">
+                    <span>Function Symbols</span>
+                    {typeof (phases.function_symbols as Record<string, unknown>)?.count === 'number' && (
+                      <Badge variant="outline">
+                        {Number((phases.function_symbols as Record<string, unknown>).count)} functions
+                      </Badge>
+                    )}
+                  </h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <span className="text-sm text-muted-foreground">Symbols Detected:</span>
