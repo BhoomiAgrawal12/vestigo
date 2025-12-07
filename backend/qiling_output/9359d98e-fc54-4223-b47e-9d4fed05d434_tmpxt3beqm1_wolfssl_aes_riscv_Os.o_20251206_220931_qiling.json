@@ -1,0 +1,46 @@
+{
+  "job_id": "9359d98e-fc54-4223-b47e-9d4fed05d434",
+  "binary_path": "/home/shinichi/Documents/VSC/vestigo-data/backend/analysis_workspace/tmpxt3beqm1_wolfssl_aes_riscv_Os.o_analysis/tmpxt3beqm1_wolfssl_aes_riscv_Os.o",
+  "binary_name": "tmpxt3beqm1_wolfssl_aes_riscv_Os.o",
+  "analysis_timestamp": 1765039171.7172217,
+  "execution_time": 0.4009523391723633,
+  "status": "failed",
+  "analysis_tool": "qiling_dynamic_analysis",
+  "phases": {
+    "packer_detection": {
+      "packed": false
+    },
+    "yara_analysis": {
+      "detected": [
+        "AES",
+        "COMPRESSION",
+        "RSA"
+      ],
+      "total_matches": 1142,
+      "scan_time": 0.001
+    },
+    "constant_detection": {
+      "algorithms_detected": [
+        "AES",
+        "wc_AesCbcDecrypt @ 0x1efc",
+        "wc_AesCbcEncrypt @ 0x1e80",
+        "wc_AesCtrEncrypt @ 0x2f30",
+        "wc_AesEncrypt @ 0x2de"
+      ],
+      "count": 5
+    },
+    "function_symbols": {
+      "detected": true,
+      "count": 4
+    },
+    "dynamic_analysis": {}
+  },
+  "verdict": {
+    "crypto_detected": false,
+    "confidence": "UNKNOWN",
+    "confidence_score": 0,
+    "reasons": []
+  },
+  "raw_output": "\n============================================================\n[*] PHASE -1: Checking for packed binary...\n[-] No packer detected\n[+] Detected architecture: riscv64\n[*] Target: tmpxt3beqm1_wolfssl_aes_riscv_Os.o\n[*] Rootfs: /home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/rootfs/riscv64_linux\n\n============================================================\n[*] PHASE 0: YARA static analysis\n[\u2713] YARA detected: AES, COMPRESSION, RSA\n    Total matches: 1142\n    Scan time: 0.001s\n    High-confidence rules:\n      - AES_InvSbox (AES, 95%)\n\n============================================================\n[*] PHASE 1: Scanning for crypto constants...\n[\u2713] Found constants for 1 algorithm(s)\n    - AES\n\n============================================================\n[*] PHASE 2: Checking for function symbols...\n[*] Found 4 crypto candidate(s):\n    - wc_AesCbcDecrypt @ 0x1efc\n    - wc_AesCbcEncrypt @ 0x1e80\n    - wc_AesCtrEncrypt @ 0x2f30\n    - wc_AesEncrypt @ 0x2de\n\n============================================================\n[*] PHASE 3: Running binary to test crypto functions...\n",
+  "errors": "/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/qiling_env/lib/python3.12/site-packages/capstone/__init__.py:267: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\nTraceback (most recent call last):\n  File \"/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/tests/verify_crypto.py\", line 1491, in <module>\n    analyze_binary()\n  File \"/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/tests/verify_crypto.py\", line 1095, in analyze_binary\n    run_binary_with_hooks(analysis_target, crypto_funcs, rootfs_path, filename, constant_results)\n  File \"/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/tests/verify_crypto.py\", line 1145, in run_binary_with_hooks\n    ql = Qiling([temp_binary], rootfs_path, verbose=QL_VERBOSE.OFF, console=False)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/qiling/qiling/core.py\", line 195, in __init__\n    self.loader.run()\n  File \"/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/qiling/qiling/loader/elf.py\", line 103, in run\n    self.load_driver(elffile, top_of_stack, loadbase=0x8000000)\n  File \"/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/qiling/qiling/loader/elf.py\", line 613, in load_driver\n    init_module = loadbase + self.lkm_get_init(elffile)\n                             ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/qiling/qiling/loader/elf.py\", line 438, in lkm_get_init\n    raise QlErrorELFFormat('invalid module: symbol init_module not found')\nqiling.exception.QlErrorELFFormat: invalid module: symbol init_module not found\n"
+}

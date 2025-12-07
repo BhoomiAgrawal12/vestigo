@@ -1,0 +1,43 @@
+{
+  "job_id": "74669861-a538-4fe8-9710-423f47137f3d",
+  "binary_path": "/home/shinichi/Documents/VSC/vestigo-data/backend/analysis_workspace/tmp_uyl0iql_wolfssl_chacha_arm32_O1.o_analysis/tmp_uyl0iql_wolfssl_chacha_arm32_O1.o",
+  "binary_name": "tmp_uyl0iql_wolfssl_chacha_arm32_O1.o",
+  "analysis_timestamp": 1765034104.195437,
+  "execution_time": 1.2555453777313232,
+  "status": "failed",
+  "analysis_tool": "qiling_dynamic_analysis",
+  "phases": {
+    "packer_detection": {
+      "packed": false
+    },
+    "yara_analysis": {
+      "detected": [
+        "COMPRESSION",
+        "ChaCha20",
+        "RSA",
+        "Salsa20"
+      ],
+      "total_matches": 23,
+      "scan_time": 0.0
+    },
+    "constant_detection": {
+      "algorithms_detected": [
+        "ChaCha20"
+      ],
+      "count": 1
+    },
+    "function_symbols": {
+      "detected": false,
+      "stripped": true
+    },
+    "dynamic_analysis": {}
+  },
+  "verdict": {
+    "crypto_detected": false,
+    "confidence": "UNKNOWN",
+    "confidence_score": 0,
+    "reasons": []
+  },
+  "raw_output": "\n============================================================\n[*] PHASE -1: Checking for packed binary...\n[-] No packer detected\n[+] Detected architecture: arm\n[*] Target: tmp_uyl0iql_wolfssl_chacha_arm32_O1.o\n[*] Rootfs: /home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/rootfs/arm_linux\n\n============================================================\n[*] PHASE 0: YARA static analysis\n[\u2713] YARA detected: COMPRESSION, ChaCha20, RSA, Salsa20\n    Total matches: 23\n    Scan time: 0.000s\n    High-confidence rules:\n      - ChaCha20_Constants (ChaCha20, 100%)\n      - Salsa20_Constants (Salsa20, 100%)\n\n============================================================\n[*] PHASE 1: Scanning for crypto constants...\n[\u2713] Found constants for 1 algorithm(s)\n    - ChaCha20\n\n============================================================\n[*] PHASE 2: Checking for function symbols...\n[-] No crypto function names detected (stripped/obfuscated binary)\n[*] Switching to enhanced behavioral analysis...\n\n============================================================\n[*] PHASE 3: Dynamic behavioral analysis...\n",
+  "errors": "/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/qiling_env/lib/python3.12/site-packages/capstone/__init__.py:267: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\nTraceback (most recent call last):\n  File \"/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/tests/verify_crypto.py\", line 1491, in <module>\n    analyze_binary()\n  File \"/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/tests/verify_crypto.py\", line 1086, in analyze_binary\n    run_stripped_binary_analysis(analysis_target, rootfs_path, filename, constant_results)\n  File \"/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/tests/verify_crypto.py\", line 728, in run_stripped_binary_analysis\n    ql = Qiling([temp_binary], rootfs_path, verbose=QL_VERBOSE.OFF, console=True)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/qiling/qiling/core.py\", line 195, in __init__\n    self.loader.run()\n  File \"/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/qiling/qiling/loader/elf.py\", line 103, in run\n    self.load_driver(elffile, top_of_stack, loadbase=0x8000000)\n  File \"/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/qiling/qiling/loader/elf.py\", line 613, in load_driver\n    init_module = loadbase + self.lkm_get_init(elffile)\n                             ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/shinichi/Documents/VSC/vestigo-data/qiling_analysis/qiling/qiling/loader/elf.py\", line 438, in lkm_get_init\n    raise QlErrorELFFormat('invalid module: symbol init_module not found')\nqiling.exception.QlErrorELFFormat: invalid module: symbol init_module not found\n"
+}
