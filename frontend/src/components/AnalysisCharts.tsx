@@ -52,9 +52,9 @@ export const ConfidenceHeatmap: React.FC<ConfidenceHeatmapProps> = ({
 }) => {
   const heatmapData = Object.entries(confidenceScores).map(([algorithm, scores]) => ({
     algorithm,
-    avgProbability: (scores.avg_probability * 100).toFixed(2),
-    maxProbability: (scores.max_probability * 100).toFixed(2),
-    significantFunctions: scores.functions_with_significant_probability,
+    avgProbability: parseFloat((scores.avg_probability * 100).toFixed(2)),
+    maxProbability: parseFloat((scores.max_probability * 100).toFixed(2)),
+    functions_with_significant_probability: scores.functions_with_significant_probability,
     color: ALGORITHM_COLORS[algorithm as keyof typeof ALGORITHM_COLORS] || '#64748b',
     rawAvg: scores.avg_probability,
     rawMax: scores.max_probability,
@@ -102,12 +102,14 @@ export const ConfidenceHeatmap: React.FC<ConfidenceHeatmapProps> = ({
                 name="Average Confidence"
                 fill="#3b82f6"
                 radius={[2, 2, 0, 0]}
+                label={{ position: 'top', formatter: (value: number) => `${value}%` }}
               />
               <Bar 
                 dataKey="maxProbability" 
                 name="Max Confidence"
                 fill="#ef4444"
                 radius={[2, 2, 0, 0]}
+                label={{ position: 'top', formatter: (value: number) => `${value}%` }}
               />
             </BarChart>
           </ResponsiveContainer>
@@ -144,7 +146,7 @@ export const ConfidenceHeatmap: React.FC<ConfidenceHeatmapProps> = ({
                     Max: {item.maxProbability}%
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    Functions: {item.significantFunctions}
+                    Functions: {item.functions_with_significant_probability}
                   </div>
                 </div>
               );

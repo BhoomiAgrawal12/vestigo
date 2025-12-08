@@ -219,13 +219,12 @@ const JobAnalysis = () => {
 
           {/* Analysis Tabs */}
           <Tabs defaultValue="overview" className="w-full">
-            {/* <TabsList className="grid w-full grid-cols-6"> */}
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList className="grid w-full grid-cols-6">
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="ml-classification">ML Analysis</TabsTrigger>
               <TabsTrigger value="filesystem">Filesystem</TabsTrigger>
               <TabsTrigger value="features">Features</TabsTrigger>
-              {/* <TabsTrigger value="qiling">Dynamic</TabsTrigger> */}
+              <TabsTrigger value="qiling">Dynamic</TabsTrigger>
               <TabsTrigger value="file-info">File Info</TabsTrigger>
               {/* <TabsTrigger value="raw-data">Raw Data</TabsTrigger> */}
             </TabsList>
@@ -277,12 +276,21 @@ const FileMetadataCard = ({ jobData }: { jobData: unknown }) => {
     if (!jobData || typeof jobData !== 'object') return {};
     
     const data = jobData as Record<string, unknown>;
+    
+    // Extract architecture from feature_extraction_results
+    let arch = 'Unknown';
+    const featureResults = data.feature_extraction_results as Record<string, unknown>;
+    if (featureResults && featureResults.functions && Array.isArray(featureResults.functions) && featureResults.functions.length > 0) {
+      const firstFunc = featureResults.functions[0] as Record<string, unknown>;
+      arch = (firstFunc.arch as string) || 'Unknown';
+    }
+    
     return {
       filename: data.filename as string,
       file_type: data.file_type as string,
       file_size: data.file_size as number,
       hash: data.hash as string,
-      arch: data.arch as string,
+      arch: arch,
       upload_time: data.upload_time as string,
       status: data.status as string,
     };
@@ -740,7 +748,7 @@ const FeatureExtractionCard = ({ jobData }: { jobData: unknown }) => {
     const avgEntropy = summary.average_entropy as number;
 
     return (
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <div className="text-center p-3 bg-muted rounded-lg">
           <div className="text-2xl font-bold">{totalFunctions || 0}</div>
           <div className="text-sm text-muted-foreground">Functions</div>
@@ -749,12 +757,12 @@ const FeatureExtractionCard = ({ jobData }: { jobData: unknown }) => {
           <div className="text-2xl font-bold">{totalTables || 0}</div>
           <div className="text-sm text-muted-foreground">Tables</div>
         </div>
-        <div className="text-center p-3 bg-muted rounded-lg">
+        {/* <div className="text-center p-3 bg-muted rounded-lg">
           <div className="text-2xl font-bold">
             {typeof avgComplexity === 'number' ? avgComplexity.toFixed(1) : 'N/A'}
           </div>
           <div className="text-sm text-muted-foreground">Avg Complexity</div>
-        </div>
+        </div> */}
         <div className="text-center p-3 bg-muted rounded-lg">
           <div className="text-2xl font-bold">
             {typeof avgEntropy === 'number' ? avgEntropy.toFixed(2) : 'N/A'}
