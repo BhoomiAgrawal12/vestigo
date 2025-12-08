@@ -141,7 +141,8 @@ def call_llm(prompt: str) -> Dict[str, Any]:
     client = OpenAI(api_key=api_key)
 
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="gpt-5.1",
+
         messages=[
             {
                 "role": "system",

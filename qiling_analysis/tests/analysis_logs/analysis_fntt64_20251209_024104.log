@@ -1,5 +1,5 @@
-[*] Analysis output will be saved to: /home/prajwal/Documents/vestigo-data/qiling_analysis/tests/analysis_logs/analysis_bhoomi_20251208_230824.log
-[*] Starting analysis at: 2025-12-08 23:08:24
+[*] Analysis output will be saved to: /home/prajwal/Documents/vestigo-data/qiling_analysis/tests/analysis_logs/analysis_fntt64_20251209_024104.log
+[*] Starting analysis at: 2025-12-09 02:41:04
 
 ======= FILE DESCRIPTON ======
 
@@ -7,26 +7,24 @@
 [*] PHASE -1: Checking for packed binary...
 [-] No packer detected
 [+] Detected architecture: x86_64
-[*] Target: bhoomi
+[*] Target: fntt64
 [*] Rootfs: /home/prajwal/Documents/vestigo-data/qiling_analysis/rootfs/x8664_linux
 
 ============================================================
 [*] PHASE 0: YARA static analysis
-[✓] YARA detected: AES, COMPRESSION, RC4/ARC4, RSA
-    Total matches: 595
+[✓] YARA detected: COMPRESSION, RC4/ARC4, RSA
+    Total matches: 596
     Scan time: 0.006s
-    High-confidence rules:
-      - AES_Sbox (AES, 95%)
 
 ============================================================
 [*] PHASE 1: Scanning for crypto constants...
-[✓] Found constants for 1 algorithm(s)
-    - AES
+[-] No crypto constants detected
 
 ============================================================
 [*] PHASE 2: Checking for function symbols...
-[*] Found 1 crypto candidate(s):
-    - neuro_encrypt @ 0x401abd
+[*] Found 2 crypto candidate(s):
+    - fntt64_decrypt @ 0x401ec2
+    - fntt64_encrypt @ 0x401dda
 
 ============================================================
 [*] PHASE 3: Running binary to test crypto functions...
@@ -35,10 +33,10 @@
    NATIVE STRACE ANALYSIS (Optional)
 ======================================================================
 [*] Running native strace on binary...
-    Strace log: /home/prajwal/Documents/vestigo-data/qiling_analysis/tests/strace_logs/strace_bhoomi_20251208_230824.log
-    Terminal output: /home/prajwal/Documents/vestigo-data/qiling_analysis/tests/strace_logs/terminal_bhoomi_20251208_230824.log
-[✓] strace log captured: 5100 bytes
-[✓] Terminal output captured: 71 bytes
+    Strace log: /home/prajwal/Documents/vestigo-data/qiling_analysis/tests/strace_logs/strace_fntt64_20251209_024104.log
+    Terminal output: /home/prajwal/Documents/vestigo-data/qiling_analysis/tests/strace_logs/terminal_fntt64_20251209_024104.log
+[✓] strace log captured: 5246 bytes
+[✓] Terminal output captured: 89 bytes
 [*] Analyzing strace log...
 [*] Strace Statistics:
     Total syscalls: 18
@@ -47,7 +45,7 @@
 [*] Installing syscall hooks (getrandom, read)...
 [*] Executing binary with basic block profiling...
 [SYSCALL] getrandom() called: 8 bytes (0x8)
-          Data: 1a31e26ed0b05e49
+          Data: add9f8d35c3b99d9
           Likely: XOR-based cipher (8-byte key)
 
 ============================================================
@@ -58,9 +56,8 @@
 [*] Falling back to static analysis results only
 
 
-[*] Constant Detection (FindCrypt):
-    [✓] Detected 1 algorithm(s), 1 constant(s)
-      AES: AES_SBOX
+[*] Constant Detection:
+    [-] No known crypto constants found
 
 [*] Avalanche Effect Analysis:
     [-] Note: Functions may be inlined or not called during this execution
@@ -70,30 +67,30 @@
     [*] Alternative: Test manually by running binary multiple times
 
 [*] Basic Block Analysis:
-    Total Basic Blocks: 1032
-    Crypto Loops: 47
-    Total Instructions: 156521
-    Crypto Operations: 21503
-    Crypto-Op Ratio: 13.74%
+    Total Basic Blocks: 1055
+    Crypto Loops: 48
+    Total Instructions: 173679
+    Crypto Operations: 23575
+    Crypto-Op Ratio: 13.57%
 
 [*] ADAPTIVE Confidence Scoring (0-100):
-    - Constants evidence : 35 pts (0-40)
+    - Constants evidence : 0 pts (0-40)
     - Function names     : 15 pts (0-40, adaptive)
     - Crypto loops       : 20 pts (0-20)
     - Crypto-op ratio    : 15 pts (0-15)
     - Avalanche effect   : 0 pts (0-15, optional)
     - YARA detection     : 0 pts (0-30)
-    -> RAW TOTAL: 85
-    -> FINAL SCORE: 95/100  => HIGH
-    Evidence sources: 4/5 available
+    -> RAW TOTAL: 50
+    -> FINAL SCORE: 50/100  => MEDIUM
+    Evidence sources: 3/5 available
 
 
-[*] Strace log saved to: /home/prajwal/Documents/vestigo-data/qiling_analysis/tests/strace_logs/strace_bhoomi_20251208_230824.log
-[*] Terminal output saved to: /home/prajwal/Documents/vestigo-data/qiling_analysis/tests/strace_logs/terminal_bhoomi_20251208_230824.log
+[*] Strace log saved to: /home/prajwal/Documents/vestigo-data/qiling_analysis/tests/strace_logs/strace_fntt64_20251209_024104.log
+[*] Terminal output saved to: /home/prajwal/Documents/vestigo-data/qiling_analysis/tests/strace_logs/terminal_fntt64_20251209_024104.log
 
 ======================================================================
    STRACE LOG CONTENTS
 ======================================================================
 
-[*] Analysis completed at: 2025-12-08 23:08:25
-[✓] Full analysis log saved to: /home/prajwal/Documents/vestigo-data/qiling_analysis/tests/analysis_logs/analysis_bhoomi_20251208_230824.log
+[*] Analysis completed at: 2025-12-09 02:41:04
+[✓] Full analysis log saved to: /home/prajwal/Documents/vestigo-data/qiling_analysis/tests/analysis_logs/analysis_fntt64_20251209_024104.log
