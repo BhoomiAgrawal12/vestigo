@@ -57,23 +57,13 @@ algo_evidence = {
 
 # Strace logging
 strace_log_path = None
-terminal_output_path = None
-
-# Configuration: Choose output capture method
-# Option 1: "combined" - All output (strace + terminal) in one file
-# Option 2: "separate" - Strace log and terminal output in separate files
-OUTPUT_CAPTURE_MODE = "separate"  # Change to "combined" if you prefer one file
 
 def run_with_strace(binary_path, rootfs_path, timeout=10):
     """
     Run binary natively with strace to capture system calls.
     Returns: (strace_log_path, success)
-    
-    Capture modes:
-    - "combined": strace log includes terminal output (using stderr redirection)
-    - "separate": strace log and terminal output saved separately
     """
-    global strace_log_path, terminal_output_path
+    global strace_log_path
     
     # Check if strace is available
     try:
@@ -88,16 +78,13 @@ def run_with_strace(binary_path, rootfs_path, timeout=10):
     log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "strace_logs")
     os.makedirs(log_dir, exist_ok=True)
     
-    # Generate timestamped log filenames
+    # Generate timestamped log filename
     timestamp = time.strftime("%Y%m%d_%H%M%S")
     binary_name = os.path.basename(binary_path).replace('.', '_')
     strace_log = os.path.join(log_dir, f"strace_{binary_name}_{timestamp}.log")
-    terminal_log = os.path.join(log_dir, f"terminal_{binary_name}_{timestamp}.log")
     
     print(f"[*] Running native strace on binary...")
-    print(f"    Strace log: {strace_log}")
-    if OUTPUT_CAPTURE_MODE == "separate":
-        print(f"    Terminal output: {terminal_log}")
+    print(f"    Log: {strace_log}")
     
     # Run strace with comprehensive syscall tracking
     # -f: follow forks
@@ -113,44 +100,22 @@ def run_with_strace(binary_path, rootfs_path, timeout=10):
         "-s", "256",       # String length
         "-v",              # Verbose
         "-tt",             # Timestamps
-        "-o", strace_log,  # Output file for strace
+        "-o", strace_log,  # Output file
         binary_path
     ]
     
     try:
         # Run with timeout
-        if OUTPUT_CAPTURE_MODE == "combined":
-            # Redirect stderr to strace log (strace writes to stderr by default)
-            # This captures both syscalls and program output in one file
-            with open(strace_log, 'a') as log_file:
-                result = subprocess.run(
-                    strace_cmd,
-                    timeout=timeout,
-                    stdout=log_file,  # Capture program's stdout
-                    stderr=subprocess.STDOUT,  # Merge stderr with stdout
-                    text=True
-                )
-        else:
-            # Separate mode: save terminal output to separate file
-            with open(terminal_log, 'w') as term_file:
-                result = subprocess.run(
-                    strace_cmd,
-                    timeout=timeout,
-                    stdout=term_file,  # Program's stdout to terminal log
-                    stderr=term_file,  # Program's stderr to terminal log
-                    text=True
-                )
-            terminal_output_path = terminal_log
+        result = subprocess.run(
+            strace_cmd,
+            timeout=timeout,
+            capture_output=True,
+            text=True
+        )
         
         # Check if log was created and has content
         if os.path.exists(strace_log) and os.path.getsize(strace_log) > 0:
             print(f"[✓] strace log captured: {os.path.getsize(strace_log)} bytes")
-            if OUTPUT_CAPTURE_MODE == "separate" and os.path.exists(terminal_log):
-                term_size = os.path.getsize(terminal_log)
-                if term_size > 0:
-                    print(f"[✓] Terminal output captured: {term_size} bytes")
-                else:
-                    print(f"[i] Terminal output: empty (no output from binary)")
             strace_log_path = strace_log
             return strace_log, True
         else:
@@ -162,12 +127,7 @@ def run_with_strace(binary_path, rootfs_path, timeout=10):
         # Log might still be useful even if timed out
         if os.path.exists(strace_log) and os.path.getsize(strace_log) > 0:
             print(f"[✓] Partial strace log captured: {os.path.getsize(strace_log)} bytes")
-            if OUTPUT_CAPTURE_MODE == "separate" and os.path.exists(terminal_log):
-                term_size = os.path.getsize(terminal_log)
-                if term_size > 0:
-                    print(f"[✓] Partial terminal output captured: {term_size} bytes")
             strace_log_path = strace_log
-            terminal_output_path = terminal_log if OUTPUT_CAPTURE_MODE == "separate" else None
             return strace_log, True
         return None, False
         
@@ -382,25 +342,15 @@ def hook_syscalls(ql):
         except:
             pass
         
-        # If not random device, call original syscall
-        # Return -1 to let Qiling handle it normally
-        return None
+        # Default behavior
+        return ql.os.syscall_read_orig(ql, fd, buf, count)
     
     # Hook the syscalls
     try:
         ql.os.set_syscall("getrandom", syscall_getrandom)
+        # Save original read for fallback
+        ql.os.syscall_read_orig = ql.os.syscall_table.get("read", lambda *args: -1)
         ql.os.set_syscall("read", syscall_read)
-    except AttributeError as e:
-        # Qiling API change - try alternative method
-        try:
-            # For newer Qiling versions, use hook_syscall
-            if hasattr(ql, 'set_syscall'):
-                ql.set_syscall("getrandom", syscall_getrandom)
-                ql.set_syscall("read", syscall_read)
-            else:
-                print(f"[!] Warning: Syscall hooking not supported in this Qiling version")
-        except Exception as e2:
-            print(f"[!] Warning: Could not hook syscalls: {e2}")
     except Exception as e:
         print(f"[!] Warning: Could not hook syscalls: {e}")
 
@@ -1181,8 +1131,6 @@ def analyze_binary():
     if not BINARY_PATH or not os.path.exists(BINARY_PATH):
         print("Usage: python3 verify_crypto.py <binary_path>")
         sys.exit(1)
-
-    # File d
     
     # Initialize logger
     logger = CryptoLogger(BINARY_PATH)
@@ -1803,22 +1751,18 @@ def run_binary_with_hooks(binary_path, crypto_funcs, rootfs_path, filename, cons
         print(f"    Evidence sources: {evidence_sources}/5 available\n")
         
         # ===== ALGORITHM CLASSIFICATION =====
-        # classification = analyze_algorithm_evidence(
-        #     constant_results,
-        #     syscall_events,
-        #     basic_blocks,
-        #     io_captures
-        # )
+        classification = analyze_algorithm_evidence(
+            constant_results,
+            syscall_events,
+            basic_blocks,
+            io_captures
+        )
         
-        # print_classification_report(classification, syscall_events)
+        print_classification_report(classification, syscall_events)
         
         # Report strace log location if available
         if strace_log_path:
             print(f"\n[*] Strace log saved to: {strace_log_path}")
-            if terminal_output_path and os.path.exists(terminal_output_path):
-                print(f"[*] Terminal output saved to: {terminal_output_path}")
-            elif OUTPUT_CAPTURE_MODE == "combined":
-                print(f"[i] Terminal output included in strace log (combined mode)")
         
     finally:
         try: shutil.rmtree(temp_dir)
@@ -1826,14 +1770,4 @@ def run_binary_with_hooks(binary_path, crypto_funcs, rootfs_path, filename, cons
 
 if __name__ == "__main__":
     analyze_binary()
-    
-    # Display strace log contents if available
-    if strace_log_path and os.path.exists(strace_log_path):
-        print("\n" + "="*70)
-        print("   STRACE LOG CONTENTS")
-        print("="*70)
-        try:
-            subprocess.run(["cat", strace_log_path], check=False)
-        except Exception as e:
-            print(f"[!] Failed to display strace log: {e}")
 
