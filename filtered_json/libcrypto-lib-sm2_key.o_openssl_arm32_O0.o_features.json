@@ -1770,7 +1770,7 @@
                 "mem_ops_ratio": 0.08403361344537816,
                 "logical_ratio": 0.05322128851540616
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 46,
                 "top_5_bigrams": [
@@ -1831,7 +1831,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 95.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Moderate bitwise density (0.29)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         }
     ],
     "binary": "libcrypto-lib-sm2_key.o_openssl_arm32_O0.o"

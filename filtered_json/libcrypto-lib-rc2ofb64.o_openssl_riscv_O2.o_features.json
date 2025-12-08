@@ -3978,7 +3978,7 @@
                 "mem_ops_ratio": 0.14460784313725492,
                 "logical_ratio": 0.10784313725490197
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 103,
                 "top_5_bigrams": [
@@ -4039,7 +4039,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.42)",
+                "High Code Entropy (6.56)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)",
+                "YARA Match: RSA"
+            ]
         }
     ],
     "binary": "libcrypto-lib-rc2ofb64.o_openssl_riscv_O2.o"

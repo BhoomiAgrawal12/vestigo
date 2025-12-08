@@ -316,7 +316,7 @@
                 "mem_ops_ratio": 0.08333333333333333,
                 "logical_ratio": 0.16666666666666666
             },
-            "label": "ECC",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 10,
                 "top_5_bigrams": [
@@ -377,7 +377,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "0001002c",
@@ -1653,7 +1660,7 @@
                 "mem_ops_ratio": 0.16770186335403728,
                 "logical_ratio": 0.031055900621118012
             },
-            "label": "ECC",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 41,
                 "top_5_bigrams": [
@@ -1714,7 +1721,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "0001011c",
@@ -14068,7 +14082,7 @@
                 "mem_ops_ratio": 0.1736420302760463,
                 "logical_ratio": 0.09038290293855744
             },
-            "label": "ECC",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 71,
                 "top_5_bigrams": [
@@ -14129,7 +14143,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.32)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00010fd8",
@@ -35231,7 +35254,7 @@
                 "mem_ops_ratio": 0.18813847900113506,
                 "logical_ratio": 0.027525539160045402
             },
-            "label": "ECC",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 165,
                 "top_5_bigrams": [
@@ -35292,7 +35315,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 80.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00012338",
@@ -41960,7 +41991,7 @@
                 "mem_ops_ratio": 0.1701931922723091,
                 "logical_ratio": 0.08647654093836246
             },
-            "label": "ECC",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 98,
                 "top_5_bigrams": [
@@ -42021,7 +42052,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.31)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "000129f4",
@@ -42258,7 +42298,7 @@
                 "mem_ops_ratio": 0.06896551724137931,
                 "logical_ratio": 0.20689655172413793
             },
-            "label": "ECC",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 8,
                 "top_5_bigrams": [
@@ -42319,7 +42359,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         }
     ],
     "binary": "libcrypto-lib-ec_mult.o_openssl_mips_O1.o"

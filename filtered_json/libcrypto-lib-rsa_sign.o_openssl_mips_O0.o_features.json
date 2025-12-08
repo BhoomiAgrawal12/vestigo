@@ -292,7 +292,7 @@
                 "mem_ops_ratio": 0.1724137931034483,
                 "logical_ratio": 0.1206896551724138
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 15,
                 "top_5_bigrams": [
@@ -353,7 +353,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.36)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "0001004c",
@@ -672,7 +680,7 @@
                 "mem_ops_ratio": 0.18181818181818182,
                 "logical_ratio": 0.10606060606060606
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 15,
                 "top_5_bigrams": [
@@ -733,7 +741,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.32)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000100a0",
@@ -3932,7 +3948,7 @@
                 "mem_ops_ratio": 0.16859122401847576,
                 "logical_ratio": 0.016166281755196306
             },
-            "label": "RSA",
+            "label": "RSA-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 31,
                 "top_5_bigrams": [
@@ -3993,7 +4009,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies RSA",
+                "Ignored AES collision in RSA function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000103f4",
@@ -6217,7 +6241,7 @@
                 "mem_ops_ratio": 0.1095890410958904,
                 "logical_ratio": 0.0319634703196347
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 30,
                 "top_5_bigrams": [
@@ -6278,7 +6302,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Moderate bitwise density (0.21)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010638",
@@ -7887,7 +7919,7 @@
                 "mem_ops_ratio": 0.18446601941747573,
                 "logical_ratio": 0.07766990291262135
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 37,
                 "top_5_bigrams": [
@@ -7948,7 +7980,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Moderate bitwise density (0.26)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010848",
@@ -10405,7 +10445,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies RSA",
+                "Moderate bitwise density (0.24)",
+                "Ignored AES collision in RSA function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010b24",
@@ -16162,7 +16211,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 85.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies RSA",
+                "Moderate bitwise density (0.23)",
+                "Ignored AES collision in RSA function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00011274",
@@ -17110,7 +17169,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies RSA",
+                "Moderate bitwise density (0.22)",
+                "Ignored AES collision in RSA function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         }
     ],
     "binary": "libcrypto-lib-rsa_sign.o_openssl_mips_O0.o"

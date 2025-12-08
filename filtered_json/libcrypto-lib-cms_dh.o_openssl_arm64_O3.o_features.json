@@ -10928,7 +10928,7 @@
                 "mem_ops_ratio": 0.07014028056112225,
                 "logical_ratio": 0.007348029392117568
             },
-            "label": "DH",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 103,
                 "top_5_bigrams": [
@@ -10989,7 +10989,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 80.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         }
     ],
     "binary": "libcrypto-lib-cms_dh.o_openssl_arm64_O3.o"

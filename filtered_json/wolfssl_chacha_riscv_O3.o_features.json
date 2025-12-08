@@ -1262,7 +1262,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies ChaCha20",
+                "Ignored AES collision in ChaCha20 function",
+                "BigInt arithmetic (Poly1305 context)",
+                "Ignored YARA RSA vs Name ChaCha20"
+            ]
         },
         {
             "address": "00100084",
@@ -4979,7 +4988,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies ChaCha20",
+                "Ignored AES collision in ChaCha20 function",
+                "BigInt arithmetic (Poly1305 context)",
+                "Ignored YARA RSA vs Name ChaCha20"
+            ]
         },
         {
             "address": "00100166",
@@ -53551,7 +53569,18 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies ChaCha20",
+                "Very High bitwise density (0.30)",
+                "High Code Entropy (6.96)",
+                "Ignored AES collision in ChaCha20 function",
+                "BigInt arithmetic (Poly1305 context)",
+                "Ignored YARA RSA vs Name ChaCha20"
+            ]
         }
     ],
     "binary": "wolfssl_chacha_riscv_O3.o"

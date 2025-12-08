@@ -8826,7 +8826,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies ChaCha20",
+                "Very High bitwise density (0.38)",
+                "Ignored AES collision in ChaCha20 function",
+                "BigInt arithmetic (Poly1305 context)",
+                "Ignored YARA RSA vs Name ChaCha20"
+            ]
         }
     ],
     "binary": "libcrypto-lib-chacha_enc.o_openssl_mips_O3.o"

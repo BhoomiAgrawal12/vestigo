@@ -131,7 +131,7 @@
                 "mem_ops_ratio": 0.06666666666666667,
                 "logical_ratio": 0.13333333333333333
             },
-            "label": "SHA-1",
+            "label": "SHA-1-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 5,
                 "top_5_bigrams": [
@@ -192,7 +192,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-1",
+                "Ignored AES collision in SHA-1 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010018",
@@ -513,7 +521,7 @@
                 "mem_ops_ratio": 0.19148936170212766,
                 "logical_ratio": 0.0425531914893617
             },
-            "label": "SHA-1",
+            "label": "SHA-1-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 10,
                 "top_5_bigrams": [
@@ -574,7 +582,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-1",
+                "Ignored AES collision in SHA-1 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010050",
@@ -895,7 +911,7 @@
                 "mem_ops_ratio": 0.19148936170212766,
                 "logical_ratio": 0.0425531914893617
             },
-            "label": "SHA-224",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 10,
                 "top_5_bigrams": [
@@ -956,7 +972,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010088",
@@ -1360,7 +1383,7 @@
                 "mem_ops_ratio": 0.208955223880597,
                 "logical_ratio": 0.029850746268656716
             },
-            "label": "SHA-3",
+            "label": "SHA-3-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 11,
                 "top_5_bigrams": [
@@ -1421,7 +1444,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Ignored AES collision in SHA-3 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000100cc",
@@ -2315,7 +2346,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-1",
+                "Very High bitwise density (0.30)",
+                "Ignored AES collision in SHA-1 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010178",
@@ -3005,7 +3045,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-1",
+                "Very High bitwise density (0.38)",
+                "Ignored AES collision in SHA-1 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010208",
@@ -3138,7 +3187,7 @@
                 "mem_ops_ratio": 0.07692307692307693,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-1",
+            "label": "SHA-1-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -3199,7 +3248,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-1",
+                "Ignored AES collision in SHA-1 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010228",
@@ -3332,7 +3389,7 @@
                 "mem_ops_ratio": 0.07692307692307693,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-224",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -3393,7 +3450,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010248",
@@ -3526,7 +3590,7 @@
                 "mem_ops_ratio": 0.07692307692307693,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-256",
+            "label": "SHA-256-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -3587,7 +3651,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010268",
@@ -3720,7 +3792,7 @@
                 "mem_ops_ratio": 0.07692307692307693,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-256",
+            "label": "SHA-256-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -3781,7 +3853,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010288",
@@ -3914,7 +3994,7 @@
                 "mem_ops_ratio": 0.07692307692307693,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-3",
+            "label": "SHA-3-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -3975,7 +4055,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Ignored AES collision in SHA-3 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000102a8",
@@ -4108,7 +4196,7 @@
                 "mem_ops_ratio": 0.07692307692307693,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-512",
+            "label": "SHA-512-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -4169,7 +4257,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000102c8",
@@ -4302,7 +4398,7 @@
                 "mem_ops_ratio": 0.07692307692307693,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-512",
+            "label": "SHA-512-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -4363,7 +4459,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000102e8",
@@ -4496,7 +4600,7 @@
                 "mem_ops_ratio": 0.07692307692307693,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-512",
+            "label": "SHA-512-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -4557,7 +4661,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010308",
@@ -5380,7 +5492,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies SHA-1",
+                "Moderate bitwise density (0.22)",
+                "Ignored AES collision in SHA-1 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000103b0",
@@ -6142,7 +6263,7 @@
                 "mem_ops_ratio": 0.16535433070866143,
                 "logical_ratio": 0.07086614173228346
             },
-            "label": "SHA-224",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 30,
                 "top_5_bigrams": [
@@ -6203,7 +6324,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Moderate bitwise density (0.22)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010458",
@@ -7026,7 +7155,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Moderate bitwise density (0.22)",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010500",
@@ -7849,7 +7987,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Moderate bitwise density (0.22)",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000105a8",
@@ -8737,7 +8884,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Moderate bitwise density (0.20)",
+                "Ignored AES collision in SHA-3 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010660",
@@ -9625,7 +9781,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Moderate bitwise density (0.20)",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010718",
@@ -10513,7 +10678,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Moderate bitwise density (0.20)",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000107d0",
@@ -11401,7 +11575,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Moderate bitwise density (0.20)",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010888",
@@ -11550,7 +11733,7 @@
                 "mem_ops_ratio": 0.11764705882352941,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-1",
+            "label": "SHA-1-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -11611,7 +11794,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-1",
+                "Ignored AES collision in SHA-1 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000108ac",
@@ -11760,7 +11951,7 @@
                 "mem_ops_ratio": 0.11764705882352941,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-224",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -11821,7 +12012,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000108d0",
@@ -11970,7 +12168,7 @@
                 "mem_ops_ratio": 0.11764705882352941,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-256",
+            "label": "SHA-256-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -12031,7 +12229,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000108f4",
@@ -12180,7 +12386,7 @@
                 "mem_ops_ratio": 0.11764705882352941,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-256",
+            "label": "SHA-256-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -12241,7 +12447,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010918",
@@ -12390,7 +12604,7 @@
                 "mem_ops_ratio": 0.11764705882352941,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-3",
+            "label": "SHA-3-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -12451,7 +12665,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Ignored AES collision in SHA-3 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "0001093c",
@@ -12600,7 +12822,7 @@
                 "mem_ops_ratio": 0.11764705882352941,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-512",
+            "label": "SHA-512-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -12661,7 +12883,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010960",
@@ -12810,7 +13040,7 @@
                 "mem_ops_ratio": 0.11764705882352941,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-512",
+            "label": "SHA-512-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -12871,7 +13101,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010984",
@@ -13020,7 +13258,7 @@
                 "mem_ops_ratio": 0.11764705882352941,
                 "logical_ratio": 0.0
             },
-            "label": "SHA-512",
+            "label": "SHA-512-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -13081,7 +13319,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000109a8",
@@ -13843,7 +14089,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-1",
+                "Very High bitwise density (0.33)",
+                "Ignored AES collision in SHA-1 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010a3c",
@@ -14232,7 +14487,7 @@
                 "mem_ops_ratio": 0.15254237288135594,
                 "logical_ratio": 0.03389830508474576
             },
-            "label": "SHA-1",
+            "label": "SHA-1-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 19,
                 "top_5_bigrams": [
@@ -14293,7 +14548,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-1",
+                "Ignored AES collision in SHA-1 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010a94",
@@ -14682,7 +14945,7 @@
                 "mem_ops_ratio": 0.15254237288135594,
                 "logical_ratio": 0.03389830508474576
             },
-            "label": "SHA-224",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 19,
                 "top_5_bigrams": [
@@ -14743,7 +15006,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010aec",
@@ -15132,7 +15402,7 @@
                 "mem_ops_ratio": 0.15254237288135594,
                 "logical_ratio": 0.03389830508474576
             },
-            "label": "SHA-256",
+            "label": "SHA-256-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 19,
                 "top_5_bigrams": [
@@ -15193,7 +15463,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010b44",
@@ -15582,7 +15860,7 @@
                 "mem_ops_ratio": 0.15254237288135594,
                 "logical_ratio": 0.03389830508474576
             },
-            "label": "SHA-256",
+            "label": "SHA-256-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 19,
                 "top_5_bigrams": [
@@ -15643,7 +15921,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010b9c",
@@ -16032,7 +16318,7 @@
                 "mem_ops_ratio": 0.15254237288135594,
                 "logical_ratio": 0.03389830508474576
             },
-            "label": "SHA-3",
+            "label": "SHA-3-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 19,
                 "top_5_bigrams": [
@@ -16093,7 +16379,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Ignored AES collision in SHA-3 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010bf4",
@@ -16482,7 +16776,7 @@
                 "mem_ops_ratio": 0.15254237288135594,
                 "logical_ratio": 0.03389830508474576
             },
-            "label": "SHA-512",
+            "label": "SHA-512-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 19,
                 "top_5_bigrams": [
@@ -16543,7 +16837,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010c4c",
@@ -16932,7 +17234,7 @@
                 "mem_ops_ratio": 0.15254237288135594,
                 "logical_ratio": 0.03389830508474576
             },
-            "label": "SHA-512",
+            "label": "SHA-512-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 19,
                 "top_5_bigrams": [
@@ -16993,7 +17295,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010ca4",
@@ -17382,7 +17692,7 @@
                 "mem_ops_ratio": 0.15254237288135594,
                 "logical_ratio": 0.03389830508474576
             },
-            "label": "SHA-512",
+            "label": "SHA-512-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 19,
                 "top_5_bigrams": [
@@ -17443,7 +17753,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010cfc",
@@ -17882,7 +18200,7 @@
                 "mem_ops_ratio": 0.14473684210526316,
                 "logical_ratio": 0.10526315789473684
             },
-            "label": "SHA-224",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 19,
                 "top_5_bigrams": [
@@ -17943,7 +18261,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.31)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010d5c",
@@ -18644,7 +18970,7 @@
                 "mem_ops_ratio": 0.1651376146788991,
                 "logical_ratio": 0.10091743119266056
             },
-            "label": "SHA-224",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 25,
                 "top_5_bigrams": [
@@ -18705,7 +19031,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.33)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010df0",
@@ -19205,7 +19539,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Very High bitwise density (0.31)",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010e50",
@@ -19967,7 +20310,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Very High bitwise density (0.33)",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010ee4",
@@ -20729,7 +21081,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Very High bitwise density (0.33)",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010f78",
@@ -21229,7 +21590,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Very High bitwise density (0.31)",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010fd8",
@@ -21729,7 +22099,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Very High bitwise density (0.31)",
+                "Ignored AES collision in SHA-3 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00011038",
@@ -22493,7 +22872,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Very High bitwise density (0.33)",
+                "Ignored AES collision in SHA-3 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000110cc",
@@ -22993,7 +23381,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Very High bitwise density (0.31)",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "0001112c",
@@ -23755,7 +24152,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Very High bitwise density (0.33)",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000111c0",
@@ -24517,7 +24923,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Very High bitwise density (0.33)",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00011254",
@@ -25279,7 +25694,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Very High bitwise density (0.33)",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000112e8",
@@ -25779,7 +26203,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Very High bitwise density (0.31)",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00011348",
@@ -26279,7 +26712,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Very High bitwise density (0.31)",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000113a8",
@@ -26600,7 +27042,7 @@
                 "mem_ops_ratio": 0.19148936170212766,
                 "logical_ratio": 0.0425531914893617
             },
-            "label": "SHA-256",
+            "label": "SHA-256-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 10,
                 "top_5_bigrams": [
@@ -26661,7 +27103,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000113e0",
@@ -26982,7 +27432,7 @@
                 "mem_ops_ratio": 0.19148936170212766,
                 "logical_ratio": 0.0425531914893617
             },
-            "label": "SHA-256",
+            "label": "SHA-256-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 10,
                 "top_5_bigrams": [
@@ -27043,7 +27493,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00011418",
@@ -27447,7 +27905,7 @@
                 "mem_ops_ratio": 0.208955223880597,
                 "logical_ratio": 0.029850746268656716
             },
-            "label": "SHA-512",
+            "label": "SHA-512-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 11,
                 "top_5_bigrams": [
@@ -27508,7 +27966,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "0001145c",
@@ -27912,7 +28378,7 @@
                 "mem_ops_ratio": 0.208955223880597,
                 "logical_ratio": 0.029850746268656716
             },
-            "label": "SHA-512",
+            "label": "SHA-512-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 11,
                 "top_5_bigrams": [
@@ -27973,7 +28439,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "000114a0",
@@ -28377,7 +28851,7 @@
                 "mem_ops_ratio": 0.208955223880597,
                 "logical_ratio": 0.029850746268656716
             },
-            "label": "SHA-512",
+            "label": "SHA-512-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 11,
                 "top_5_bigrams": [
@@ -28438,7 +28912,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         }
     ],
     "binary": "libdefault-lib-sha2_prov.o_openssl_mips_O2.o"

@@ -9274,7 +9274,7 @@
                 "mem_ops_ratio": 0.12845802261246092,
                 "logical_ratio": 0.24657204714938658
             },
-            "label": "ECC",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 44,
                 "top_5_bigrams": [
@@ -9335,7 +9335,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "x86"
+            "arch": "x86",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.56)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00010a61",
@@ -10093,7 +10102,7 @@
                 "mem_ops_ratio": 0.3072916666666667,
                 "logical_ratio": 0.057291666666666664
             },
-            "label": "ECC",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 21,
                 "top_5_bigrams": [
@@ -10154,7 +10163,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "x86"
+            "arch": "x86",
+            "algorithm": "AES",
+            "confidence_score": 95.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Moderate bitwise density (0.20)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00010b01",
@@ -12243,7 +12261,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "x86"
+            "arch": "x86",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Very High bitwise density (0.76)",
+                "Ignored AES collision in SHA-3 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name SHA-3"
+            ]
         },
         {
             "address": "00010c46",
@@ -15499,7 +15527,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "x86"
+            "arch": "x86",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Very High bitwise density (0.78)",
+                "Ignored AES collision in SHA-3 function",
+                "High-Entropy BigInt (Likely RSA)",
+                "Ignored YARA RSA vs Name SHA-3"
+            ]
         }
     ],
     "binary": "libcrypto-lib-keccak1600.o_openssl_x86_Os.o"

@@ -1707,7 +1707,7 @@
                 "mem_ops_ratio": 0.049528301886792456,
                 "logical_ratio": 0.030660377358490566
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 63,
                 "top_5_bigrams": [
@@ -1768,7 +1768,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Moderate bitwise density (0.23)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00010100",
@@ -2405,7 +2414,7 @@
                 "mem_ops_ratio": 0.09022556390977443,
                 "logical_ratio": 0.09022556390977443
             },
-            "label": "ECC",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 21,
                 "top_5_bigrams": [
@@ -2466,7 +2475,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.43)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00010160",
@@ -3077,7 +3095,7 @@
                 "mem_ops_ratio": 0.06060606060606061,
                 "logical_ratio": 0.09090909090909091
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 22,
                 "top_5_bigrams": [
@@ -3138,7 +3156,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.48)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "000101c0",
@@ -9627,7 +9654,7 @@
                 "mem_ops_ratio": 0.03610675039246468,
                 "logical_ratio": 0.08084772370486656
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 81,
                 "top_5_bigrams": [
@@ -9688,7 +9715,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.48)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00010638",
@@ -10347,7 +10383,7 @@
                 "mem_ops_ratio": 0.08450704225352113,
                 "logical_ratio": 0.08450704225352113
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 22,
                 "top_5_bigrams": [
@@ -10408,7 +10444,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.41)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         }
     ],
     "binary": "libcrypto-lib-eck_prn.o_openssl_arm32_O1.o"

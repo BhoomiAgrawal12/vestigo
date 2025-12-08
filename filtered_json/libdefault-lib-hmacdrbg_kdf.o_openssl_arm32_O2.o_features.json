@@ -2430,7 +2430,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Moderate bitwise density (0.24)",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name HMAC"
+            ]
         },
         {
             "address": "00010128",
@@ -7685,7 +7695,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 85.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Moderate bitwise density (0.18)",
+                "Ignored AES collision in HMAC function",
+                "High-Entropy BigInt (Likely RSA)",
+                "Ignored YARA RSA vs Name HMAC"
+            ]
         },
         {
             "address": "00010458",
@@ -8855,7 +8875,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Moderate bitwise density (0.19)",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name HMAC"
+            ]
         },
         {
             "address": "000104cc",
@@ -9386,7 +9416,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Moderate bitwise density (0.24)",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name HMAC"
+            ]
         },
         {
             "address": "0001051c",
@@ -10087,7 +10127,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Very High bitwise density (0.40)",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name HMAC"
+            ]
         },
         {
             "address": "00010570",
@@ -11749,7 +11799,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Moderate bitwise density (0.15)",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name HMAC"
+            ]
         },
         {
             "address": "00010658",
@@ -12017,7 +12077,7 @@
                 "mem_ops_ratio": 0.1111111111111111,
                 "logical_ratio": 0.08333333333333333
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 10,
                 "top_5_bigrams": [
@@ -12078,7 +12138,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name HMAC"
+            ]
         }
     ],
     "binary": "libdefault-lib-hmacdrbg_kdf.o_openssl_arm32_O2.o"

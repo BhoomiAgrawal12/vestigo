@@ -310,7 +310,7 @@
                 "mem_ops_ratio": 0.24390243902439024,
                 "logical_ratio": 0.0
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 15,
                 "top_5_bigrams": [
@@ -371,7 +371,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "0010002e",
@@ -708,7 +715,7 @@
                 "mem_ops_ratio": 0.2553191489361702,
                 "logical_ratio": 0.0
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 15,
                 "top_5_bigrams": [
@@ -769,7 +776,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100064",
@@ -1561,7 +1575,7 @@
                 "mem_ops_ratio": 0.19718309859154928,
                 "logical_ratio": 0.014084507042253521
             },
-            "label": "RSA",
+            "label": "RSA-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 26,
                 "top_5_bigrams": [
@@ -1622,7 +1636,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies RSA",
+                "Ignored AES collision in RSA function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "001000b4",
@@ -3655,7 +3677,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 85.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies RSA",
+                "Moderate bitwise density (0.22)",
+                "Ignored AES collision in RSA function",
+                "High-Entropy BigInt (Likely RSA)"
+            ]
         },
         {
             "address": "001001ac",
@@ -4788,7 +4819,7 @@
                 "mem_ops_ratio": 0.19230769230769232,
                 "logical_ratio": 0.009615384615384616
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 36,
                 "top_5_bigrams": [
@@ -4849,7 +4880,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100224",
@@ -5306,7 +5344,7 @@
                 "mem_ops_ratio": 0.14634146341463414,
                 "logical_ratio": 0.024390243902439025
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 16,
                 "top_5_bigrams": [
@@ -5367,7 +5405,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Moderate bitwise density (0.16)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100252",
@@ -6424,7 +6470,7 @@
                 "mem_ops_ratio": 0.14130434782608695,
                 "logical_ratio": 0.03260869565217391
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 30,
                 "top_5_bigrams": [
@@ -6485,7 +6531,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Moderate bitwise density (0.20)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "001002be",
@@ -7135,7 +7189,7 @@
                 "mem_ops_ratio": 0.16129032258064516,
                 "logical_ratio": 0.03225806451612903
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 20,
                 "top_5_bigrams": [
@@ -7196,7 +7250,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Moderate bitwise density (0.18)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100304",
@@ -8744,7 +8806,7 @@
                 "mem_ops_ratio": 0.1597222222222222,
                 "logical_ratio": 0.027777777777777776
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 38,
                 "top_5_bigrams": [
@@ -8805,7 +8867,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Moderate bitwise density (0.18)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "001003a8",
@@ -10518,7 +10588,7 @@
                 "mem_ops_ratio": 0.15,
                 "logical_ratio": 0.03125
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 39,
                 "top_5_bigrams": [
@@ -10579,7 +10649,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Moderate bitwise density (0.19)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100464",
@@ -11147,7 +11225,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies RSA",
+                "Moderate bitwise density (0.22)",
+                "Ignored AES collision in RSA function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "001004a2",
@@ -11715,7 +11802,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies RSA",
+                "Moderate bitwise density (0.22)",
+                "Ignored AES collision in RSA function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "001004e0",
@@ -12400,7 +12496,7 @@
                 "mem_ops_ratio": 0.1694915254237288,
                 "logical_ratio": 0.01694915254237288
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 23,
                 "top_5_bigrams": [
@@ -12461,7 +12557,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100524",
@@ -12788,7 +12891,7 @@
                 "mem_ops_ratio": 0.16666666666666666,
                 "logical_ratio": 0.0
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 10,
                 "top_5_bigrams": [
@@ -12849,7 +12952,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100542",
@@ -14237,7 +14347,7 @@
                 "mem_ops_ratio": 0.1652892561983471,
                 "logical_ratio": 0.01652892561983471
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 40,
                 "top_5_bigrams": [
@@ -14298,7 +14408,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "001005cc",
@@ -14625,7 +14742,7 @@
                 "mem_ops_ratio": 0.16666666666666666,
                 "logical_ratio": 0.0
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 10,
                 "top_5_bigrams": [
@@ -14686,7 +14803,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "001005ea",
@@ -17114,7 +17238,7 @@
                 "mem_ops_ratio": 0.12549019607843137,
                 "logical_ratio": 0.050980392156862744
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 42,
                 "top_5_bigrams": [
@@ -17175,7 +17299,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 95.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Moderate bitwise density (0.26)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "0010070e",
@@ -20453,7 +20586,7 @@
                 "mem_ops_ratio": 0.15178571428571427,
                 "logical_ratio": 0.02976190476190476
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 59,
                 "top_5_bigrams": [
@@ -20514,7 +20647,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Moderate bitwise density (0.20)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "001008a2",
@@ -23370,7 +23512,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 85.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies RSA",
+                "Moderate bitwise density (0.24)",
+                "Ignored AES collision in RSA function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00100a18",
@@ -24290,7 +24442,7 @@
                 "mem_ops_ratio": 0.1978021978021978,
                 "logical_ratio": 0.02197802197802198
             },
-            "label": "RSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 26,
                 "top_5_bigrams": [
@@ -24351,7 +24503,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100a80",
@@ -25271,7 +25430,7 @@
                 "mem_ops_ratio": 0.1978021978021978,
                 "logical_ratio": 0.02197802197802198
             },
-            "label": "RSA",
+            "label": "RSA-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 26,
                 "top_5_bigrams": [
@@ -25332,7 +25491,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies RSA",
+                "Ignored AES collision in RSA function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         }
     ],
     "binary": "libdefault-lib-rsa_kem.o_openssl_riscv_O0.o"

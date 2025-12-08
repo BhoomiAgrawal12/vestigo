@@ -825,7 +825,7 @@
                 "mem_ops_ratio": 0.1437125748502994,
                 "logical_ratio": 0.10778443113772455
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 32,
                 "top_5_bigrams": [
@@ -886,7 +886,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.40)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         }
     ],
     "binary": "libcrypto-lib-rc2_ecb.o_openssl_mips_O2.o"

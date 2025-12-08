@@ -231,7 +231,7 @@
                 "mem_ops_ratio": 0.13953488372093023,
                 "logical_ratio": 0.06976744186046512
             },
-            "label": "SHA-3",
+            "label": "SHA-3-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 8,
                 "top_5_bigrams": [
@@ -292,7 +292,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Ignored AES collision in SHA-3 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name SHA-3"
+            ]
         },
         {
             "address": "00010018",
@@ -925,7 +934,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Very High bitwise density (0.33)",
+                "Ignored AES collision in SHA-3 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name SHA-3"
+            ]
         },
         {
             "address": "0001004a",
@@ -1274,7 +1293,7 @@
                 "mem_ops_ratio": 0.16981132075471697,
                 "logical_ratio": 0.07547169811320754
             },
-            "label": "ECC",
+            "label": "SHA-3",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -1335,7 +1354,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Very High bitwise density (0.32)",
+                "Ignored AES collision in SHA-3 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name SHA-3"
+            ]
         },
         {
             "address": "0001005e",
@@ -2622,7 +2651,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Moderate bitwise density (0.17)",
+                "Ignored AES collision in SHA-3 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name SHA-3"
+            ]
         },
         {
             "address": "00010110",
@@ -3491,7 +3530,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Moderate bitwise density (0.18)",
+                "Ignored AES collision in SHA-3 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name SHA-3"
+            ]
         },
         {
             "address": "0001018c",
@@ -5086,7 +5135,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 85.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Moderate bitwise density (0.19)",
+                "Ignored AES collision in SHA-3 function",
+                "High-Entropy BigInt (Likely RSA)",
+                "Ignored YARA RSA vs Name SHA-3"
+            ]
         }
     ],
     "binary": "libcrypto-lib-sha3.o_openssl_arm32_O1.o"

@@ -25810,7 +25810,7 @@
                 "mem_ops_ratio": 0.21132323897300856,
                 "logical_ratio": 0.17116524028966426
             },
-            "label": "ECC",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 136,
                 "top_5_bigrams": [
@@ -25871,7 +25871,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.39)",
+                "High Code Entropy (6.80)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "0010090e",
@@ -27167,7 +27177,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Very High bitwise density (0.30)",
+                "Ignored AES collision in SHA-3 function",
+                "High-Entropy BigInt (Likely RSA)",
+                "Ignored YARA RSA vs Name SHA-3"
+            ]
         },
         {
             "address": "001009ae",
@@ -30496,7 +30516,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 85.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Moderate bitwise density (0.24)",
+                "Ignored AES collision in SHA-3 function",
+                "High-Entropy BigInt (Likely RSA)",
+                "Ignored YARA RSA vs Name SHA-3"
+            ]
         }
     ],
     "binary": "libcrypto-lib-keccak1600.o_openssl_riscv_O3.o"

@@ -4005,7 +4005,7 @@
                 "mem_ops_ratio": 0.07909967845659165,
                 "logical_ratio": 0.10482315112540193
             },
-            "label": "PBKDF2",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 96,
                 "top_5_bigrams": [
@@ -4066,7 +4066,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.34)",
+                "High Code Entropy (6.52)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "code:010184",
@@ -7540,7 +7550,7 @@
                 "mem_ops_ratio": 0.10040160642570281,
                 "logical_ratio": 0.10742971887550201
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 93,
                 "top_5_bigrams": [
@@ -7601,7 +7611,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.38)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "code:0102b4",
@@ -7738,7 +7757,7 @@
                 "mem_ops_ratio": 0.42857142857142855,
                 "logical_ratio": 0.0
             },
-            "label": "PBKDF2",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 2,
                 "top_5_bigrams": [
@@ -7796,7 +7815,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:0102ba",
@@ -8661,7 +8687,7 @@
                 "mem_ops_ratio": 0.07731958762886598,
                 "logical_ratio": 0.11855670103092783
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 25,
                 "top_5_bigrams": [
@@ -8722,7 +8748,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.39)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "code:010300",
@@ -8862,7 +8897,7 @@
                 "mem_ops_ratio": 0.08108108108108109,
                 "logical_ratio": 0.05405405405405406
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 5,
                 "top_5_bigrams": [
@@ -8923,7 +8958,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:010308",
@@ -12278,7 +12320,7 @@
                 "mem_ops_ratio": 0.04398289554062309,
                 "logical_ratio": 0.09224190592547343
             },
-            "label": "PBKDF2",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 71,
                 "top_5_bigrams": [
@@ -12339,7 +12381,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.31)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)"
+            ]
         },
         {
             "address": "code:01042d",
@@ -13366,7 +13416,7 @@
                 "mem_ops_ratio": 0.09850746268656717,
                 "logical_ratio": 0.11044776119402985
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 26,
                 "top_5_bigrams": [
@@ -13427,7 +13477,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.37)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "code:010472",
@@ -13545,7 +13604,7 @@
                 "mem_ops_ratio": 0.05714285714285714,
                 "logical_ratio": 0.05714285714285714
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -13606,7 +13665,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:010479",
@@ -13723,7 +13789,7 @@
                 "mem_ops_ratio": 0.09090909090909091,
                 "logical_ratio": 0.0
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 4,
                 "top_5_bigrams": [
@@ -13783,7 +13849,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:01047f",
@@ -13864,7 +13937,7 @@
                 "mem_ops_ratio": 0.0,
                 "logical_ratio": 0.0
             },
-            "label": "crypto-unknown",
+            "label": "non-crypto",
             "instruction_sequence": {
                 "unique_ngram_count": 4,
                 "top_5_bigrams": [
@@ -13924,7 +13997,11 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": null,
+            "confidence_score": 0.0,
+            "confidence_level": "Low",
+            "detection_reasons": []
         },
         {
             "address": "code:010484",
@@ -14177,7 +14254,7 @@
                 "mem_ops_ratio": 0.0625,
                 "logical_ratio": 0.075
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 12,
                 "top_5_bigrams": [
@@ -14238,7 +14315,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Moderate bitwise density (0.30)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:010495",
@@ -14484,7 +14569,7 @@
                 "mem_ops_ratio": 0.06542056074766354,
                 "logical_ratio": 0.07476635514018691
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 10,
                 "top_5_bigrams": [
@@ -14545,7 +14630,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Moderate bitwise density (0.29)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:0104a8",
@@ -15173,7 +15266,7 @@
                 "mem_ops_ratio": 0.04421768707482993,
                 "logical_ratio": 0.09523809523809523
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 29,
                 "top_5_bigrams": [
@@ -15234,7 +15327,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.32)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:0104dd",
@@ -15382,7 +15483,7 @@
                 "mem_ops_ratio": 0.07894736842105263,
                 "logical_ratio": 0.05263157894736842
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -15443,7 +15544,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:0104e8",
@@ -16453,7 +16561,7 @@
                 "mem_ops_ratio": 0.05434782608695652,
                 "logical_ratio": 0.08333333333333333
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 31,
                 "top_5_bigrams": [
@@ -16514,7 +16622,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.35)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:010536",
@@ -17203,7 +17319,7 @@
                 "mem_ops_ratio": 0.030379746835443037,
                 "logical_ratio": 0.09873417721518987
             },
-            "label": "PBKDF2",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 30,
                 "top_5_bigrams": [
@@ -17264,7 +17380,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.30)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:010574",
@@ -17744,7 +17868,7 @@
                 "mem_ops_ratio": 0.057750759878419454,
                 "logical_ratio": 0.07598784194528875
             },
-            "label": "PBKDF2",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 23,
                 "top_5_bigrams": [
@@ -17805,7 +17929,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Moderate bitwise density (0.27)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:0105a8",
@@ -17920,7 +18052,7 @@
                 "mem_ops_ratio": 0.1,
                 "logical_ratio": 0.0
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 4,
                 "top_5_bigrams": [
@@ -17980,7 +18112,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:0105ae",
@@ -18139,7 +18278,7 @@
                 "mem_ops_ratio": 0.028169014084507043,
                 "logical_ratio": 0.11267605633802817
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -18200,7 +18339,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.33)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:0105bd",
@@ -18348,7 +18495,7 @@
                 "mem_ops_ratio": 0.075,
                 "logical_ratio": 0.05
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 8,
                 "top_5_bigrams": [
@@ -18409,7 +18556,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:0105c7",
@@ -18588,7 +18742,7 @@
                 "mem_ops_ratio": 0.0851063829787234,
                 "logical_ratio": 0.0425531914893617
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 9,
                 "top_5_bigrams": [
@@ -18649,7 +18803,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Moderate bitwise density (0.24)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:0105d3",
@@ -18799,7 +18961,7 @@
                 "mem_ops_ratio": 0.045454545454545456,
                 "logical_ratio": 0.09090909090909091
             },
-            "label": "crypto-unknown",
+            "label": "math-bigint",
             "instruction_sequence": {
                 "unique_ngram_count": 8,
                 "top_5_bigrams": [
@@ -18860,7 +19022,14 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "RSA",
+            "confidence_score": 5.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Moderate bitwise density (0.29)",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:0105e8",
@@ -19039,7 +19208,7 @@
                 "mem_ops_ratio": 0.0851063829787234,
                 "logical_ratio": 0.0425531914893617
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 9,
                 "top_5_bigrams": [
@@ -19100,7 +19269,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Moderate bitwise density (0.24)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         }
     ],
     "binary": "wolfssl_pwdbased_avr_O2.o"

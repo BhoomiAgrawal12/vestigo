@@ -2761,7 +2761,7 @@
                 "mem_ops_ratio": 0.039473684210526314,
                 "logical_ratio": 0.06578947368421052
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 43,
                 "top_5_bigrams": [
@@ -2822,7 +2822,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.33)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         }
     ],
     "binary": "libcrypto-lib-sm2_key.o_openssl_riscv_O3.o"

@@ -16875,7 +16875,7 @@
                 "mem_ops_ratio": 0.029409036088690974,
                 "logical_ratio": 0.4267557287317933
             },
-            "label": "Camellia",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 68,
                 "top_5_bigrams": [
@@ -16936,7 +16936,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "x86"
+            "arch": "x86",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.80)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00010b70",
@@ -21622,7 +21631,7 @@
                 "mem_ops_ratio": 0.05156313438895656,
                 "logical_ratio": 0.3503857084855867
             },
-            "label": "Camellia",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 50,
                 "top_5_bigrams": [
@@ -21683,7 +21692,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "x86"
+            "arch": "x86",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.69)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010f30",
@@ -22079,7 +22096,7 @@
                 "mem_ops_ratio": 0.13978494623655913,
                 "logical_ratio": 0.13978494623655913
             },
-            "label": "Camellia",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 14,
                 "top_5_bigrams": [
@@ -22140,7 +22157,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "x86"
+            "arch": "x86",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.40)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00010f70",
@@ -26830,7 +26856,7 @@
                 "mem_ops_ratio": 0.05190592051905921,
                 "logical_ratio": 0.35077047850770476
             },
-            "label": "Camellia",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 50,
                 "top_5_bigrams": [
@@ -26891,7 +26917,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "x86"
+            "arch": "x86",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.69)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00011320",
@@ -27287,7 +27322,7 @@
                 "mem_ops_ratio": 0.13978494623655913,
                 "logical_ratio": 0.13978494623655913
             },
-            "label": "Camellia",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 14,
                 "top_5_bigrams": [
@@ -27348,7 +27383,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "x86"
+            "arch": "x86",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.40)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         }
     ],
     "binary": "libcrypto-lib-camellia.o_openssl_x86_O2.o"

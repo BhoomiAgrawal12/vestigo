@@ -586,7 +586,7 @@
                 "mem_ops_ratio": 0.1792452830188679,
                 "logical_ratio": 0.09433962264150944
             },
-            "label": "Camellia",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 18,
                 "top_5_bigrams": [
@@ -647,7 +647,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "x86"
+            "arch": "x86",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Moderate bitwise density (0.29)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         }
     ],
     "binary": "libcrypto-lib-cmll_ecb.o_openssl_x86_Os.o"

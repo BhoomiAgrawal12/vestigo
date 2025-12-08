@@ -3725,7 +3725,7 @@
                 "mem_ops_ratio": 0.06505190311418685,
                 "logical_ratio": 0.047058823529411764
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 47,
                 "top_5_bigrams": [
@@ -3786,7 +3786,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.34)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "0001039c",
@@ -7518,7 +7526,7 @@
                 "mem_ops_ratio": 0.06482758620689655,
                 "logical_ratio": 0.04689655172413793
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 48,
                 "top_5_bigrams": [
@@ -7579,7 +7587,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.34)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010738",
@@ -11720,7 +11736,14 @@
                     }
                 }
             ],
-            "label": "crypto-unknown"
+            "label": "AES",
+            "algorithm": "ECC",
+            "confidence_score": 90.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "YARA Match: RSA"
+            ]
         }
     ]
 }

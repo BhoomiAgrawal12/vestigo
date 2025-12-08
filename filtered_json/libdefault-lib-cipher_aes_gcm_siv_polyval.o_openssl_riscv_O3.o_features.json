@@ -5298,7 +5298,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies AES",
+                "Very High bitwise density (0.58)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)",
+                "Ignored YARA RSA vs Name AES"
+            ]
         },
         {
             "address": "00100284",
@@ -15297,7 +15307,18 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies AES",
+                "Very High bitwise density (0.50)",
+                "High Code Entropy (6.56)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)",
+                "Ignored YARA RSA vs Name AES"
+            ]
         }
     ],
     "binary": "libdefault-lib-cipher_aes_gcm_siv_polyval.o_openssl_riscv_O3.o"

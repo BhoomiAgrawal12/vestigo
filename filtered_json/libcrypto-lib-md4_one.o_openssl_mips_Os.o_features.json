@@ -798,7 +798,7 @@
                 "mem_ops_ratio": 0.16279069767441862,
                 "logical_ratio": 0.14728682170542637
             },
-            "label": "MD5",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 31,
                 "top_5_bigrams": [
@@ -859,7 +859,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.40)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         }
     ],
     "binary": "libcrypto-lib-md4_one.o_openssl_mips_Os.o"

@@ -293,7 +293,15 @@
                 "tbox_detected": false
             },
             "arch": "AARCH64",
-            "label": "ChaCha20"
+            "label": "ChaCha20",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies ChaCha20",
+                "Ignored AES collision in ChaCha20 function",
+                "BigInt arithmetic (Poly1305 context)"
+            ]
         },
         {
             "address": "00100030",
@@ -514,7 +522,14 @@
                 "tbox_detected": false
             },
             "arch": "AARCH64",
-            "label": "ChaCha20"
+            "label": "ChaCha20",
+            "algorithm": "RSA",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies ChaCha20",
+                "BigInt arithmetic (Poly1305 context)"
+            ]
         },
         {
             "address": "00100040",
@@ -829,7 +844,15 @@
                 "tbox_detected": false
             },
             "arch": "AARCH64",
-            "label": "ChaCha20"
+            "label": "ChaCha20",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies ChaCha20",
+                "Ignored AES collision in ChaCha20 function",
+                "BigInt arithmetic (Poly1305 context)"
+            ]
         },
         {
             "address": "00100064",
@@ -1226,7 +1249,15 @@
                 "tbox_detected": false
             },
             "arch": "AARCH64",
-            "label": "ChaCha20"
+            "label": "ChaCha20",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies ChaCha20",
+                "Ignored AES collision in ChaCha20 function",
+                "BigInt arithmetic (Poly1305 context)"
+            ]
         },
         {
             "address": "001000b0",
@@ -2116,7 +2147,15 @@
                 "tbox_detected": false
             },
             "arch": "AARCH64",
-            "label": "ChaCha20"
+            "label": "ChaCha20",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies ChaCha20",
+                "Ignored AES collision in ChaCha20 function",
+                "BigInt arithmetic (Poly1305 context)"
+            ]
         },
         {
             "address": "00100180",
@@ -6297,7 +6336,17 @@
                 "tbox_detected": false
             },
             "arch": "AARCH64",
-            "label": "ChaCha20"
+            "label": "ChaCha20",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies ChaCha20",
+                "Very High bitwise density (0.52)",
+                "Ignored AES collision in ChaCha20 function",
+                "BigInt arithmetic (Poly1305 context)",
+                "Ignored YARA RSA vs Name ChaCha20"
+            ]
         }
     ],
     "binary": "chacha20.c.o_mbedtls_arm64_O2.o"

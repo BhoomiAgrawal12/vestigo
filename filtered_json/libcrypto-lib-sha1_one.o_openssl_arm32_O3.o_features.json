@@ -556,7 +556,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies SHA-1",
+                "Moderate bitwise density (0.29)",
+                "Ignored AES collision in SHA-1 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name SHA-1"
+            ]
         },
         {
             "address": "00010040",
@@ -960,7 +970,7 @@
                 "mem_ops_ratio": 0.10588235294117647,
                 "logical_ratio": 0.03529411764705882
             },
-            "label": "SHA-1",
+            "label": "SHA-1-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 22,
                 "top_5_bigrams": [
@@ -1021,7 +1031,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-1",
+                "Ignored AES collision in SHA-1 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name SHA-1"
+            ]
         },
         {
             "address": "0001007c",
@@ -1425,7 +1444,7 @@
                 "mem_ops_ratio": 0.10588235294117647,
                 "logical_ratio": 0.03529411764705882
             },
-            "label": "SHA-224",
+            "label": "SHA-1-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 22,
                 "top_5_bigrams": [
@@ -1486,7 +1505,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-1",
+                "Ignored AES collision in SHA-1 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name SHA-1"
+            ]
         },
         {
             "address": "000100b8",
@@ -1890,7 +1918,7 @@
                 "mem_ops_ratio": 0.10588235294117647,
                 "logical_ratio": 0.03529411764705882
             },
-            "label": "SHA-256",
+            "label": "SHA-256-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 22,
                 "top_5_bigrams": [
@@ -1951,7 +1979,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name SHA-256"
+            ]
         },
         {
             "address": "000100f4",
@@ -2355,7 +2392,7 @@
                 "mem_ops_ratio": 0.10588235294117647,
                 "logical_ratio": 0.03529411764705882
             },
-            "label": "SHA-3",
+            "label": "SHA-3-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 22,
                 "top_5_bigrams": [
@@ -2416,7 +2453,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-3",
+                "Ignored AES collision in SHA-3 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name SHA-3"
+            ]
         },
         {
             "address": "00010130",
@@ -2820,7 +2866,7 @@
                 "mem_ops_ratio": 0.10588235294117647,
                 "logical_ratio": 0.03529411764705882
             },
-            "label": "SHA-512",
+            "label": "SHA-512-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 22,
                 "top_5_bigrams": [
@@ -2881,7 +2927,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-512",
+                "Ignored AES collision in SHA-512 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name SHA-512"
+            ]
         }
     ],
     "binary": "libcrypto-lib-sha1_one.o_openssl_arm32_O3.o"

@@ -2807,7 +2807,7 @@
                 "mem_ops_ratio": 0.17757009345794392,
                 "logical_ratio": 0.04205607476635514
             },
-            "label": "DSA",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 64,
                 "top_5_bigrams": [
@@ -2868,7 +2868,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 95.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Moderate bitwise density (0.20)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)"
+            ]
         }
     ],
     "binary": "libcrypto-lib-ml_dsa_matrix.o_openssl_riscv_Os.o"

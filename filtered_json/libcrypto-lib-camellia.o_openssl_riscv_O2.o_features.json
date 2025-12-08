@@ -29713,7 +29713,7 @@
                 "mem_ops_ratio": 0.11919504643962849,
                 "logical_ratio": 0.0761609907120743
             },
-            "label": "Camellia",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 220,
                 "top_5_bigrams": [
@@ -29774,7 +29774,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.37)",
+                "High Code Entropy (6.75)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00100f30",
@@ -39488,7 +39498,7 @@
                 "mem_ops_ratio": 0.09626556016597511,
                 "logical_ratio": 0.11950207468879669
             },
-            "label": "Camellia",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 101,
                 "top_5_bigrams": [
@@ -39549,7 +39559,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.38)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "001015c8",
@@ -39726,7 +39745,7 @@
                 "mem_ops_ratio": 0.0,
                 "logical_ratio": 0.07692307692307693
             },
-            "label": "Camellia",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 4,
                 "top_5_bigrams": [
@@ -39786,7 +39805,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 80.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "001015da",
@@ -49550,7 +49577,7 @@
                 "mem_ops_ratio": 0.09642560266001662,
                 "logical_ratio": 0.11970074812967581
             },
-            "label": "Camellia",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 97,
                 "top_5_bigrams": [
@@ -49611,7 +49638,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.38)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00101c72",
@@ -49788,7 +49824,7 @@
                 "mem_ops_ratio": 0.0,
                 "logical_ratio": 0.07692307692307693
             },
-            "label": "Camellia",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 4,
                 "top_5_bigrams": [
@@ -49848,7 +49884,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 80.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         }
     ],
     "binary": "libcrypto-lib-camellia.o_openssl_riscv_O2.o"

@@ -113,7 +113,7 @@
                 "mem_ops_ratio": 0.0,
                 "logical_ratio": 0.0
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 2,
                 "top_5_bigrams": [
@@ -171,7 +171,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "0010000c",
@@ -303,7 +311,7 @@
                 "mem_ops_ratio": 0.0,
                 "logical_ratio": 0.0
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 3,
                 "top_5_bigrams": [
@@ -362,7 +370,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "0010001c",
@@ -2216,7 +2232,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Moderate bitwise density (0.20)",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100190",
@@ -3260,7 +3285,7 @@
                 "mem_ops_ratio": 0.12,
                 "logical_ratio": 0.0
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 28,
                 "top_5_bigrams": [
@@ -3321,7 +3346,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100224",
@@ -12500,7 +12533,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 70.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "High-Entropy BigInt (Likely RSA)",
+                "Ignored YARA RSA vs Name HMAC"
+            ]
         },
         {
             "address": "001007b0",
@@ -17150,7 +17192,7 @@
                 "mem_ops_ratio": 0.07164634146341463,
                 "logical_ratio": 0.0
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 50,
                 "top_5_bigrams": [
@@ -17211,7 +17253,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name HMAC"
+            ]
         },
         {
             "address": "00100a84",
@@ -17552,7 +17603,7 @@
                 "mem_ops_ratio": 0.17647058823529413,
                 "logical_ratio": 0.0
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 13,
                 "top_5_bigrams": [
@@ -17613,7 +17664,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100ac0",
@@ -18119,7 +18178,7 @@
                 "mem_ops_ratio": 0.19607843137254902,
                 "logical_ratio": 0.0
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 15,
                 "top_5_bigrams": [
@@ -18180,7 +18239,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100b14",
@@ -18715,7 +18782,7 @@
                 "mem_ops_ratio": 0.19672131147540983,
                 "logical_ratio": 0.0
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 21,
                 "top_5_bigrams": [
@@ -18776,7 +18843,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100b74",
@@ -19200,7 +19275,7 @@
                 "mem_ops_ratio": 0.06172839506172839,
                 "logical_ratio": 0.0
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 13,
                 "top_5_bigrams": [
@@ -19261,7 +19336,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100bc4",
@@ -19766,7 +19849,7 @@
                 "mem_ops_ratio": 0.21818181818181817,
                 "logical_ratio": 0.01818181818181818
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 19,
                 "top_5_bigrams": [
@@ -19827,7 +19910,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100c20",
@@ -20556,7 +20647,7 @@
                 "mem_ops_ratio": 0.23478260869565218,
                 "logical_ratio": 0.017391304347826087
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 21,
                 "top_5_bigrams": [
@@ -20617,7 +20708,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100cd8",
@@ -20732,7 +20831,7 @@
                 "mem_ops_ratio": 0.2,
                 "logical_ratio": 0.0
             },
-            "label": "SEED",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 3,
                 "top_5_bigrams": [
@@ -20791,7 +20890,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100ce8",
@@ -23255,7 +23362,7 @@
                 "mem_ops_ratio": 0.15457413249211358,
                 "logical_ratio": 0.0
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 62,
                 "top_5_bigrams": [
@@ -23316,7 +23423,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name HMAC"
+            ]
         },
         {
             "address": "00100eb4",
@@ -24011,7 +24127,7 @@
                 "mem_ops_ratio": 0.14925373134328357,
                 "logical_ratio": 0.0
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 22,
                 "top_5_bigrams": [
@@ -24072,7 +24188,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100f24",
@@ -25115,7 +25239,7 @@
                 "mem_ops_ratio": 0.16363636363636364,
                 "logical_ratio": 0.0
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 28,
                 "top_5_bigrams": [
@@ -25176,7 +25300,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100fe0",
@@ -26162,7 +26294,7 @@
                 "mem_ops_ratio": 0.18604651162790697,
                 "logical_ratio": 0.0
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 25,
                 "top_5_bigrams": [
@@ -26223,7 +26355,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name HMAC"
+            ]
         },
         {
             "address": "001010c8",
@@ -27609,7 +27750,7 @@
                 "mem_ops_ratio": 0.12558139534883722,
                 "logical_ratio": 0.018604651162790697
             },
-            "label": "HMAC",
+            "label": "HMAC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 36,
                 "top_5_bigrams": [
@@ -27670,7 +27811,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies HMAC",
+                "Ignored AES collision in HMAC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         }
     ],
     "binary": "libdefault-lib-drbg_hmac.o_openssl_arm64_Os.o"

@@ -980,7 +980,7 @@
                 "mem_ops_ratio": 0.11538461538461539,
                 "logical_ratio": 0.006993006993006993
             },
-            "label": "RC4",
+            "label": "RC4-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 34,
                 "top_5_bigrams": [
@@ -1041,7 +1041,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies RC4",
+                "Ignored AES collision in RC4 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         }
     ],
     "binary": "libcrypto-lib-rc4_skey.o_openssl_arm32_Os.o"

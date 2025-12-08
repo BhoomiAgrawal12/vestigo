@@ -3522,7 +3522,7 @@
                 "mem_ops_ratio": 0.09421641791044776,
                 "logical_ratio": 0.08955223880597014
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 82,
                 "top_5_bigrams": [
@@ -3583,7 +3583,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.35)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "code:010258",
@@ -6227,7 +6236,7 @@
                 "mem_ops_ratio": 0.08712613784135241,
                 "logical_ratio": 0.08712613784135241
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 70,
                 "top_5_bigrams": [
@@ -6288,7 +6297,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Very High bitwise density (0.34)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)",
+                "YARA Match: RSA"
+            ]
         }
     ],
     "binary": "wolfssl_kdf_avr_O3.o"

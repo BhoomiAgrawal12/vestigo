@@ -423,7 +423,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies MD5",
+                "Moderate bitwise density (0.23)",
+                "Ignored AES collision in MD5 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name MD5"
+            ]
         },
         {
             "address": "00010034",
@@ -5746,7 +5756,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies MD5",
+                "Very High bitwise density (0.36)",
+                "Ignored AES collision in MD5 function",
+                "High-Entropy BigInt (Likely RSA)"
+            ]
         },
         {
             "address": "00010700",
@@ -7161,7 +7180,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 85.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies MD5",
+                "Moderate bitwise density (0.25)",
+                "Ignored AES collision in MD5 function",
+                "High-Entropy BigInt (Likely RSA)",
+                "Ignored YARA RSA vs Name MD5"
+            ]
         },
         {
             "address": "000107a6",
@@ -8929,7 +8958,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies MD5",
+                "Very High bitwise density (0.37)",
+                "Ignored AES collision in MD5 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name MD5"
+            ]
         }
     ],
     "binary": "libcrypto-lib-md5_dgst.o_openssl_arm32_Os.o"

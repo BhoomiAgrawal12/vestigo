@@ -431,7 +431,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies MD5",
+                "Very High bitwise density (0.31)",
+                "Ignored AES collision in MD5 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010078",
@@ -4939,7 +4948,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies MD5",
+                "Very High bitwise density (0.40)",
+                "Ignored AES collision in MD5 function",
+                "High-Entropy BigInt (Likely RSA)",
+                "Ignored YARA RSA vs Name MD5"
+            ]
         },
         {
             "address": "00010c2c",
@@ -6707,7 +6726,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies MD5",
+                "Very High bitwise density (0.32)",
+                "Ignored AES collision in MD5 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name MD5"
+            ]
         },
         {
             "address": "00010dd0",
@@ -6840,7 +6869,7 @@
                 "mem_ops_ratio": 0.06666666666666667,
                 "logical_ratio": 0.13333333333333333
             },
-            "label": "MD5",
+            "label": "MD5-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 5,
                 "top_5_bigrams": [
@@ -6901,7 +6930,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies MD5",
+                "Ignored AES collision in MD5 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00010de8",
@@ -8281,7 +8318,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies MD5",
+                "Moderate bitwise density (0.30)",
+                "Ignored AES collision in MD5 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name MD5"
+            ]
         }
     ],
     "binary": "libcrypto-lib-md5_dgst.o_openssl_mips_Os.o"

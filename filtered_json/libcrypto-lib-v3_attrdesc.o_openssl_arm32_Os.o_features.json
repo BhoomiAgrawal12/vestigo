@@ -4173,7 +4173,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 85.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies DES",
+                "Moderate bitwise density (0.16)",
+                "Ignored AES collision in DES function",
+                "High-Entropy BigInt (Likely RSA)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "00010338",
@@ -4377,7 +4387,7 @@
                 "mem_ops_ratio": 0.24242424242424243,
                 "logical_ratio": 0.030303030303030304
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -4438,7 +4448,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "00010354",
@@ -4642,7 +4661,7 @@
                 "mem_ops_ratio": 0.25806451612903225,
                 "logical_ratio": 0.03225806451612903
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -4703,7 +4722,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "0001036c",
@@ -4859,7 +4887,7 @@
                 "mem_ops_ratio": 0.2222222222222222,
                 "logical_ratio": 0.05555555555555555
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 3,
                 "top_5_bigrams": [
@@ -4918,7 +4946,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "0001037a",
@@ -5074,7 +5111,7 @@
                 "mem_ops_ratio": 0.19047619047619047,
                 "logical_ratio": 0.047619047619047616
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -5135,7 +5172,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "0001038e",
@@ -5339,7 +5385,7 @@
                 "mem_ops_ratio": 0.24242424242424243,
                 "logical_ratio": 0.030303030303030304
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -5400,7 +5446,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "000103aa",
@@ -5604,7 +5659,7 @@
                 "mem_ops_ratio": 0.25806451612903225,
                 "logical_ratio": 0.03225806451612903
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -5665,7 +5720,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "000103c2",
@@ -5821,7 +5885,7 @@
                 "mem_ops_ratio": 0.2222222222222222,
                 "logical_ratio": 0.05555555555555555
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 3,
                 "top_5_bigrams": [
@@ -5880,7 +5944,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "000103d0",
@@ -6036,7 +6109,7 @@
                 "mem_ops_ratio": 0.19047619047619047,
                 "logical_ratio": 0.047619047619047616
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -6097,7 +6170,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "000103e4",
@@ -6301,7 +6383,7 @@
                 "mem_ops_ratio": 0.24242424242424243,
                 "logical_ratio": 0.030303030303030304
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -6362,7 +6444,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "00010400",
@@ -6566,7 +6657,7 @@
                 "mem_ops_ratio": 0.25806451612903225,
                 "logical_ratio": 0.03225806451612903
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -6627,7 +6718,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "00010418",
@@ -6783,7 +6883,7 @@
                 "mem_ops_ratio": 0.2222222222222222,
                 "logical_ratio": 0.05555555555555555
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 3,
                 "top_5_bigrams": [
@@ -6842,7 +6942,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "00010426",
@@ -6998,7 +7107,7 @@
                 "mem_ops_ratio": 0.19047619047619047,
                 "logical_ratio": 0.047619047619047616
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -7059,7 +7168,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "0001043a",
@@ -7263,7 +7381,7 @@
                 "mem_ops_ratio": 0.24242424242424243,
                 "logical_ratio": 0.030303030303030304
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -7324,7 +7442,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "00010456",
@@ -7528,7 +7655,7 @@
                 "mem_ops_ratio": 0.25806451612903225,
                 "logical_ratio": 0.03225806451612903
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -7589,7 +7716,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "0001046e",
@@ -7745,7 +7881,7 @@
                 "mem_ops_ratio": 0.2222222222222222,
                 "logical_ratio": 0.05555555555555555
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 3,
                 "top_5_bigrams": [
@@ -7804,7 +7940,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "0001047c",
@@ -7960,7 +8105,7 @@
                 "mem_ops_ratio": 0.19047619047619047,
                 "logical_ratio": 0.047619047619047616
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -8021,7 +8166,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "00010490",
@@ -8225,7 +8379,7 @@
                 "mem_ops_ratio": 0.24242424242424243,
                 "logical_ratio": 0.030303030303030304
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -8286,7 +8440,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "000104ac",
@@ -8490,7 +8653,7 @@
                 "mem_ops_ratio": 0.25806451612903225,
                 "logical_ratio": 0.03225806451612903
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -8551,7 +8714,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "000104c4",
@@ -8707,7 +8879,7 @@
                 "mem_ops_ratio": 0.2222222222222222,
                 "logical_ratio": 0.05555555555555555
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 3,
                 "top_5_bigrams": [
@@ -8766,7 +8938,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         },
         {
             "address": "000104d2",
@@ -8922,7 +9103,7 @@
                 "mem_ops_ratio": 0.19047619047619047,
                 "logical_ratio": 0.047619047619047616
             },
-            "label": "DES",
+            "label": "DES-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 6,
                 "top_5_bigrams": [
@@ -8983,7 +9164,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies DES",
+                "Ignored AES collision in DES function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name DES"
+            ]
         }
     ],
     "binary": "libcrypto-lib-v3_attrdesc.o_openssl_arm32_Os.o"

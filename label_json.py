@@ -2,450 +2,279 @@ import os
 import json
 import re
 import sys
+import math
+import argparse
 
-# Configuration
+# --- Configuration ---
 YARA_FILE = "qiling_analysis/tests/crypto.yar"
 JSON_DIR = "filtered_json"
 NEGATIVE_DIR = os.path.join(JSON_DIR, "negative")
 
+# --- YARA & Helper Functions ---
+
 def parse_yara_rules(yara_path):
-    """
-    Parses the YARA file to extract algorithm names and byte signatures.
-    Returns a list of rules: {'algorithm': 'AES', 'signatures': [[0x63, 0x7C, ...], ...]}
-    """
     rules = []
     try:
-        with open(yara_path, 'r') as f:
-            content = f.read()
-
-        # Remove comments to simplify parsing
-        # Remove /* ... */
+        with open(yara_path, 'r') as f: content = f.read()
         content = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
-        # Remove // ...
         content = re.sub(r'//.*', '', content)
-
-        # Find start of rules
-        # We look for "rule RuleName {"
-        # We will iterate through the content and find "rule"
-        
         pos = 0
         while True:
             match = re.search(r'\brule\s+(\w+)\s*\{', content[pos:])
-            if not match:
-                break
-            
+            if not match: break
             rule_name = match.group(1)
-            start_brace = pos + match.end() - 1 # Index of '{'
-            
-            # Find matching closing brace
+            start_brace = pos + match.end() - 1 
             brace_count = 1
             i = start_brace + 1
             while i < len(content) and brace_count > 0:
-                if content[i] == '{':
-                    brace_count += 1
-                elif content[i] == '}':
-                    brace_count -= 1
+                if content[i] == '{': brace_count += 1
+                elif content[i] == '}': brace_count -= 1
                 i += 1
-            
             if brace_count == 0:
-                rule_body = content[start_brace+1 : i-1]
-                pos = i # Continue from end of this rule
-                
-                # Extract Algorithm from meta
+                rule_body = content[start_brace + 1: i - 1]
+                pos = i 
                 algo_match = re.search(r'algorithm\s*=\s*"(.*?)"', rule_body)
-                if algo_match:
-                    algorithm = algo_match.group(1)
-                else:
-                    algorithm = rule_name # Fallback
-
-                # Extract byte sequences
+                algorithm = algo_match.group(1) if algo_match else rule_name
                 signatures = []
-                
-                # Find hex strings: $name = { HH HH ... }
                 hex_str_pattern = re.compile(r'\$\w+\s*=\s*\{(.*?)\}', re.DOTALL)
                 for hex_match in hex_str_pattern.finditer(rule_body):
                     hex_content = hex_match.group(1)
-                    # Clean up whitespace (comments already removed)
                     hex_bytes = [int(b, 16) for b in hex_content.split() if re.match(r'^[0-9a-fA-F]{2}$', b)]
-                    if hex_bytes:
-                        signatures.append(hex_bytes)
-                
-                # Find text strings: $name = "string"
+                    if hex_bytes: signatures.append(hex_bytes)
                 text_str_pattern = re.compile(r'\$\w+\s*=\s*"(.*?)"')
                 for text_match in text_str_pattern.finditer(rule_body):
-                    text_content = text_match.group(1)
-                    # Convert string to bytes
-                    signatures.append([ord(c) for c in text_content])
-
-                if signatures:
-                    rules.append({
-                        'name': rule_name,
-                        'algorithm': algorithm,
-                        'signatures': signatures
-                    })
-            else:
-                # Malformed rule or end of file
-                break
-                
-    except Exception as e:
-        print(f"Error parsing YARA file: {e}")
-        sys.exit(1)
-
+                    signatures.append([ord(c) for c in text_match.group(1)])
+                if signatures: rules.append({'name': rule_name, 'algorithm': algorithm, 'signatures': signatures})
+            else: break
+    except Exception: pass
     return rules
 
 def check_yara_match(immediates, rules):
-    """
-    Checks if the function's immediates contain any of the YARA signatures.
-    Returns the algorithm name if matched, else None.
-    """
-    if not immediates:
-        return None
-        
-    # Convert immediates to a byte string for easier searching? 
-    # Or just sliding window? Immediates is a list of integers.
-    # A simple sliding window or string search is safer.
-    
-    # Optimization: Convert immediates to bytes once
-    try:
-        # Filter out any values > 255 just in case, though they should be bytes
-        imm_bytes = bytes([b for b in immediates if 0 <= b <= 255])
-    except Exception:
-        return None
-
+    if not immediates or not rules: return None
+    try: imm_bytes = bytes([b for b in immediates if 0 <= b <= 255])
+    except: return None
     for rule in rules:
         for sig in rule['signatures']:
-            sig_bytes = bytes(sig)
-            if sig_bytes in imm_bytes:
-                return rule['algorithm']
+            if bytes(sig) in imm_bytes: return rule['algorithm']
     return None
 
 def infer_algo_from_name(filename, func_name):
-    """
-    Infers algorithm name from filename or function name.
-    More specific patterns are checked first to avoid misclassification.
-    """
-    # Order matters! Check more specific patterns first
+    # Order matters: Specific > Generic
     crypto_patterns = [
-        # SHA variants (check specific versions first)
-        ("sha3", "SHA-3"),
-        ("sha512", "SHA-512"),
-        ("sha384", "SHA-384"),
-        ("sha256", "SHA-256"),
-        ("sha224", "SHA-224"),
-        ("sha1", "SHA-1"),
-        ("sha", "SHA-256"),  # Generic SHA defaults to SHA-256
-        
-        # AES and variants
-        ("aes", "AES"),
-        ("rijndael", "AES"),
-        
-        # ChaCha/Salsa
-        ("chacha20", "ChaCha20"),
-        ("chacha", "ChaCha20"),
-        ("salsa20", "Salsa20"),
-        ("salsa", "Salsa20"),
-        ("poly1305", "ChaCha20"),  # Often used with ChaCha20
-        
-        # DES family
-        ("3des", "DES"),
-        ("tdes", "DES"),
-        ("des3", "DES"),
-        ("des", "DES"),
-        
-        # Hash functions
-        ("md5", "MD5"),
-        ("md4", "MD5"),
-        ("md2", "MD5"),
-        
-        # Stream ciphers
-        ("rc4", "RC4"),
-        ("arc4", "RC4"),
-        
-        # Block ciphers
-        ("blowfish", "Blowfish"),
-        ("twofish", "Blowfish"),
-        ("camellia", "Camellia"),
-        ("aria", "ARIA"),
-        ("seed", "SEED"),
-        ("cast", "CAST"),
-        
-        # Public key crypto
-        ("rsa", "RSA"),
-        ("ecdsa", "ECC"),
-        ("ecdh", "ECC"),
-        ("ecc", "ECC"),
-        ("dsa", "DSA"),
-        ("dh", "DH"),
-        ("ec_", "ECC"),
-        ("curve25519", "ECC"),
-        ("ed25519", "ECC"),
-        
-        # MACs and KDFs
-        ("hmac", "HMAC"),
-        ("cmac", "CMAC"),
-        ("gmac", "GMAC"),
-        ("pbkdf", "PBKDF2"),
-        ("hkdf", "HKDF"),
-        
-        # Modes and constructions
-        ("gcm", "AES"),  # GCM usually with AES
-        ("ccm", "AES"),  # CCM usually with AES
-        ("ctr", "AES"),  # CTR mode usually with AES
-        ("cbc", "AES"),  # CBC mode usually with AES
-        
-        # Other
-        ("crc32", "CRC32"),
-        ("crc", "CRC32"),
+        ("chacha20", "ChaCha20"), ("chacha", "ChaCha20"), ("poly1305", "Poly1305"),
+        ("sha3", "SHA-3"), ("sha512", "SHA-512"), ("sha256", "SHA-256"), ("sha1", "SHA-1"),
+        ("aes", "AES"), ("rijndael", "AES"), 
+        ("des", "DES"), ("md5", "MD5"), ("rc4", "RC4"),
+        ("hmac", "HMAC"), ("ecdsa", "ECC"), ("curve25519", "ECC")
     ]
+    
+    name_lower = (func_name or "").lower()
+    file_lower = (filename or "").lower()
 
-    name_lower = func_name.lower()
-    file_lower = filename.lower()
-
-    # Check function name first (higher priority)
     for pattern, algo in crypto_patterns:
-        if pattern in name_lower:
-            return algo
-            
-    # Check filename
+        if pattern in name_lower: return algo
     for pattern, algo in crypto_patterns:
-        if pattern in file_lower:
-            return algo
-
+        if pattern in file_lower: return algo
+    
+    # RSA Check - Only if strictly named
+    if "rsa" in name_lower and any(x in name_lower for x in ["enc", "dec", "sign", "ver", "pkcs", "oaep", "crt"]):
+        return "RSA"
+        
     return None
 
-def fix_json_content(content):
-    """
-    Attempts to fix common JSON errors:
-    - Trailing commas before closing brackets/braces
-    - Truncated/incomplete JSON structures
-    """
-    import re
-    
-    lines = content.split('\n')
-    
-    # First pass: remove trailing commas before closing brackets
-    fixed_lines = []
-    for i, line in enumerate(lines):
-        stripped = line.rstrip()
-        
-        if stripped.endswith(','):
-            # Look ahead to see if the next non-empty content is a closing bracket
-            next_content = None
-            for j in range(i + 1, len(lines)):
-                next_stripped = lines[j].strip()
-                if next_stripped:
-                    next_content = next_stripped
-                    break
-            
-            # If next content starts with closing bracket or we're at end, remove the trailing comma
-            if (next_content and (next_content.startswith(']') or next_content.startswith('}'))) or j >= len(lines):
-                line = stripped[:-1] + line[len(stripped):]
-        
-        fixed_lines.append(line)
-    
-    content = '\n'.join(fixed_lines)
-    
-    # Second pass: Handle truncated JSON by tracking bracket depth
-    try:
-        json.loads(content)
-        return content  # Already valid
-    except json.JSONDecodeError as e:
-        # Remove trailing empty lines
-        content = content.rstrip()
-        
-        # Track nesting using a stack-based approach
-        stack = []
-        in_string = False
-        escape_next = False
-        
-        for char in content:
-            if escape_next:
-                escape_next = False
-                continue
-            
-            if char == '\\':
-                escape_next = True
-                continue
-            
-            if char == '"' and not escape_next:
-                in_string = not in_string
-                continue
-            
-            if not in_string:
-                if char in '{[':
-                    stack.append(char)
-                elif char in '}]':
-                    if stack and ((char == '}' and stack[-1] == '{') or (char == ']' and stack[-1] == '[')):
-                        stack.pop()
-        
-        # Remove trailing comma if present
-        if content.rstrip().endswith(','):
-            content = content.rstrip()[:-1]
-        
-        # Close any unclosed structures
-        content += '\n'
-        while stack:
-            opener = stack.pop()
-            if opener == '{':
-                content += '    }\n'
-            elif opener == '[':
-                content += '    ]\n'
-        
-        return content
+# --- SCORING LOGIC ---
 
-def load_json_with_repair(file_path):
-    """
-    Attempts to load JSON, with automatic repair if initial load fails.
-    """
+def get_structural_score(func):
+    score = 0.0
+    reasons = []
+
+    op_counts = func.get("op_category_counts", {})
+    bitwise_ops = op_counts.get("bitwise_ops", 0)
+    total_ops = sum(op_counts.values()) if op_counts else 0
+    entropy = func.get("entropy_metrics", {}).get("function_byte_entropy", 0.0)
+
+    # 1. Bitwise Density
+    if total_ops > 15:
+        density = bitwise_ops / total_ops
+        if density > 0.30:
+            score += 35.0
+            reasons.append(f"Very High bitwise density ({density:.2f})")
+        elif density > 0.15:
+            score += 15.0
+            reasons.append(f"Moderate bitwise density ({density:.2f})")
+
+    # 2. Entropy
+    if entropy > 6.4:
+        score += 30.0
+        reasons.append(f"High Code Entropy ({entropy:.2f})")
+    
+    return score, reasons, entropy
+
+def get_signature_score(func, yara_algo, name_hint, entropy):
+    score = 0.0
+    reasons = []
+    hint = None
+
+    sigs = func.get("crypto_signatures", {})
+    
+    # --- AES SIGNALS ---
+    # Only trust AES S-box if we aren't already sure it's ChaCha/Poly/Something else
+    # ChaCha uses 0x00-0xFF constants that often collide with S-box checks.
+    if sigs.get("has_aes_sbox") or any(n.get("constant_flags", {}).get("AES_SBOX_BYTES") for n in func.get("node_level", [])):
+        if name_hint and name_hint not in ["AES", "Unknown", None]:
+            # Ignoring AES signal because name strongly says otherwise
+            reasons.append(f"Ignored AES collision in {name_hint} function")
+        else:
+            score += 50.0
+            reasons.append("AES S-Box identified")
+            hint = "AES"
+
+    # --- SHA SIGNALS ---
+    if sigs.get("has_sha_constants"):
+        score += 60.0
+        reasons.append("SHA constants identified")
+        hint = "SHA"
+    
+    # --- RSA / BIGINT SIGNALS ---
+    if sigs.get("rsa_bigint_detected"):
+        # Poly1305 and RSA both use BigInt. How to distinguish?
+        # 1. Name: If name is 'poly1305', it's Poly.
+        # 2. Entropy: RSA keys have high entropy (>6.0). Poly1305 code/math has lower entropy (<5.5).
+        
+        if name_hint == "Poly1305" or name_hint == "ChaCha20":
+            # It's BigInt because it's Poly1305
+            reasons.append("BigInt arithmetic (Poly1305 context)")
+            # Do NOT set hint to RSA
+        elif entropy < 5.8:
+            # Low entropy BigInt -> Generic Math or Stream Cipher MAC
+            reasons.append("BigInt detected but low entropy (Generic Math/Poly1305)")
+            score -= 10.0 # Reduce score to avoid false positive
+        else:
+            # High Entropy BigInt -> Likely RSA Key operations
+            score += 30.0
+            reasons.append("High-Entropy BigInt (Likely RSA)")
+            hint = hint or "RSA"
+
+    # --- YARA ---
+    if yara_algo and yara_algo != "COMPRESSION":
+        if name_hint and name_hint != yara_algo and name_hint != "Unknown":
+             reasons.append(f"Ignored YARA {yara_algo} vs Name {name_hint}")
+        else:
+            score += 40.0
+            reasons.append(f"YARA Match: {yara_algo}")
+            hint = hint or yara_algo
+
+    return score, reasons, hint
+
+def classify_function(func, filename, yara_algo):
+    total_score = 0.0
+    all_reasons = []
+    
+    # 1. Name Check (Highest Priority)
+    name_hint = infer_algo_from_name(filename, func.get("name", ""))
+    if name_hint:
+        total_score += 40.0 # Boost name score
+        all_reasons.append(f"Name implies {name_hint}")
+
+    # 2. Structure
+    struct_score, struct_reasons, entropy = get_structural_score(func)
+    total_score += struct_score
+    all_reasons.extend(struct_reasons)
+
+    # 3. Signatures
+    sig_score, sig_reasons, sig_hint = get_signature_score(func, yara_algo, name_hint, entropy)
+    total_score += sig_score
+    all_reasons.extend(sig_reasons)
+    
+    # --- Final Logic ---
+    final_score = min(100.0, total_score)
+    confidence = "Low"
+    label = "non-crypto"
+    
+    # The Decision
+    detected_algo = name_hint if name_hint else sig_hint
+
+    if detected_algo:
+        if final_score >= 40.0:
+            label = detected_algo
+            confidence = "High" if final_score > 60 else "Medium"
+        else:
+            label = f"{detected_algo}-candidate"
+            confidence = "Low"
+    elif final_score >= 60.0:
+        label = "crypto-generic"
+        confidence = "Medium"
+    elif "BigInt" in str(all_reasons) and final_score < 40:
+        label = "math-bigint" # Generic math fallback
+        confidence = "Medium"
+
+    func["label"] = label
+    func["confidence_score"] = final_score
+    func["confidence_level"] = confidence
+    func["detection_reasons"] = all_reasons
+    
+    return func
+
+# --- Main Processing ---
+
+def load_json_safe(file_path):
     try:
-        with open(file_path, 'r') as f:
-            content = f.read()
-            return json.loads(content)
-    except json.JSONDecodeError as e:
-        # Try to repair the JSON
-        try:
-            with open(file_path, 'r') as f:
-                content = f.read()
-            
-            # Additional preprocessing for common issues
-            # Remove any invalid control characters
-            content = ''.join(char for char in content if ord(char) >= 32 or char in '\n\r\t')
-            
-            fixed_content = fix_json_content(content)
-            data = json.loads(fixed_content)
-            
-            # Write back the fixed version
-            with open(file_path, 'w') as f:
-                json.dump(data, f, indent=4)
-            
-            print(f"  Repaired and reloaded: {os.path.basename(file_path)}")
-            return data
-        except json.JSONDecodeError as je:
-            # If it's still a structural issue, try more aggressive fixes
-            try:
-                # Try to find where the JSON becomes invalid and truncate before that point
-                lines = content.split('\n')
-                # Find the last valid closing brace/bracket combination
-                for cutoff in range(len(lines) - 1, max(0, len(lines) - 100), -1):
-                    test_content = '\n'.join(lines[:cutoff])
-                    test_fixed = fix_json_content(test_content)
-                    try:
-                        data = json.loads(test_fixed)
-                        print(f"  Repaired by truncating at line {cutoff}: {os.path.basename(file_path)}")
-                        with open(file_path, 'w') as f:
-                            json.dump(data, f, indent=4)
-                        return data
-                    except:
-                        continue
-                raise Exception(f"Failed to repair JSON: {je}")
-            except Exception as repair_error:
-                raise Exception(f"Failed to repair JSON: {repair_error}")
+        with open(file_path, 'r') as f: return json.loads(re.sub(r',\s*([\]}])', r'\1', f.read()))
+    except: return None
 
 def process_files():
-    import argparse
-    parser = argparse.ArgumentParser(description="Label functions in JSON files using YARA rules.")
-    parser.add_argument("directory", nargs="?", default="filtered_json", help="Directory containing JSON files to process")
-    args = parser.parse_args()
-    
-    target_dir = args.directory
-    
-    print(f"Parsing YARA rules from {YARA_FILE}...")
+    print(f"[*] Loading YARA rules from {YARA_FILE}...")
     yara_rules = parse_yara_rules(YARA_FILE)
-    print(f"Loaded {len(yara_rules)} rules.")
+    
+    all_files = []
+    for root, _, files in os.walk(JSON_DIR):
+        for f in files: 
+            if f.endswith(".json"): all_files.append(os.path.join(root, f))
+    
+    total_files = len(all_files)
+    print(f"[*] Found {total_files} files.")
+    stats = {"crypto": 0, "non-crypto": 0, "math-bigint": 0}
 
-    if not os.path.exists(target_dir):
-        print(f"Directory {target_dir} not found.")
-        return
+    for i, file_path in enumerate(all_files, 1):
+        pct = (i / total_files) * 100
+        sys.stdout.write(f"\r[{i}/{total_files}] {pct:.1f}% | {os.path.basename(file_path)[:30]:<30}")
+        sys.stdout.flush()
 
-    count = 0
-    error_count = 0
-    for root, dirs, files in os.walk(target_dir):
-        for file in files:
-            if not file.endswith(".json"):
-                continue
+        is_negative = "negative" in file_path
+        try:
+            data = load_json_safe(file_path)
+            if not data or "functions" not in data: continue
+
+            updated = False
+            for func in data["functions"]:
+                if is_negative:
+                    if func.get("label") != "non-crypto":
+                        func["label"] = "non-crypto"
+                        updated = True
+                    stats["non-crypto"] += 1
+                    continue
+
+                imms = []
+                for node in func.get("node_level", []): imms.extend(node.get("immediates", []))
+                yara_match = check_yara_match(imms, yara_rules)
                 
-            file_path = os.path.join(root, file)
-            # Check if file is in a 'negative' subdirectory relative to the target_dir or absolute path
-            is_negative = "/negative/" in file_path or os.path.sep + "negative" + os.path.sep in file_path
-            
-            try:
-                data = load_json_with_repair(file_path)
+                old_label = func.get("label")
+                func = classify_function(func, os.path.basename(file_path), yara_match)
                 
-                updated = False
-                if "functions" in data:
-                    for func in data["functions"]:
-                        original_label = func.get("label", "Unknown")
-                        new_label = "Unknown"
-                        
-                        if is_negative:
-                            new_label = "non-crypto"
-                        else:
-                            func_name = func.get("name", "")
-                            
-                            # Priority-based classification with hybrid approach:
-                            
-                            # 1. Check YARA signatures (crypto constants)
-                            all_immediates = []
-                            for node in func.get("node_level", []):
-                                all_immediates.extend(node.get("immediates", []))
-                            yara_label = check_yara_match(all_immediates, yara_rules)
-                            
-                            # 2. Check function name (very specific)
-                            inferred_from_func = infer_algo_from_name("", func_name)
-                            
-                            # 3. Check filename (file-level context)
-                            inferred_from_file = infer_algo_from_name(file, "")
-                            
-                            # Hybrid Decision Logic:
-                            # If function name or filename clearly indicates an algorithm,
-                            # prefer that over generic YARA matches (like RSA which can have false positives)
-                            if inferred_from_func:
-                                # Function name is most specific - use it
-                                new_label = inferred_from_func
-                            elif inferred_from_file and yara_label:
-                                # If both filename and YARA match, prefer YARA unless it's RSA
-                                # (RSA rule has high false positive rate due to small constants)
-                                if yara_label == "RSA":
-                                    # Filename is more reliable than RSA YARA match
-                                    new_label = inferred_from_file
-                                elif yara_label == "COMPRESSION":
-                                    new_label = "non-crypto"
-                                else:
-                                    # Trust YARA for specific crypto constants
-                                    new_label = yara_label
-                            elif yara_label:
-                                # YARA match without filename confirmation
-                                if yara_label == "COMPRESSION":
-                                    new_label = "non-crypto"
-                                elif yara_label == "RSA":
-                                    # RSA needs secondary confirmation
-                                    new_label = "crypto-unknown"
-                                else:
-                                    new_label = yara_label
-                            elif inferred_from_file:
-                                # Filename only
-                                new_label = inferred_from_file
-                            else:
-                                # No clear indication
-                                new_label = "crypto-unknown"
-
-                        if new_label != original_label:
-                            func["label"] = new_label
-                            updated = True
+                if func["label"] != old_label: updated = True
                 
-                if updated:
-                    with open(file_path, 'w') as f:
-                        json.dump(data, f, indent=4)
-                    # print(f"Updated {file}")
-                    count += 1
-                    
-            except Exception as e:
-                print(f"Error processing {file}: {e}")
-                error_count += 1
+                if "non-crypto" in func["label"]: stats["non-crypto"] += 1
+                elif "math-bigint" in func["label"]: stats["math-bigint"] += 1
+                else: stats["crypto"] += 1
 
-    print(f"Finished processing. Updated {count} files in {target_dir}.")
-    if error_count > 0:
-        print(f"Encountered {error_count} errors during processing.")
+            if updated:
+                with open(file_path, 'w') as f: json.dump(data, f, indent=4)
+        except Exception: pass
+
+    print(f"\n\n[*] Done.")
+    print(f"    Crypto: {stats['crypto']}")
+    print(f"    Non-Crypto: {stats['non-crypto']}")
+    print(f"    Math/BigInt: {stats['math-bigint']}")
 
 if __name__ == "__main__":
     process_files()

@@ -3885,7 +3885,7 @@
                 "mem_ops_ratio": 0.15873015873015872,
                 "logical_ratio": 0.05026455026455026
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 117,
                 "top_5_bigrams": [
@@ -3946,7 +3946,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 95.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Moderate bitwise density (0.18)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00010474",
@@ -8091,7 +8100,7 @@
                 "mem_ops_ratio": 0.15920398009950248,
                 "logical_ratio": 0.05721393034825871
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 120,
                 "top_5_bigrams": [
@@ -8152,7 +8161,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 95.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Moderate bitwise density (0.21)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00010974",
@@ -12448,7 +12466,7 @@
                 "mem_ops_ratio": 0.1259124087591241,
                 "logical_ratio": 0.06843065693430657
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 134,
                 "top_5_bigrams": [
@@ -12509,7 +12527,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 95.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Moderate bitwise density (0.22)",
+                "AES S-Box identified",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "00011078",
@@ -17465,7 +17492,7 @@
                 "mem_ops_ratio": 0.12789827973074047,
                 "logical_ratio": 0.0605833956619297
             },
-            "label": "crypto-unknown",
+            "label": "AES",
             "instruction_sequence": {
                 "unique_ngram_count": 135,
                 "top_5_bigrams": [
@@ -17526,7 +17553,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "MIPS"
+            "arch": "MIPS",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Moderate bitwise density (0.21)",
+                "AES S-Box identified",
+                "High-Entropy BigInt (Likely RSA)",
+                "YARA Match: RSA"
+            ]
         },
         {
             "address": "000118f4",
@@ -21834,7 +21870,14 @@
                     ]
                 }
             ],
-            "label": "crypto-unknown"
+            "label": "AES",
+            "algorithm": "AES",
+            "confidence_score": 90.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "AES S-Box identified",
+                "YARA Match: RSA"
+            ]
         }
     ]
 }

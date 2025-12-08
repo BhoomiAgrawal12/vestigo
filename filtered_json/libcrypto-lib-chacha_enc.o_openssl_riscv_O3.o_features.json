@@ -15367,7 +15367,18 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 85.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies ChaCha20",
+                "Moderate bitwise density (0.27)",
+                "High Code Entropy (6.81)",
+                "Ignored AES collision in ChaCha20 function",
+                "BigInt arithmetic (Poly1305 context)",
+                "Ignored YARA RSA vs Name ChaCha20"
+            ]
         }
     ],
     "binary": "libcrypto-lib-chacha_enc.o_openssl_riscv_O3.o"

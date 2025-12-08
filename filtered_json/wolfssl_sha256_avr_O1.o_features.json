@@ -6465,7 +6465,18 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Very High bitwise density (0.35)",
+                "High Code Entropy (6.63)",
+                "Ignored AES collision in SHA-256 function",
+                "High-Entropy BigInt (Likely RSA)",
+                "Ignored YARA RSA vs Name SHA-256"
+            ]
         },
         {
             "address": "code:01041a",
@@ -8569,7 +8580,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 85.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Moderate bitwise density (0.28)",
+                "Ignored AES collision in SHA-256 function",
+                "High-Entropy BigInt (Likely RSA)"
+            ]
         },
         {
             "address": "code:0104d1",
@@ -9448,7 +9468,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Very High bitwise density (0.52)",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name SHA-256"
+            ]
         },
         {
             "address": "code:01050b",
@@ -11582,7 +11612,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 85.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Moderate bitwise density (0.26)",
+                "Ignored AES collision in SHA-256 function",
+                "High-Entropy BigInt (Likely RSA)"
+            ]
         },
         {
             "address": "code:010603",
@@ -11789,7 +11828,7 @@
                 "mem_ops_ratio": 0.07692307692307693,
                 "logical_ratio": 0.038461538461538464
             },
-            "label": "SHA-256",
+            "label": "SHA-256-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 5,
                 "top_5_bigrams": [
@@ -11850,7 +11889,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:01060a",
@@ -12297,7 +12344,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Moderate bitwise density (0.24)",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "code:01061f",
@@ -13104,7 +13160,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies SHA-256",
+                "Moderate bitwise density (0.24)",
+                "Ignored AES collision in SHA-256 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         }
     ],
     "binary": "wolfssl_sha256_avr_O1.o"

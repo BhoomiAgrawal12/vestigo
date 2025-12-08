@@ -253,7 +253,7 @@
                 "mem_ops_ratio": 0.13333333333333333,
                 "logical_ratio": 0.1
             },
-            "label": "ChaCha20",
+            "label": "Poly1305",
             "instruction_sequence": {
                 "unique_ngram_count": 7,
                 "top_5_bigrams": [
@@ -314,7 +314,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies Poly1305",
+                "Ignored AES collision in Poly1305 function",
+                "BigInt arithmetic (Poly1305 context)",
+                "Ignored YARA RSA vs Name Poly1305"
+            ]
         },
         {
             "address": "00100020",
@@ -7805,7 +7814,7 @@
                 "mem_ops_ratio": 0.12749003984063745,
                 "logical_ratio": 0.049800796812749
             },
-            "label": "ChaCha20",
+            "label": "Poly1305",
             "instruction_sequence": {
                 "unique_ngram_count": 115,
                 "top_5_bigrams": [
@@ -7866,7 +7875,18 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 85.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies Poly1305",
+                "Moderate bitwise density (0.29)",
+                "High Code Entropy (6.78)",
+                "Ignored AES collision in Poly1305 function",
+                "BigInt arithmetic (Poly1305 context)",
+                "Ignored YARA RSA vs Name Poly1305"
+            ]
         },
         {
             "address": "001002d0",
@@ -9991,7 +10011,7 @@
                 "mem_ops_ratio": 0.13580246913580246,
                 "logical_ratio": 0.07407407407407407
             },
-            "label": "ChaCha20",
+            "label": "Poly1305",
             "instruction_sequence": {
                 "unique_ngram_count": 28,
                 "top_5_bigrams": [
@@ -10052,7 +10072,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies Poly1305",
+                "Moderate bitwise density (0.26)",
+                "Ignored AES collision in Poly1305 function",
+                "BigInt arithmetic (Poly1305 context)"
+            ]
         },
         {
             "address": "00100390",
@@ -11855,7 +11884,7 @@
                 "mem_ops_ratio": 0.11510791366906475,
                 "logical_ratio": 0.050359712230215826
             },
-            "label": "ChaCha20",
+            "label": "Poly1305",
             "instruction_sequence": {
                 "unique_ngram_count": 40,
                 "top_5_bigrams": [
@@ -11916,7 +11945,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies Poly1305",
+                "Moderate bitwise density (0.22)",
+                "Ignored AES collision in Poly1305 function",
+                "BigInt arithmetic (Poly1305 context)"
+            ]
         },
         {
             "address": "0010042e",
@@ -16724,7 +16762,7 @@
                 "mem_ops_ratio": 0.10476190476190476,
                 "logical_ratio": 0.047619047619047616
             },
-            "label": "ChaCha20",
+            "label": "Poly1305",
             "instruction_sequence": {
                 "unique_ngram_count": 85,
                 "top_5_bigrams": [
@@ -16785,7 +16823,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "RISCV"
+            "arch": "RISCV",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies Poly1305",
+                "Very High bitwise density (0.35)",
+                "Ignored AES collision in Poly1305 function",
+                "BigInt arithmetic (Poly1305 context)",
+                "Ignored YARA RSA vs Name Poly1305"
+            ]
         }
     ],
     "binary": "libcrypto-lib-poly1305.o_openssl_riscv_Os.o"

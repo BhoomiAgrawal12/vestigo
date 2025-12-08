@@ -3752,7 +3752,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "x86"
+            "arch": "x86",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies RC4",
+                "Very High bitwise density (0.45)",
+                "Ignored AES collision in RC4 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name RC4"
+            ]
         }
     ],
     "binary": "libcrypto-lib-rc4_enc.o_openssl_x86_O3.o"

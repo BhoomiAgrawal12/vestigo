@@ -1025,7 +1025,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies RC4",
+                "Moderate bitwise density (0.16)",
+                "Ignored AES collision in RC4 function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name RC4"
+            ]
         }
     ],
     "binary": "libcrypto-lib-rc4_skey.o_openssl_arm32_O1.o"

@@ -479,7 +479,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 65.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies ECC",
+                "Very High bitwise density (0.36)",
+                "Ignored AES collision in ECC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name ECC"
+            ]
         },
         {
             "address": "0001003c",
@@ -1071,7 +1081,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "ARM"
+            "arch": "ARM",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies ECC",
+                "Moderate bitwise density (0.25)",
+                "Ignored AES collision in ECC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name ECC"
+            ]
         }
     ],
     "binary": "libcrypto-lib-ecdsa_vrf.o_openssl_arm32_O3.o"

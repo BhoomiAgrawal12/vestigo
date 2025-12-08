@@ -9475,7 +9475,18 @@
                 "tbox_detected": false
             },
             "arch": "AARCH64",
-            "label": "ChaCha20"
+            "label": "ChaCha20",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies ChaCha20",
+                "Very High bitwise density (0.42)",
+                "High Code Entropy (6.49)",
+                "Ignored AES collision in ChaCha20 function",
+                "BigInt arithmetic (Poly1305 context)",
+                "Ignored YARA RSA vs Name ChaCha20"
+            ]
         }
     ],
     "binary": "chacha20_neon.c.o_mbedtls_arm64_O3.o"

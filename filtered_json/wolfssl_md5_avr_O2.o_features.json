@@ -7398,7 +7398,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AVR8"
+            "arch": "AVR8",
+            "algorithm": "AES",
+            "confidence_score": 100.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies MD5",
+                "Very High bitwise density (0.32)",
+                "Ignored AES collision in MD5 function",
+                "High-Entropy BigInt (Likely RSA)"
+            ]
         },
         {
             "address": "code:01067b",
@@ -8118,7 +8127,14 @@
                     ]
                 }
             ],
-            "label": "MD5"
+            "label": "MD5",
+            "algorithm": "AES",
+            "confidence_score": 40.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies MD5",
+                "Ignored AES collision in MD5 function"
+            ]
         }
     ]
 }

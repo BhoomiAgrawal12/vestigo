@@ -5973,7 +5973,7 @@
                 "mem_ops_ratio": 0.08238276299112801,
                 "logical_ratio": 0.032953105196451206
             },
-            "label": "ECC",
+            "label": "ECC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 61,
                 "top_5_bigrams": [
@@ -6034,7 +6034,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies ECC",
+                "Ignored AES collision in ECC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name ECC"
+            ]
         },
         {
             "address": "00100520",
@@ -6551,7 +6560,7 @@
                 "mem_ops_ratio": 0.11290322580645161,
                 "logical_ratio": 0.0
             },
-            "label": "ECC",
+            "label": "ECC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 18,
                 "top_5_bigrams": [
@@ -6612,7 +6621,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies ECC",
+                "Ignored AES collision in ECC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "0010057c",
@@ -7129,7 +7146,7 @@
                 "mem_ops_ratio": 0.11290322580645161,
                 "logical_ratio": 0.0
             },
-            "label": "ECC",
+            "label": "ECC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 18,
                 "top_5_bigrams": [
@@ -7190,7 +7207,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies ECC",
+                "Ignored AES collision in ECC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "001005d8",
@@ -7706,7 +7731,7 @@
                 "mem_ops_ratio": 0.11290322580645161,
                 "logical_ratio": 0.0
             },
-            "label": "ECC",
+            "label": "ECC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 18,
                 "top_5_bigrams": [
@@ -7767,7 +7792,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies ECC",
+                "Ignored AES collision in ECC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100634",
@@ -8580,7 +8613,16 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies ECC",
+                "Moderate bitwise density (0.18)",
+                "Ignored AES collision in ECC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "001006cc",
@@ -10332,7 +10374,7 @@
                 "mem_ops_ratio": 0.14173228346456693,
                 "logical_ratio": 0.007874015748031496
             },
-            "label": "ECC",
+            "label": "ECC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 45,
                 "top_5_bigrams": [
@@ -10393,7 +10435,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies ECC",
+                "Ignored AES collision in ECC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100844",
@@ -10689,7 +10739,7 @@
                 "mem_ops_ratio": 0.14634146341463414,
                 "logical_ratio": 0.0
             },
-            "label": "ECC",
+            "label": "ECC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 10,
                 "top_5_bigrams": [
@@ -10750,7 +10800,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies ECC",
+                "Ignored AES collision in ECC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100878",
@@ -17923,7 +17981,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies ECC",
+                "Moderate bitwise density (0.17)",
+                "Ignored AES collision in ECC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name ECC"
+            ]
         },
         {
             "address": "00100e94",
@@ -19003,7 +19071,7 @@
                 "mem_ops_ratio": 0.16326530612244897,
                 "logical_ratio": 0.0
             },
-            "label": "ECC",
+            "label": "ECC-candidate",
             "instruction_sequence": {
                 "unique_ngram_count": 36,
                 "top_5_bigrams": [
@@ -19064,7 +19132,15 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 30.0,
+            "confidence_level": "Low",
+            "detection_reasons": [
+                "Name implies ECC",
+                "Ignored AES collision in ECC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)"
+            ]
         },
         {
             "address": "00100f68",
@@ -26065,7 +26141,17 @@
                 "mixed_coordinate_ratio": 0.0,
                 "tbox_detected": false
             },
-            "arch": "AARCH64"
+            "arch": "AARCH64",
+            "algorithm": "AES",
+            "confidence_score": 45.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies ECC",
+                "Moderate bitwise density (0.16)",
+                "Ignored AES collision in ECC function",
+                "BigInt detected but low entropy (Generic Math/Poly1305)",
+                "Ignored YARA RSA vs Name ECC"
+            ]
         }
     ],
     "binary": "libcrypto-lib-ecdsa_ossl.o_openssl_arm64_O1.o"

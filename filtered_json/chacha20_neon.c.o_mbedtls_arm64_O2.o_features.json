@@ -3666,7 +3666,17 @@
                 "tbox_detected": false
             },
             "arch": "AARCH64",
-            "label": "ChaCha20"
+            "label": "ChaCha20",
+            "algorithm": "AES",
+            "confidence_score": 75.0,
+            "confidence_level": "High",
+            "detection_reasons": [
+                "Name implies ChaCha20",
+                "Very High bitwise density (0.43)",
+                "Ignored AES collision in ChaCha20 function",
+                "BigInt arithmetic (Poly1305 context)",
+                "Ignored YARA RSA vs Name ChaCha20"
+            ]
         },
         {
             "address": "00100310",
@@ -5834,7 +5844,16 @@
                 "tbox_detected": false
             },
             "arch": "AARCH64",
-            "label": "ChaCha20"
+            "label": "ChaCha20",
+            "algorithm": "AES",
+            "confidence_score": 55.0,
+            "confidence_level": "Medium",
+            "detection_reasons": [
+                "Name implies ChaCha20",
+                "Moderate bitwise density (0.17)",
+                "Ignored AES collision in ChaCha20 function",
+                "BigInt arithmetic (Poly1305 context)"
+            ]
         }
     ],
     "binary": "chacha20_neon.c.o_mbedtls_arm64_O2.o"
