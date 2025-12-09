@@ -37,6 +37,42 @@ class IngestionModule:
                 return True
         return False
     
+    def _is_unsupported_file_type(self, file_type):
+        """
+        Check if file type is unsupported for Ghidra analysis.
+        These file types should be routed to PATH_C_HARD_TARGET instead of PATH_A_BARE_METAL.
+        
+        Args:
+            file_type (str): The file type string from libmagic
+            
+        Returns:
+            bool: True if file type is unsupported for Ghidra analysis
+        """
+        # List of file type patterns that cannot be analyzed by Ghidra
+        unsupported_patterns = [
+            "SIMH tape data",
+            "tape archive",
+            "dump",
+            "core file",
+            "swap file",
+            "hibernation file",
+            "crash dump",
+            "memory dump",
+            "raw disk image",
+            "partition table",
+            "filesystem data",
+            "disk image",
+        ]
+        
+        file_type_lower = file_type.lower()
+        
+        # Check if any unsupported pattern matches
+        for pattern in unsupported_patterns:
+            if pattern.lower() in file_type_lower:
+                return True
+        
+        return False
+    
     def _check_for_bootloader(self, extracted_path):
         """
         Check for bootloader binaries in extracted firmware.
@@ -318,9 +354,15 @@ class IngestionModule:
                     report["routing"]["decision"] = "PATH_B_LINUX_FS"
                     report["routing"]["reason"] = "Binary firmware (.bin) extracted to Linux filesystem - routing to filesystem analysis."
                 else:
-                    # Extracted but no clear filesystem - could be bare metal firmware
-                    report["routing"]["decision"] = "PATH_A_BARE_METAL"
-                    report["routing"]["reason"] = "Binary firmware (.bin) extracted but no Linux FS found"
+                    # Extracted but no clear filesystem - check if file type is supported
+                    if self._is_unsupported_file_type(file_type):
+                        # File type cannot be analyzed by Ghidra - route to PATH_C
+                        report["routing"]["decision"] = "PATH_C_HARD_TARGET"
+                        report["routing"]["reason"] = f"Binary firmware (.bin) extracted but file type '{file_type}' is unsupported for analysis"
+                    else:
+                        # Extracted but no clear filesystem - could be bare metal firmware
+                        report["routing"]["decision"] = "PATH_A_BARE_METAL"
+                        report["routing"]["reason"] = "Binary firmware (.bin) extracted but no Linux FS found"
             else:
                 # Extraction failed - encrypted or obfuscated firmware
                 report["routing"]["decision"] = "PATH_C_HARD_TARGET"
@@ -346,9 +388,15 @@ class IngestionModule:
                 report["routing"]["decision"] = "PATH_B_LINUX_FS"
                 report["routing"]["reason"] = "Found Linux FS structure (/bin, /etc)."
             else:
-                # Extracted something, but no OS structure -> Likely Bare Metal / RTOS blobs
-                report["routing"]["decision"] = "PATH_A_BARE_METAL"
-                report["routing"]["reason"] = "Extracted data, but no Linux FS found. Treating as Bare Metal/RTOS."
+                # Extracted something, but no OS structure - check if file type is supported
+                if self._is_unsupported_file_type(file_type):
+                    # File type cannot be analyzed by Ghidra - route to PATH_C
+                    report["routing"]["decision"] = "PATH_C_HARD_TARGET"
+                    report["routing"]["reason"] = f"Extracted data but file type '{file_type}' is unsupported for analysis"
+                else:
+                    # Likely Bare Metal / RTOS blobs
+                    report["routing"]["decision"] = "PATH_A_BARE_METAL"
+                    report["routing"]["reason"] = "Extracted data, but no Linux FS found. Treating as Bare Metal/RTOS."
                 
         else:
             # Extraction failed. Is it encrypted?
