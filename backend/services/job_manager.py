@@ -37,6 +37,7 @@ class JobData:
     analysis_results: Optional[Dict[str, Any]] = None
     feature_extraction_results: Optional[Dict[str, Any]] = None
     qiling_dynamic_results: Optional[Dict[str, Any]] = None
+    llm_analysis_results: Optional[Dict[str, Any]] = None
     classification_results: Optional[Dict[str, Any]] = None
     created_at: float = None
     updated_at: float = None
@@ -134,6 +135,22 @@ class JobManager:
         self._jobs_cache[job_id] = job
         
         logger.info(f"Updated job with Qiling results - JobID: {job_id}")
+        return job
+    
+    def update_job_llm_results(self, job_id: str, llm_results: Dict[str, Any]) -> Optional[JobData]:
+        """Update job with LLM analysis results"""
+        job = self.get_job(job_id)
+        if not job:
+            logger.warning(f"Attempted to update non-existent job: {job_id}")
+            return None
+        
+        job.llm_analysis_results = llm_results
+        job.updated_at = time.time()
+        
+        self._save_job(job)
+        self._jobs_cache[job_id] = job
+        
+        logger.info(f"Updated job with LLM analysis results - JobID: {job_id}")
         return job
     
     def update_job_classification_results(self, job_id: str, classification_results: Dict[str, Any]) -> Optional[JobData]:

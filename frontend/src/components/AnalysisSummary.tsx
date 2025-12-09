@@ -151,6 +151,7 @@ interface AnalysisStatusIndicatorProps {
   hasFeatureExtraction: boolean;
   hasMLClassification: boolean;
   hasQilingAnalysis: boolean;
+  hasLLMAnalysis?: boolean;
 }
 
 export const AnalysisStatusIndicator: React.FC<AnalysisStatusIndicatorProps> = ({
@@ -158,6 +159,7 @@ export const AnalysisStatusIndicator: React.FC<AnalysisStatusIndicatorProps> = (
   hasFeatureExtraction,
   hasMLClassification,
   hasQilingAnalysis,
+  hasLLMAnalysis = false,
 }) => {
   const getStatusIcon = (completed: boolean) => {
     return completed ? (
@@ -204,6 +206,16 @@ export const AnalysisStatusIndicator: React.FC<AnalysisStatusIndicatorProps> = (
             </div>
             <Badge variant={hasQilingAnalysis ? "default" : "secondary"}>
               {hasQilingAnalysis ? "Complete" : "Pending"}
+            </Badge>
+          </div>
+
+          <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+            <div className="flex items-center gap-3">
+              {getStatusIcon(hasLLMAnalysis)}
+              <span className="font-medium">Agent Analysis</span>
+            </div>
+            <Badge variant={hasLLMAnalysis ? "default" : "secondary"}>
+              {hasLLMAnalysis ? "Complete" : "Pending"}
             </Badge>
           </div>
         </div>

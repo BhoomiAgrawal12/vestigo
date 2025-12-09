@@ -33,6 +33,7 @@ from services.secure_boot_analysis_service import SecureBootAnalysisService
 from services.crypto_library_service import CryptoLibraryService
 from services.qiling_dynamic_analysis_service import QilingDynamicAnalysisService
 from services.binary_converter_service import BinaryConverterService
+from services.llm_analysis_service import LLMAnalysisService
 from services.job_manager import job_manager, JobStatus
 
 # ==========================================================
@@ -49,6 +50,7 @@ secureboot_service = SecureBootAnalysisService()
 cryptolib_service = CryptoLibraryService()
 qiling_service = QilingDynamicAnalysisService()
 converter_service = BinaryConverterService()
+llm_service = LLMAnalysisService()
 
 logger.info("Vestigo Backend starting up...")
 
@@ -511,6 +513,9 @@ async def process_qiling_dynamic_analysis(job_id: str, analysis_result: dict):
                 logger.info(f"Background Qiling analysis completed - JobID: {job_id}")
                 logger.info(f"Qiling verdict: {qiling_results.get('verdict', {}).get('crypto_detected', 'unknown')} "
                           f"(confidence: {qiling_results.get('verdict', {}).get('confidence', 'N/A')})")
+                
+                # TRIGGER LLM ANALYSIS if strace logs are available
+                await process_llm_analysis(job_id, binary_path, qiling_results)
             else:
                 logger.error(f"No binary files found in workspace - JobID: {job_id}")
         else:
@@ -519,6 +524,77 @@ async def process_qiling_dynamic_analysis(job_id: str, analysis_result: dict):
     except Exception as e:
         logger.error(f"Background Qiling analysis failed - JobID: {job_id}, Error: {str(e)}", exc_info=True)
         # Don't fail the entire job - Qiling is supplementary analysis
+
+
+async def process_llm_analysis(job_id: str, binary_path: str, qiling_results: dict):
+    """Background task to process LLM analysis of strace logs"""
+    try:
+        logger.info(f"Starting LLM analysis of strace logs - JobID: {job_id}")
+        
+        # Find the strace log file for this binary
+        # Strace logs are saved in qiling_analysis/tests/strace_logs/
+        project_root = Path(__file__).parent.parent
+        strace_log_dir = project_root / "qiling_analysis" / "tests" / "strace_logs"
+        
+        # Extract binary basename for matching strace log
+        # The strace log naming convention: replace ALL dots with underscores, keep hyphens
+        # Example: tmpg27iok30_libcrypto-lib-md5_sha1.o_openssl_arm64_O3.elf
+        #       -> strace_tmpg27iok30_libcrypto-lib-md5_sha1_o_openssl_arm64_O3_elf_TIMESTAMP.log
+        binary_basename = os.path.basename(binary_path)
+        
+        # Replace dots with underscores (matches verify_crypto.py line 112)
+        # This preserves hyphens but replaces .elf and .o extensions
+        binary_basename_normalized = binary_basename.replace('.', '_')
+        
+        # Look for strace log matching this binary (trying multiple patterns)
+        patterns_to_try = [
+            f"strace_{binary_basename_normalized}*.log",  # Normalized (dots -> underscores)
+            f"strace_{binary_basename}*.log",              # Original basename (fallback)
+            f"strace_*{binary_basename.split('_')[0]}*.log" if '_' in binary_basename else None  # Temp prefix
+        ]
+        patterns_to_try = [p for p in patterns_to_try if p]  # Remove None values
+        
+        matching_logs = []
+        for pattern in patterns_to_try:
+            matching_logs = list(strace_log_dir.glob(pattern))
+            if matching_logs:
+                logger.info(f"Found strace logs with pattern: {pattern}")
+                break
+        
+        if not matching_logs:
+            logger.warning(f"No strace log found for binary - JobID: {job_id}")
+            logger.warning(f"Tried patterns: {patterns_to_try}")
+            logger.warning(f"Binary path: {binary_path}")
+            logger.warning(f"Available strace logs:")
+            for log_file in strace_log_dir.glob("strace_*.log"):
+                logger.warning(f"  - {log_file.name}")
+            logger.info(f"LLM analysis skipped - no strace log available")
+            return
+        
+        # Use the most recent strace log (sorted by name which includes timestamp)
+        strace_log_path = str(sorted(matching_logs)[-1])
+        logger.info(f"Found and using strace log: {strace_log_path}")
+        
+        # Run LLM analysis
+        llm_results = await llm_service.analyze_crypto_telemetry(
+            job_id=job_id,
+            strace_log_path=strace_log_path,
+            qiling_results=qiling_results
+        )
+        
+        # Update job with LLM results
+        job_manager.update_job_llm_results(job_id, llm_results)
+        
+        logger.info(f"LLM analysis completed - JobID: {job_id}")
+        if llm_results.get("status") == "completed":
+            llm_classification = llm_results.get("llm_classification", {})
+            logger.info(f"LLM Classification: {llm_classification.get('crypto_classification', 'UNKNOWN')}, "
+                       f"Algorithm: {llm_classification.get('crypto_algorithm', 'unknown')}, "
+                       f"Confidence: {llm_classification.get('confidence', 0.0)}")
+        
+    except Exception as e:
+        logger.error(f"LLM analysis failed - JobID: {job_id}, Error: {str(e)}", exc_info=True)
+        # Don't fail the entire job - LLM is supplementary analysis
 
 
 async def process_filesystem_scan(job_id: str, analysis_result: dict):
@@ -1014,6 +1090,100 @@ async def list_jobs_comprehensive(limit: int = 20, include_child_jobs: bool = Fa
     except Exception as e:
         logger.error(f"Error listing comprehensive jobs: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail="Error retrieving comprehensive jobs data")
+
+
+@app.get("/job/{job_id}/strace-logs")
+async def get_strace_logs(job_id: str):
+    """Get strace logs for a job's binary analysis"""
+    try:
+        job = job_manager.get_job(job_id)
+        if not job:
+            raise HTTPException(status_code=404, detail="Job not found")
+        
+        # Get binary path from qiling results
+        qiling_results = job.qiling_dynamic_results
+        if not qiling_results:
+            raise HTTPException(status_code=404, detail="No Qiling analysis results available")
+        
+        binary_path = qiling_results.get("binary_path", "")
+        binary_name = qiling_results.get("binary_name", "")
+        
+        if not binary_name:
+            raise HTTPException(status_code=404, detail="Binary name not found in analysis results")
+        
+        # Find strace logs
+        project_root = Path(__file__).parent.parent
+        strace_log_dir = project_root / "qiling_analysis" / "tests" / "strace_logs"
+        
+        if not strace_log_dir.exists():
+            raise HTTPException(status_code=404, detail="Strace logs directory not found")
+        
+        # Extract binary basename for matching strace log
+        # The strace log naming convention: replace ALL dots with underscores, keep hyphens
+        # Example: tmpg27iok30_libcrypto-lib-md5_sha1.o_openssl_arm64_O3.elf
+        #       -> strace_tmpg27iok30_libcrypto-lib-md5_sha1_o_openssl_arm64_O3_elf_TIMESTAMP.log
+        
+        binary_basename = binary_name
+        
+        # Replace dots with underscores (matches verify_crypto.py line 112)
+        # This preserves hyphens but replaces .elf and .o extensions
+        binary_basename_normalized = binary_basename.replace('.', '_')
+        
+        # Look for strace log matching this binary (trying multiple patterns)
+        patterns_to_try = [
+            f"strace_{binary_basename_normalized}*.log",  # Normalized (dots -> underscores)
+            f"strace_{binary_basename}*.log",              # Original basename (fallback)
+            f"strace_*{binary_basename.split('_')[0]}*.log" if '_' in binary_basename else None  # Temp prefix
+        ]
+        patterns_to_try = [p for p in patterns_to_try if p]  # Remove None values
+        
+        matching_logs = []
+        for pattern in patterns_to_try:
+            matching_logs = list(strace_log_dir.glob(pattern))
+            if matching_logs:
+                logger.info(f"Found strace logs with pattern: {pattern}")
+                break
+        
+        if not matching_logs:
+            logger.warning(f"No strace logs found for binary: {binary_name}")
+            logger.warning(f"Tried patterns: {patterns_to_try}")
+            logger.warning(f"Available strace logs in directory:")
+            for log_file in strace_log_dir.glob("strace_*.log"):
+                logger.warning(f"  - {log_file.name}")
+            raise HTTPException(status_code=404, detail=f"No strace logs found for binary: {binary_name}")
+        
+        # Use the most recent strace log
+        strace_log_path = sorted(matching_logs)[-1]
+        logger.info(f"Using strace log: {strace_log_path.name}")
+        
+        # Read the log file
+        try:
+            with open(strace_log_path, 'r', encoding='utf-8', errors='ignore') as f:
+                strace_content = f.read()
+        except Exception as e:
+            logger.error(f"Error reading strace log {strace_log_path}: {str(e)}")
+            raise HTTPException(status_code=500, detail="Error reading strace log file")
+        
+        # Get file stats
+        file_stats = strace_log_path.stat()
+        
+        return {
+            "job_id": job_id,
+            "binary_name": binary_name,
+            "strace_log_path": str(strace_log_path),
+            "strace_log_name": strace_log_path.name,
+            "file_size": file_stats.st_size,
+            "file_modified": file_stats.st_mtime,
+            "content": strace_content,
+            "lines": len(strace_content.split('\n')),
+            "available_logs": [str(log.name) for log in matching_logs]
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error retrieving strace logs for job {job_id}: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Error retrieving strace logs")
 
 
 # ==========================================================

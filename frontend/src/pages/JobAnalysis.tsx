@@ -33,6 +33,7 @@ import { CFGVisualization } from "@/components/CFGVisualization";
 import { FunctionAnalysisDetails } from "@/components/FunctionAnalysisDetails";
 import { OpcodeAnalysis } from "@/components/OpcodeAnalysis";
 import { FileSystemAnalysis } from "@/components/FileSystemAnalysis";
+import { LLMAnalysisCard } from "@/components/LLMAnalysis";
 
 import { useEffect, useState } from "react";
 
@@ -215,16 +216,18 @@ const JobAnalysis = () => {
             hasFeatureExtraction={!!(jobData as Record<string, unknown>)?.feature_extraction_results}
             hasMLClassification={!!((jobData as Record<string, unknown>)?.feature_extraction_results as Record<string, unknown>)?.ml_classification}
             hasQilingAnalysis={!!(jobData as Record<string, unknown>)?.qiling_dynamic_results}
+            hasLLMAnalysis={!!(jobData as Record<string, unknown>)?.llm_analysis_results}
           />
 
           {/* Analysis Tabs */}
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-6">
+            <TabsList className="grid w-full grid-cols-7">
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="ml-classification">ML Analysis</TabsTrigger>
               <TabsTrigger value="filesystem">Filesystem</TabsTrigger>
               <TabsTrigger value="features">Features</TabsTrigger>
               <TabsTrigger value="qiling">Dynamic</TabsTrigger>
+              <TabsTrigger value="llm">Agent</TabsTrigger>
               <TabsTrigger value="file-info">File Info</TabsTrigger>
               {/* <TabsTrigger value="raw-data">Raw Data</TabsTrigger> */}
             </TabsList>
@@ -255,6 +258,14 @@ const JobAnalysis = () => {
 
             <TabsContent value="qiling" className="space-y-6">
               <QilingAnalysisCard qilingData={jobData} />
+            </TabsContent>
+
+            <TabsContent value="llm" className="space-y-6">
+              <LLMAnalysisCard 
+                llmData={(jobData as Record<string, unknown>)?.llm_analysis_results as Record<string, unknown> | null}
+                qilingData={jobData as Record<string, unknown> | null}
+                jobId={jobId}
+              />
             </TabsContent>
 
             <TabsContent value="raw-data" className="space-y-6">
