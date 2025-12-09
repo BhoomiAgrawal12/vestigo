@@ -35,6 +35,7 @@ import { OpcodeAnalysis } from "@/components/OpcodeAnalysis";
 import { FileSystemAnalysis } from "@/components/FileSystemAnalysis";
 import { LLMAnalysisCard } from "@/components/LLMAnalysis";
 import { HardTargetAnalysis } from "@/components/HardTargetAnalysis";
+import { PipelineVisualization } from "@/components/PipelineVisualization";
 
 import { useEffect, useState } from "react";
 
@@ -222,8 +223,9 @@ const JobAnalysis = () => {
 
           {/* Analysis Tabs */}
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-8">
+            <TabsList className="grid w-full grid-cols-9">
               <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="pipeline">Pipeline</TabsTrigger>
               <TabsTrigger value="ml-classification">ML Analysis</TabsTrigger>
               <TabsTrigger value="filesystem">Filesystem</TabsTrigger>
               <TabsTrigger value="features">Features</TabsTrigger>
@@ -231,12 +233,25 @@ const JobAnalysis = () => {
               <TabsTrigger value="llm">Agent</TabsTrigger>
               <TabsTrigger value="hard-target">Hard Target</TabsTrigger>
               <TabsTrigger value="file-info">File Info</TabsTrigger>
-              {/* <TabsTrigger value="raw-data">Raw Data</TabsTrigger> */}
             </TabsList>
 
             <TabsContent value="overview" className="space-y-6">
               <FileMetadataCard jobData={jobData} />
               <AnalysisOverviewCard jobData={jobData} />
+            </TabsContent>
+
+            <TabsContent value="pipeline" className="space-y-6">
+              <PipelineVisualization
+                jobId={jobId || ''}
+                routingDecision={jobData?.routing_decision || 'unknown'}
+                routingReason={jobData?.routing_reason || 'No reason provided'}
+                bootloaders={jobData?.bootloaders || []}
+                binaries={(jobData as Record<string, unknown>)?.feature_extraction_results 
+                  ? ((jobData as Record<string, unknown>).feature_extraction_results as Record<string, unknown>).binaries as any[]
+                  : []}
+                status={jobData?.status || 'processing'}
+                autoRefresh={jobData?.status !== 'complete' && jobData?.status !== 'failed'}
+              />
             </TabsContent>
 
             <TabsContent value="file-info" className="space-y-6">

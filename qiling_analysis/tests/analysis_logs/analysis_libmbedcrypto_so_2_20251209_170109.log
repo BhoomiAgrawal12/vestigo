@@ -1,0 +1,109 @@
+[*] Analysis output will be saved to: /home/spy-d/My Files/sih/vestigo-data/qiling_analysis/tests/analysis_logs/analysis_libmbedcrypto_so_2_20251209_170109.log
+[*] Starting analysis at: 2025-12-09 17:01:09
+
+======= FILE DESCRIPTON ======
+
+============================================================
+[*] PHASE -1: Checking for packed binary...
+[-] No packer detected
+[+] Detected architecture: mips
+[*] Target: libmbedcrypto.so.2
+[*] Rootfs: /home/spy-d/My Files/sih/vestigo-data/qiling_analysis/rootfs/mips32_linux
+
+============================================================
+[*] PHASE 0: YARA static analysis
+[✓] YARA detected: SHA-256
+    Total matches: 1
+    Scan time: 0.001s
+    High-confidence rules:
+      - SHA256_Constants (SHA-256, 95%)
+
+============================================================
+[*] PHASE 1: Scanning for crypto constants...
+[✓] Found constants for 1 algorithm(s)
+    - SHA256
+
+============================================================
+[*] PHASE 2: Checking for function symbols...
+[*] Found 31 crypto candidate(s):
+    - mbedtls_aes_crypt_cbc @ 0x6670
+    - mbedtls_aes_crypt_ecb @ 0x6638
+    - mbedtls_aes_decrypt @ 0x661c
+    - mbedtls_aes_encrypt @ 0x5e98
+    - mbedtls_aes_free @ 0x5348
+    - mbedtls_aes_init @ 0x681c
+    - mbedtls_aes_setkey_dec @ 0x683c
+    - mbedtls_aes_setkey_enc @ 0x5370
+    - mbedtls_cipher_crypt @ 0xeff4
+    - mbedtls_cipher_finish @ 0xe960
+
+============================================================
+[*] PHASE 3: Running binary to test crypto functions...
+
+======================================================================
+   NATIVE STRACE ANALYSIS (Optional)
+======================================================================
+[*] Running native strace on binary...
+    Strace log: /home/spy-d/My Files/sih/vestigo-data/qiling_analysis/tests/strace_logs/strace_libmbedcrypto_so_2_20251209_170109.log
+    Terminal output: /home/spy-d/My Files/sih/vestigo-data/qiling_analysis/tests/strace_logs/terminal_libmbedcrypto_so_2_20251209_170109.log
+[✓] strace log captured: 30002 bytes
+[✓] Terminal output captured: 67 bytes
+[*] Analyzing strace log...
+[*] Strace Statistics:
+    Total syscalls: 205
+    getrandom() calls: 3
+      - 8 bytes
+      - 0 bytes
+      - 16 bytes
+    Crypto-relevant calls: 10
+[*] Binary requires GLIBC: 2.0 (max: 2.0)
+[*] Installing syscall hooks (getrandom, read)...
+[*] Executing binary with basic block profiling...
+
+============================================================
+   ENHANCED ANALYSIS RESULTS (v2.0)
+============================================================
+
+[!] Binary execution failed or crashed early
+[*] Falling back to static analysis results only
+
+
+[*] Constant Detection (FindCrypt):
+    [✓] Detected 1 algorithm(s), 1 constant(s)
+      SHA256: SHA256_K
+
+[*] Avalanche Effect Analysis:
+    [-] Note: Functions may be inlined or not called during this execution
+    [-] Unable to capture I/O through function hooks
+    [-] Note: Binary executed and produced output (check console above)
+    [*] Avalanche testing requires multiple runs with different inputs
+    [*] Alternative: Test manually by running binary multiple times
+
+[*] Basic Block Analysis:
+    Total Basic Blocks: 1
+    Crypto Loops: 0
+    Total Instructions: 15
+    Crypto Operations: 3
+    Crypto-Op Ratio: 20.00%
+
+[*] ADAPTIVE Confidence Scoring (0-100):
+    - Constants evidence : 35 pts (0-40)
+    - Function names     : 40 pts (0-40, adaptive)
+    - Crypto loops       : 0 pts (0-20)
+    - Crypto-op ratio    : 15 pts (0-15)
+    - Avalanche effect   : 0 pts (0-15, optional)
+    - YARA detection     : 0 pts (0-30)
+    -> RAW TOTAL: 90
+    -> FINAL SCORE: 100/100  => HIGH
+    Evidence sources: 3/5 available
+
+
+[*] Strace log saved to: /home/spy-d/My Files/sih/vestigo-data/qiling_analysis/tests/strace_logs/strace_libmbedcrypto_so_2_20251209_170109.log
+[*] Terminal output saved to: /home/spy-d/My Files/sih/vestigo-data/qiling_analysis/tests/strace_logs/terminal_libmbedcrypto_so_2_20251209_170109.log
+
+======================================================================
+   STRACE LOG CONTENTS
+======================================================================
+
+[*] Analysis completed at: 2025-12-09 17:01:09
+[✓] Full analysis log saved to: /home/spy-d/My Files/sih/vestigo-data/qiling_analysis/tests/analysis_logs/analysis_libmbedcrypto_so_2_20251209_170109.log

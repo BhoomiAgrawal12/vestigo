@@ -1,0 +1,111 @@
+[*] Analysis output will be saved to: /home/spy-d/My Files/sih/vestigo-data/qiling_analysis/tests/analysis_logs/analysis_libmd5-rfc_so_20251209_170334.log
+[*] Starting analysis at: 2025-12-09 17:03:34
+
+======= FILE DESCRIPTON ======
+
+============================================================
+[*] PHASE -1: Checking for packed binary...
+[-] No packer detected
+[+] Detected architecture: mips
+[*] Target: libmd5-rfc.so
+[*] Rootfs: /home/spy-d/My Files/sih/vestigo-data/qiling_analysis/rootfs/mips32_linux
+
+============================================================
+[*] PHASE 0: YARA static analysis
+[-] No YARA matches (may be obfuscated or compressed)
+
+============================================================
+[*] PHASE 1: Scanning for crypto constants...
+[-] No crypto constants detected
+
+============================================================
+[*] PHASE 2: Checking for function symbols...
+[-] No crypto function names detected (stripped/obfuscated binary)
+[*] Switching to enhanced behavioral analysis...
+
+============================================================
+[*] PHASE 3: Dynamic behavioral analysis...
+
+======================================================================
+   NATIVE STRACE ANALYSIS (Optional)
+======================================================================
+[*] Running native strace on binary...
+    Strace log: /home/spy-d/My Files/sih/vestigo-data/qiling_analysis/tests/strace_logs/strace_libmd5-rfc_so_20251209_170334.log
+    Terminal output: /home/spy-d/My Files/sih/vestigo-data/qiling_analysis/tests/strace_logs/terminal_libmd5-rfc_so_20251209_170334.log
+[✓] strace log captured: 29320 bytes
+[✓] Terminal output captured: 67 bytes
+[*] Analyzing strace log...
+[*] Strace Statistics:
+    Total syscalls: 201
+    getrandom() calls: 3
+      - 8 bytes: 976645 17:03:34.701192 getrandom("\x7a\x88\x3d\x50\x6b\x65\x72\x2f", 8, GRND_NON...
+      - 0 bytes: 976645 17:03:34.703284 getrandom(NULL, 0, 0) = 0...
+      - 16 bytes: 976645 17:03:34.704100 getrandom("\xe7\x46\x6b\xb7\xef\xd6\xe2\xed\x4e\x70\xb8\x...
+    Crypto-relevant calls: 7
+[*] Binary requires GLIBC: 2.0 (max: 2.0)
+[*] Installing syscall hooks (getrandom, read)...
+[*] Executing binary with syscall + basic block monitoring...
+    (Tracking: getrandom, memory writes, crypto operations)
+
+======================================================================
+   PHASE 1: SYSCALL ANALYSIS
+======================================================================
+
+[!] Binary execution failed or crashed early
+[*] Falling back to static analysis results only
+
+
+[-] No getrandom() calls detected
+    Note: Binary may use /dev/random or hardcoded keys
+
+======================================================================
+   PHASE 2: CONSTANT DETECTION
+======================================================================
+
+[-] No known crypto constants found
+    → Likely proprietary or obfuscated algorithm
+
+======================================================================
+   PHASE 3: MEMORY & PATTERN ANALYSIS
+======================================================================
+
+[*] Memory Entropy Analysis:
+    [-] No high-entropy memory writes detected
+
+[*] Crypto Loop Detection (Round Functions):
+    [-] No crypto loops detected
+
+[*] Basic Block Analysis:
+    Total Basic Blocks: 1
+    Total Instructions Executed: 15
+    Crypto Operations: 3
+    Crypto-Op Ratio: 20.00%
+    Crypto-Heavy Blocks: 0
+    [!] Note: Analysis incomplete due to execution failure
+
+======================================================================
+   PHASE 4: ALGORITHM CLASSIFICATION
+======================================================================
+
+======================================================================
+
+[*] Analysis Summary:
+      → Binary uses CUSTOM/PROPRIETARY cipher
+      → Detected 2 weakness indicator(s):
+         • No known crypto constants detected
+         • Few crypto loops (simple cipher)
+      → ⚠ URGENT: Replace with standard algorithms
+      → Recommended alternatives:
+         • AES-256-GCM (block cipher, hardware accelerated)
+         • ChaCha20-Poly1305 (stream cipher, software optimized)
+======================================================================
+
+[*] Logs saved to: /home/spy-d/My Files/sih/vestigo-data/qiling_analysis/tests/../logs/libmd5-rfc.so_20251209_170334
+[*] Strace log saved to: /home/spy-d/My Files/sih/vestigo-data/qiling_analysis/tests/strace_logs/strace_libmd5-rfc_so_20251209_170334.log
+
+======================================================================
+   STRACE LOG CONTENTS
+======================================================================
+
+[*] Analysis completed at: 2025-12-09 17:03:35
+[✓] Full analysis log saved to: /home/spy-d/My Files/sih/vestigo-data/qiling_analysis/tests/analysis_logs/analysis_libmd5-rfc_so_20251209_170334.log

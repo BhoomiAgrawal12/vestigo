@@ -6,6 +6,7 @@ import {
   Info,
   X,
   FolderOpen,
+  ArrowRight,
 } from "lucide-react";
 
 import { Card } from "@/components/ui/card";
@@ -15,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Progress } from "@/components/ui/progress";
+import { PipelineVisualization } from "@/components/PipelineVisualization";
 
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -28,11 +30,25 @@ interface UploadFile {
   status: "pending" | "uploading" | "complete" | "failed";
 }
 
+interface AnalysisData {
+  jobId: string;
+  analysis: {
+    routing_decision: string;
+    routing_reason: string;
+    bootloaders?: any[];
+    filesystem_info?: any;
+    binary_info?: any;
+  };
+  fileName?: string;
+}
+
 const Upload = () => {
   const [dragActive, setDragActive] = useState(false);
   const [uploadFiles, setUploadFiles] = useState<UploadFile[]>([]);
   const [hashInput, setHashInput] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  const [analysisData, setAnalysisData] = useState<AnalysisData | null>(null);
+  const [showPipeline, setShowPipeline] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const folderInputRef = useRef<HTMLInputElement>(null);
@@ -137,8 +153,15 @@ const Upload = () => {
           toast.info(`Analysis Path: ${analysisInfo.routing_decision}`);
         }
 
-        // Redirect to comprehensive analysis page
-        navigate(`/job/${jobId}/analysis`);
+        // Store analysis data and show pipeline
+        setAnalysisData(data);
+        setShowPipeline(true);
+        
+        // Auto-redirect after showing pipeline (optional)
+        setTimeout(() => {
+          navigate(`/job/${jobId}/analysis`);
+        }, 5000);
+        
         return;
       } catch (err) {
         console.error(err);
@@ -306,6 +329,33 @@ const Upload = () => {
               <Button onClick={handleHashAnalysis}>Analyze</Button>
             </div>
           </Card>
+
+          {/* Pipeline Visualization - Show after upload */}
+          {showPipeline && analysisData && (
+            <div className="mt-10">
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="text-3xl font-display font-bold">
+                  Analysis Pipeline
+                </h2>
+                <Button
+                  onClick={() => navigate(`/job/${analysisData.jobId}/analysis`)}
+                  className="bg-primary"
+                >
+                  View Full Analysis <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
+              
+              <PipelineVisualization
+                jobId={analysisData.jobId}
+                routingDecision={analysisData.analysis.routing_decision}
+                routingReason={analysisData.analysis.routing_reason}
+                bootloaders={analysisData.analysis.bootloaders}
+                binaries={[]}
+                status="processing"
+                autoRefresh={true}
+              />
+            </div>
+          )}
         </div>
       </section>
 
