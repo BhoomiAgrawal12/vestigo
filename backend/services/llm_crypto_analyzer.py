@@ -237,34 +237,79 @@ Return ONLY the JSON object, nothing else."""
     def _prepare_prompt(self, crypto_strings: List[str], binary_name: str, file_type: str) -> str:
         """Prepare the analysis prompt with data"""
         
-        # Limit strings to avoid token limits (keep first 200)
-        strings_sample = crypto_strings[:200]
+        # Limit strings to avoid token limits (keep first 300 for better coverage)
+        strings_sample = crypto_strings[:300]
         strings_text = "\n".join([f"- {s}" for s in strings_sample])
         
         schema_json = json.dumps(self.RESPONSE_SCHEMA, indent=2)
         
-        prompt = f"""CRITICAL: You MUST respond with ONLY valid JSON. Start your response with {{ and end with }}. No explanations before or after.
+        prompt = f"""CRITICAL: Respond with ONLY valid JSON. Start with {{ and end with }}.
 
-Binary Information:
-- Filename: {binary_name}
-- File Type: {file_type}
-- Total Crypto Strings: {len(crypto_strings)}
+Analyze these cryptographic strings from binary: {binary_name}
 
-Crypto Strings (first {len(strings_sample)}):
+STRINGS TO ANALYZE ({len(strings_sample)} of {len(crypto_strings)} total):
 {strings_text}
 
-Task: Analyze these strings and return a JSON object matching this schema:
+EXTRACTION GUIDELINES:
+1. CRYPTO ALGORITHMS: Look for algorithm names (AES, RSA, SHA, CHACHA20, etc.) with modes/sizes
+   - Symmetric: AES-128-CBC, AES-256-GCM, CHACHA20-POLY1305, aes128, aes256
+   - Hashes: SHA256, SHA512, SHA1, MD5, SHA3-256
+   - MAC/KDF: HMAC, PBKDF2, HKDF
 
+2. PUBLIC KEY: Extract RSA/ECC algorithms
+   - RSA: "RSA", "rsaEncryption", "RSA Public-Key", "RSA-PSS"
+   - ECDSA/ECDH: "ECDH", "ECDHE", "ECDSA", "Curve25519", "X25519", "SECP256R1"
+
+3. TLS VERSIONS: Look for TLS/SSL/DTLS version strings
+   - Examples: "TLSv1.2", "TLSv1.3", "DTLSv1", "SSLv3"
+
+4. TLS HANDSHAKE STATES: Look for handshake message types
+   - Server side: "Server Hello", "Server Certificate", "Server Key Exchange", "Server Finished"
+   - Client side: "Client Hello", "Client Certificate", "Client Key Exchange", "Client Finished"
+   - Other: "Certificate Request", "Certificate Status", "Change CipherSpec", "Session Ticket"
+
+5. CRYPTO LIBRARIES: Identify library names and versions
+   - Look for: "wolfSSL", "OpenSSL", "mbedTLS", "BoringSSL"
+   - Version patterns: "wolfSSL 5.8.0", "OpenSSL 1.1.1"
+   - Source files: "./src/x509.c", "ssl.c"
+   - Error messages: "RSA_new failed", "InitRsaKey failure"
+
+6. CERTIFICATE BLOCKS: PEM format markers
+   - "-----BEGIN CERTIFICATE-----", "-----BEGIN PRIVATE KEY-----", etc.
+
+7. NETWORK PROTOCOLS: HTTP, IoT, Industrial protocols
+   - HTTP: "HTTP/1.1", "HTTP/2", "GET /", "POST /"
+   - IoT: "MQTT", "CoAP", "websocket"
+   - Industrial: "Modbus", "DNP3", "OPC UA"
+
+8. ARCHITECTURE INDICATORS: Look for architecture-specific strings
+   - ARM: "armv7", "aarch64", "ARM", "thumb"
+   - x86: "x86_64", "i386", "amd64"
+   - MIPS: "mips", "mipsel"
+   - Evidence: Register names, calling conventions, library paths
+
+9. SECURITY FEATURES:
+   - Key exchange: "ECDHE", "DHE", "RSA key exchange"
+   - Cipher modes: "GCM", "CBC", "CCM", "CTR"
+   - Extensions: "ALPN", "SNI", "0-RTT"
+
+10. BEHAVIORAL ANALYSIS: Determine usage pattern
+    - Check for "Server" vs "Client" strings
+    - Infer purpose from protocols (IoT, Router, VPN, Web Server)
+    - Assess security level from algorithm strength
+
+RESPONSE SCHEMA:
 {schema_json}
 
-Rules:
-- ONLY include items ACTUALLY PRESENT in the strings above
-- Empty categories: use [] or ""
-- verdict.summary: ONE sentence max 100 chars
-- Return ONLY the JSON object, nothing else
-- Start with {{ and end with }}
+CRITICAL RULES:
+- Include items ONLY if found in strings above
+- Empty categories: use [] for arrays, "" for strings
+- Don't invent data - extract only what's visible
+- For architecture: check for arch-specific strings (armv7, x86_64, mips, etc.)
+- For TLS handshake: look for "Hello", "Certificate", "Finished", "Key Exchange" phrases
+- verdict.summary: ONE sentence, max 100 chars
 
-JSON Response:"""
+Return ONLY the JSON object now:"""
 
         return prompt
 
